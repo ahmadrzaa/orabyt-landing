@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ORABYT — Coming Soon</title>
+  <meta name="description" content="ORABYT — website & AI assistant. Coming soon." />
+  <meta name="theme-color" content="#000000" />
+  <meta name="color-scheme" content="dark" />
+  <!-- Inter (clean, Apple/Tesla vibe) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#000;
+      --ink:#fff;
+      --ink-dim:rgba(255,255,255,.72);
+      --line:rgba(255,255,255,.14);
+      --chip:rgba(255,255,255,.08);
+      --container:clamp(16px,4vw,40px);
+      --radius:14px;
+      --accent:#18d39e; /* aura green */
+      --focus: 0 0 0 3px rgba(24,211,158,.35);
+      --shadow: 0 18px 50px rgba(0,0,0,.5);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font:16px/1.6 Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      color:var(--ink);
+      background:var(--bg);
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+    a:focus-visible, button:focus-visible{outline:none; box-shadow: var(--focus)}
+    .container{max-width:1100px;margin:0 auto;padding:0 var(--container)}
+
+    /* ===== Header ===== */
+    .site-header{
+      position:sticky; top:0; z-index:10;
+      background:rgba(0,0,0,.55);
+      backdrop-filter:saturate(140%) blur(8px);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{display:flex;justify-content:space-between;align-items:center;min-height:64px;gap:12px}
+    .brand{display:flex;align-items:center;gap:10px}
+    .dot{width:8px;height:8px;border-radius:999px;background:linear-gradient(90deg,#19f,#18d39e);box-shadow:0 0 18px #19f8}
+    .logo{font-weight:900;letter-spacing:.14em;font-size:19px}
+    .menu{display:flex;gap:18px;align-items:center}
+    .menu a{opacity:.9}
+    .btn-chip{border:1px solid var(--line);background:var(--chip);padding:8px 12px;border-radius:999px}
+    .nav-toggle{display:none;background:none;border:0;cursor:pointer}
+    .nav-toggle span{display:block;width:26px;height:2px;background:var(--ink);margin:5px 0;border-radius:2px}
+
+    /* ===== Hero ===== */
+    .hero{position:relative;min-height:92vh;display:grid;place-items:center;overflow:hidden}
+    .hero-inner{z-index:2;text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px;padding:6em 0}
+    h1{margin:0;font-size:clamp(40px,6vw,72px);font-weight:800;line-height:1.08;letter-spacing:.005em}
+    .sub{color:var(--ink-dim);max-width:740px;margin:0 auto}
+    .chip{display:inline-block;margin-top:6px;border:1px solid var(--line);background:var(--chip);padding:6px 12px;border-radius:999px;font-weight:700;letter-spacing:.04em}
+
+    /* ===== Animated dark beams (no images) ===== */
+    .bg-waves{
+      position:absolute; inset:-22% -12%; z-index:1;
+      filter:blur(24px) saturate(140%); opacity:.9;
+      background:
+        radial-gradient(60% 30% at 52% 60%, rgba(24,211,158,.18), transparent 60%),
+        radial-gradient(50% 22% at 18% 42%, rgba(24,211,158,.12), transparent 60%),
+        radial-gradient(44% 22% at 82% 36%, rgba(0,175,255,.12), transparent 60%),
+        conic-gradient(from 210deg at 50% 60%, rgba(24,211,158,.16), transparent 40%);
+      animation: float 14s ease-in-out infinite alternate;
+    }
+    .bg-waves::after{
+      content:""; position:absolute; inset:0;
+      background: radial-gradient(90% 70% at 50% 40%, transparent 0, rgba(0,0,0,.22) 55%, rgba(0,0,0,.72) 100%);
+    }
+    @keyframes float{to{transform:translateY(10px) scale(1.02)}}
+
+    /* ===== Sections ===== */
+    .section{padding:64px 0;border-top:1px solid var(--line)}
+    .section h2{margin:0 0 12px;font-size:clamp(22px,3vw,28px)}
+
+    /* ===== Founders ===== */
+    .profiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .profile{
+      display:grid;grid-template-columns:80px 1fr;gap:14px;
+      border:1px solid var(--line);border-radius:var(--radius);padding:14px;
+      background:rgba(255,255,255,.04);
+      transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+    .profile:hover{transform:translateY(-2px);border-color:rgba(24,211,158,.38);box-shadow:var(--shadow)}
+    .photo{
+      width:64px;height:64px;border-radius:50%;
+      object-fit:cover;border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+    }
+    .muted{color:var(--ink-dim)}
+    .small{font-size:.95rem}
+    .tiny{font-size:.85rem}
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 0;padding:0;list-style:none}
+    .tags li{font-size:.8rem;border:1px solid var(--line);background:var(--chip);padding:4px 8px;border-radius:999px}
+    .pill{display:inline-block;margin-left:8px;font-size:.8rem;font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid var(--line);background:var(--chip)}
+    .reveal{opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease}
+    .reveal.visible{opacity:1;transform:none}
+
+    /* ===== Contact ===== */
+    .cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+    .btn{display:inline-block;border-radius:999px;padding:10px 16px;text-decoration:none}
+    .btn-primary{background:#fff;color:#000}
+    .btn-ghost{border:1px solid var(--line);color:#fff;background:var(--chip)}
+    .btn:hover{filter:brightness(1.06)}
+
+    /* ===== Mobile ===== */
+    @media (max-width: 820px){
+      .menu{display:none;position:fixed;inset:64px var(--container) auto var(--container);background:#000;border:1px solid var(--line);border-radius:12px;padding:12px;flex-direction:column;gap:12px}
+      .menu.show{display:flex}
+      .nav-toggle{display:block}
+      .profiles{grid-template-columns:1fr}
+    }
+
+    /* Motion reduce */
+    @media (prefers-reduced-motion: reduce){
+      .bg-waves{animation:none}
+      .reveal{transition:none}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="ORABYT">
+        <span class="dot" aria-hidden="true"></span>
+        <span class="logo">ORABYT</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      <nav class="menu" role="navigation" aria-label="Primary">
+        <a href="#founders">Founders</a>
+        <a href="#contact">Contact</a>
+        <a class="btn-chip" aria-disabled="true" href="#">Web App — Coming soon</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="hero" role="region" aria-label="Intro">
+    <div class="bg-waves" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <h1>Website Coming Soon</h1>
+      <p class="sub">We’re building a clean AI assistant and a fast website experience for everyone.<br/>Stay tuned — ORABYT is on the way.</p>
+      <span class="chip">Launching soon</span>
+    </div>
+  </section>
+
+  <!-- Founders -->
+  <section id="founders" class="section" role="region" aria-label="Founders">
+    <div class="container">
+      <h2>Founders</h2>
+
+      <div class="profiles">
+        <!-- Arunbal -->
+        <article class="profile reveal">
+          <!-- Replace with your actual image -->
+          <img class="photo" src="/arun.png" alt="Arunbal P — Software Developer at INTERMID">
+          <div>
+            <h3 style="margin:0 0 4px">Arunbal P</h3>
+            <p class="muted" style="margin:0 0 8px">Software Developer · INTERMID · Kerala, India</p>
+            <p style="margin:0 0 8px">Web developer with 9+ years shipping production websites and internal tools.</p>
+            <ul class="tags"><li>JavaScript</li><li>React</li><li>WordPress</li><li>APIs</li></ul>
+            <p class="muted small" style="margin:8px 0 0">Education: University of Calicut</p>
+          </div>
+        </article>
+
+        <!-- Ahmad -->
+        <article class="profile reveal">
+          <img class="photo" src="/ahamd.png" alt="Ahmad Raza — AI Software Engineer (ex IBM) at INTERMID">
+          <div>
+            <h3 style="margin:0 0 4px">Ahmad Raza <span class="pill">ex IBM</span></h3>
+            <p class="muted" style="margin:0 0 8px">AI Software Engineer & Web Developer · INTERMID · Bahrain</p>
+            <p style="margin:0 0 8px"><strong>4 years</strong> — Web & AI Chatbot Engineer; real-time chatbots (Socket.IO), LLM/Ollama, ChatGPT APIs, NLP, Next.js/Node.</p>
+            <ul class="tags"><li>LLMs</li><li>Ollama</li><li>ChatGPT API</li><li>NLP</li><li>Realtime</li></ul>
+            <p class="muted small" style="margin:8px 0 0">Education: Master of Computer Applications (MCA), REVA University, Bengaluru</p>
+            <p class="muted small" style="margin:4px 0 0">Email: <a href="mailto:ahmadrza.1110@gmail.com">ahmadrza.1110@gmail.com</a></p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section" role="region" aria-label="Contact">
+    <div class="container" style="text-align:center">
+      <h2>Contact</h2>
+      <p class="sub">Have a project or want early access to our AI agent? Free plan + Pro ₹999/BD 5.</p>
+      <div class="cta">
+        <!-- Replace email and WhatsApp -->
+        <a href="mailto:hello@orabyt.com" class="btn btn-primary">Email</a>
+        <a href="https://wa.me/97300000000" target="_blank" rel="noopener" class="btn btn-ghost">WhatsApp</a>
+      </div>
+      <p class="tiny muted" style="margin-top:12px">© <span id="year"></span> ORABYT</p>
+    </div>
+  </section>
+
+  <script>
+    // Mobile nav
+    const toggle = document.querySelector('.nav-toggle');
+    const menu = document.querySelector('.menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', () => {
+        const open = menu.classList.toggle('show');
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+      menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        menu.classList.remove('show');
+        toggle.setAttribute('aria-expanded','false');
+      }));
+    }
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Reveal founders on scroll (with safety for older browsers)
+    (function(){
+      if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+        return;
+      }
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            io.unobserve(e.target);
+          }
+        });
+      }, {threshold:.15});
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    })();
+  </script>
+</body>
+</html>
