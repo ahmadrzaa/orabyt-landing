@@ -2,246 +2,1415 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ORABYT — Coming Soon</title>
-  <meta name="description" content="ORABYT — website & AI assistant. Coming soon." />
-  <meta name="theme-color" content="#000000" />
-  <meta name="color-scheme" content="dark" />
-  <!-- Inter (clean, Apple/Tesla vibe) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  />
+  <title>Website & AI Services</title>
+  <meta name="description" content="Websites, hosting, SEO, SSL, and custom AI chatbots/agents." />
 
-  <style>
-    :root{
-      --bg:#000;
-      --ink:#fff;
-      --ink-dim:rgba(255,255,255,.72);
-      --line:rgba(255,255,255,.14);
-      --chip:rgba(255,255,255,.08);
-      --container:clamp(16px,4vw,40px);
-      --radius:14px;
-      --accent:#18d39e; /* aura green */
-      --focus: 0 0 0 3px rgba(24,211,158,.35);
-      --shadow: 0 18px 50px rgba(0,0,0,.5);
-    }
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:FILL@0..1;wght@100..700;GRAD@-50..200;opsz@20..48" rel="stylesheet" />
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font:16px/1.6 Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      color:var(--ink);
-      background:var(--bg);
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-    }
-    img{max-width:100%;display:block}
-    a{color:inherit;text-decoration:none}
-    a:focus-visible, button:focus-visible{outline:none; box-shadow: var(--focus)}
-    .container{max-width:1100px;margin:0 auto;padding:0 var(--container)}
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
-    /* ===== Header ===== */
-    .site-header{
-      position:sticky; top:0; z-index:10;
-      background:rgba(0,0,0,.55);
-      backdrop-filter:saturate(140%) blur(8px);
-      border-bottom:1px solid var(--line);
-    }
-    .nav{display:flex;justify-content:space-between;align-items:center;min-height:64px;gap:12px}
-    .brand{display:flex;align-items:center;gap:10px}
-    .dot{width:8px;height:8px;border-radius:999px;background:linear-gradient(90deg,#19f,#18d39e);box-shadow:0 0 18px #19f8}
-    .logo{font-weight:900;letter-spacing:.14em;font-size:19px}
-    .menu{display:flex;gap:18px;align-items:center}
-    .menu a{opacity:.9}
-    .btn-chip{border:1px solid var(--line);background:var(--chip);padding:8px 12px;border-radius:999px}
-    .nav-toggle{display:none;background:none;border:0;cursor:pointer}
-    .nav-toggle span{display:block;width:26px;height:2px;background:var(--ink);margin:5px 0;border-radius:2px}
-
-    /* ===== Hero ===== */
-    .hero{position:relative;min-height:92vh;display:grid;place-items:center;overflow:hidden}
-    .hero-inner{z-index:2;text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px;padding:6em 0}
-    h1{margin:0;font-size:clamp(40px,6vw,72px);font-weight:800;line-height:1.08;letter-spacing:.005em}
-    .sub{color:var(--ink-dim);max-width:740px;margin:0 auto}
-    .chip{display:inline-block;margin-top:6px;border:1px solid var(--line);background:var(--chip);padding:6px 12px;border-radius:999px;font-weight:700;letter-spacing:.04em}
-
-    /* ===== Animated dark beams (no images) ===== */
-    .bg-waves{
-      position:absolute; inset:-22% -12%; z-index:1;
-      filter:blur(24px) saturate(140%); opacity:.9;
-      background:
-        radial-gradient(60% 30% at 52% 60%, rgba(24,211,158,.18), transparent 60%),
-        radial-gradient(50% 22% at 18% 42%, rgba(24,211,158,.12), transparent 60%),
-        radial-gradient(44% 22% at 82% 36%, rgba(0,175,255,.12), transparent 60%),
-        conic-gradient(from 210deg at 50% 60%, rgba(24,211,158,.16), transparent 40%);
-      animation: float 14s ease-in-out infinite alternate;
-    }
-    .bg-waves::after{
-      content:""; position:absolute; inset:0;
-      background: radial-gradient(90% 70% at 50% 40%, transparent 0, rgba(0,0,0,.22) 55%, rgba(0,0,0,.72) 100%);
-    }
-    @keyframes float{to{transform:translateY(10px) scale(1.02)}}
-
-    /* ===== Sections ===== */
-    .section{padding:64px 0;border-top:1px solid var(--line)}
-    .section h2{margin:0 0 12px;font-size:clamp(22px,3vw,28px)}
-
-    /* ===== Founders ===== */
-    .profiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-    .profile{
-      display:grid;grid-template-columns:80px 1fr;gap:14px;
-      border:1px solid var(--line);border-radius:var(--radius);padding:14px;
-      background:rgba(255,255,255,.04);
-      transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-    }
-    .profile:hover{transform:translateY(-2px);border-color:rgba(24,211,158,.38);box-shadow:var(--shadow)}
-    .photo{
-      width:64px;height:64px;border-radius:50%;
-      object-fit:cover;border:1px solid var(--line);
-      background:rgba(255,255,255,.06);
-    }
-    .muted{color:var(--ink-dim)}
-    .small{font-size:.95rem}
-    .tiny{font-size:.85rem}
-    .tags{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 0;padding:0;list-style:none}
-    .tags li{font-size:.8rem;border:1px solid var(--line);background:var(--chip);padding:4px 8px;border-radius:999px}
-    .pill{display:inline-block;margin-left:8px;font-size:.8rem;font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid var(--line);background:var(--chip)}
-    .reveal{opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease}
-    .reveal.visible{opacity:1;transform:none}
-
-    /* ===== Contact ===== */
-    .cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px}
-    .btn{display:inline-block;border-radius:999px;padding:10px 16px;text-decoration:none}
-    .btn-primary{background:#fff;color:#000}
-    .btn-ghost{border:1px solid var(--line);color:#fff;background:var(--chip)}
-    .btn:hover{filter:brightness(1.06)}
-
-    /* ===== Mobile ===== */
-    @media (max-width: 820px){
-      .menu{display:none;position:fixed;inset:64px var(--container) auto var(--container);background:#000;border:1px solid var(--line);border-radius:12px;padding:12px;flex-direction:column;gap:12px}
-      .menu.show{display:flex}
-      .nav-toggle{display:block}
-      .profiles{grid-template-columns:1fr}
-    }
-
-    /* Motion reduce */
-    @media (prefers-reduced-motion: reduce){
-      .bg-waves{animation:none}
-      .reveal{transition:none}
-    }
-  </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="site-header" role="banner">
-    <div class="container nav">
-      <a class="brand" href="#home" aria-label="ORABYT">
-        <span class="dot" aria-hidden="true"></span>
-        <span class="logo">ORABYT</span>
-      </a>
-      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
-      <nav class="menu" role="navigation" aria-label="Primary">
-        <a href="#founders">Founders</a>
-        <a href="#contact">Contact</a>
-        <a class="btn-chip" aria-disabled="true" href="#">Web App — Coming soon</a>
-      </nav>
+
+  <!-- Sticky header -->
+<header class="nav" role="banner">
+  <div class="nav__wrap">
+    <!-- left: logo -->
+    <a href="/" class="brand" aria-label="Home">
+      <img src="/images/ORABYT_logo.svg" alt="Orabyt logo" class="brand__logo" />
+    </a>
+
+    <!-- center: navbar -->
+    <nav class="menu" aria-label="Primary">
+      <ul class="menu__list">
+        <li class="menu__item"><a class="menu__link" href="#apply">WHAT WE DO</a></li>
+        <li class="menu__item"><a class="menu__link" href="#services-dark">SERVICES</a></li>
+        <li class="menu__item"><a class="menu__link" href="#footer">COMPANY</a></li>
+        <li class="menu__item"><a class="menu__link" href="#founders">FOUNDER</a></li>
+        <li class="menu__item"><a class="menu__link" href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+
+    <!-- right: actions -->
+    <div class="nav__actions">
+      <a class="btn-outline" href="#enquiry">Book a demo</a>
+      <button class="burger" aria-label="Open menu" aria-controls="drawer" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-  </header>
+  </div>
+</header>
 
-  <!-- Hero -->
-  <section id="home" class="hero" role="region" aria-label="Intro">
-    <div class="bg-waves" aria-hidden="true"></div>
-    <div class="container hero-inner">
-      <h1>Website Coming Soon</h1>
-      <p class="sub">We’re building a clean AI assistant and a fast website experience for everyone.<br/>Stay tuned — ORABYT is on the way.</p>
-      <span class="chip">Launching soon</span>
+<!-- Fullscreen Mobile drawer -->
+<div id="drawer" class="drawer" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="drawer__panel">
+    <div class="drawer__top">
+      <img src="/images/ORABYT_ white logo.svg" alt="Orabyt" class="drawer__logo" />
+      <button class="drawer__close" aria-label="Close menu">✕</button>
     </div>
-  </section>
 
-  <!-- Founders -->
-  <section id="founders" class="section" role="region" aria-label="Founders">
-    <div class="container">
-      <h2>Founders</h2>
+    <nav class="drawer__nav" aria-label="Mobile">
+      <a href="#apply">WHAT WE DO</a>
+      <a href="#services-dark">SERVICES</a>
+      <a href="#footer">COMPANY</a>
+      <a href="#founders">FOUNDER</a>
+      <a href="#faq">FAQ</a>
 
-      <div class="profiles">
-        <!-- Arunbal -->
-        <article class="profile reveal">
-          <!-- Replace with your actual image -->
-          <img class="photo" src="/arun.png" alt="Arunbal P — Software Developer at INTERMID">
-          <div>
-            <h3 style="margin:0 0 4px">Arunbal P</h3>
-            <p class="muted" style="margin:0 0 8px">Software Developer · INTERMID · Kerala, India</p>
-            <p style="margin:0 0 8px">Web developer with 9+ years shipping production websites and internal tools.</p>
-            <ul class="tags"><li>JavaScript</li><li>React</li><li>WordPress</li><li>APIs</li></ul>
-            <p class="muted small" style="margin:8px 0 0">Education: University of Calicut</p>
-          </div>
-        </article>
-
-        <!-- Ahmad -->
-        <article class="profile reveal">
-          <img class="photo" src="/ahamd.png" alt="Ahmad Raza — AI Software Engineer (ex IBM) at INTERMID">
-          <div>
-            <h3 style="margin:0 0 4px">Ahmad Raza <span class="pill">ex IBM</span></h3>
-            <p class="muted" style="margin:0 0 8px">AI Software Engineer & Web Developer · INTERMID · Bahrain</p>
-            <p style="margin:0 0 8px"><strong>4 years</strong> — Web & AI Chatbot Engineer; real-time chatbots (Socket.IO), LLM/Ollama, ChatGPT APIs, NLP, Next.js/Node.</p>
-            <ul class="tags"><li>LLMs</li><li>Ollama</li><li>ChatGPT API</li><li>NLP</li><li>Realtime</li></ul>
-            <p class="muted small" style="margin:8px 0 0">Education: Master of Computer Applications (MCA), REVA University, Bengaluru</p>
-            <p class="muted small" style="margin:4px 0 0">Email: <a href="mailto:ahmadrza.1110@gmail.com">ahmadrza.1110@gmail.com</a></p>
-          </div>
-        </article>
+      <div class="drawer__cta">
+        <a class="btn-outline" href="#enquiry">Book a demo</a>
       </div>
-    </div>
-  </section>
+    </nav>
+  </div>
+</div>
 
-  <!-- Contact -->
-  <section id="contact" class="section" role="region" aria-label="Contact">
-    <div class="container" style="text-align:center">
-      <h2>Contact</h2>
-      <p class="sub">Have a project or want early access to our AI agent? Free plan + Pro ₹999/BD 5.</p>
-      <div class="cta">
-        <!-- Replace email and WhatsApp -->
-        <a href="mailto:hello@orabyt.com" class="btn btn-primary">Email</a>
-        <a href="https://wa.me/97300000000" target="_blank" rel="noopener" class="btn btn-ghost">WhatsApp</a>
-      </div>
-      <p class="tiny muted" style="margin-top:12px">© <span id="year"></span> ORABYT</p>
-    </div>
-  </section>
+<!-- HERO with full-bleed video -->
+<section class="hero">
+  <video class="hero__video" src="/media/bg.mp4" autoplay muted loop playsinline></video>
+  <div class="hero__veil"></div>
 
-  <script>
-    // Mobile nav
-    const toggle = document.querySelector('.nav-toggle');
-    const menu = document.querySelector('.menu');
-    if (toggle && menu) {
-      toggle.addEventListener('click', () => {
-        const open = menu.classList.toggle('show');
-        toggle.setAttribute('aria-expanded', String(open));
-      });
-      menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-        menu.classList.remove('show');
-        toggle.setAttribute('aria-expanded','false');
-      }));
+  <div class="hero__inner">
+    <h1 class="heading-xl">
+      <span>AI accelerated software,</span><br>
+      <span>delivered fast.</span>
+    </h1>
+
+    <p class="lead">Websites, e-commerce & custom apps with an on site AI assistant.</p>
+
+    <div class="hero__cta">
+      <a class="btn-solid" href="#enquiry" aria-label="Book a demo">Book a demo</a>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- WHAT WE DO (light band with white wrapper) -->
+<section class="section-split" id="apply" aria-labelledby="apply-heading">
+
+  <!-- ROW 1: Big heading only -->
+  <div class="container section-split__head">
+    <p class="feature2__eyebrow">What we do</p>
+    <h2 class="feature2__title" id="apply-heading">End-to-end web, apps &amp; AI built to scale</h2>
+  </div>
+
+  <!-- ROW 2: Left video, Right copy -->
+  <div class="split container">
+
+    <!-- Left: autoplay video card -->
+    <figure class="card-video js-video-preview" data-video="/media/orabyt_bot.mp4">
+      <video class="card-video__media"
+             src="/media/orabyt_bot.mp4"
+             autoplay muted loop playsinline
+             disablepictureinpicture></video>
+      <button class="card-video__play" type="button" aria-label="Play full video">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#111" stroke-width="2" aria-hidden="true">
+          <path d="M8 5v14l11-7-11-7z"/>
+        </svg>
+      </button>
+    </figure>
+
+    <!-- Right: subheading + bullets -->
+    <div class="split__copy">
+      <p class="feature2__lead">
+        We ship full-stack products: frontend, backend, cloud—plus an on-site AI assistant trained on your content. One team. Fast delivery.
+      </p>
+
+      <ul class="feature2__list">
+        <li><strong>Websites &amp; Stores:</strong> corporate, restaurant/food, groceries, bookings, marketplaces, secure checkout.</li>
+        <li><strong>Custom Apps &amp; Dashboards:</strong> portals, CRMs, analytics, roles/permissions, exports, charts.</li>
+        <li><strong>AI Chatbots &amp; Agents:</strong> website &amp; WhatsApp bots for leads/support, product search, PDF Q&amp;A, voice &amp; image.</li>
+        <li><strong>Integrations &amp; Automations:</strong> payments, POS, inventory/ERP, email/SMS, webhooks, RPA tasks.</li>
+        <li><strong>Cloud &amp; DevOps:</strong> hosting, SSL/CDN, backups, monitoring, scaling (Node/React/Next/WordPress).</li>
+        <li><strong>Ongoing Care:</strong> monthly updates, security patches, SLAs, feature sprints.</li>
+      </ul>
+
+      <p class="feature2__note">
+        <strong>For CS students (BCA/MCA/BTech):</strong> final-year project mentoring + internship certificate &amp; training letter.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- Video Modal -->
+<div id="video-modal-2" class="vidmodal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="vidmodal__backdrop"></div>
+  <div class="vidmodal__panel">
+    <div class="vidmodal__inner" role="document">
+      <button class="vidmodal__close" type="button" aria-label="Close video">✕</button>
+      <video class="vidmodal__video"
+             controls playsinline
+             disablepictureinpicture
+             controlsList="nodownload noplaybackrate"></video>
+    </div>
+  </div>
+</div>
+
+
+<script>
+(() => {
+  const previews = document.querySelectorAll('.js-video-preview');
+  const modal = document.getElementById('video-modal-2');
+  if (!previews.length || !modal) return;
+
+  const big = modal.querySelector('.vidmodal__video');
+  const closeBtn = modal.querySelector('.vidmodal__close');
+  const backdrop = modal.querySelector('.vidmodal__backdrop');
+  let lastActive = null;
+
+  // Some browsers may spawn PiP or stickyness; ensure we exit anything forced.
+  const exitAll = () => {
+    if (document.pictureInPictureElement) {
+      document.exitPictureInPicture?.().catch(()=>{});
     }
+    if (document.fullscreenElement) {
+      document.exitFullscreen?.().catch(()=>{});
+    }
+  };
 
-    // Year
-    document.getElementById('year').textContent = new Date().getFullYear();
+  const open = (src, small) => {
+    try { small?.pause(); } catch(_) {}
+    lastActive = document.activeElement;
+    big.src = src || '';
+    big.load?.();
+    modal.setAttribute('open','');
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    // play if user-gesture allows
+    big.play?.().catch(()=>{ /* ignore autoplay block */ });
+    closeBtn?.focus();
+  };
 
-    // Reveal founders on scroll (with safety for older browsers)
-    (function(){
-      if (!('IntersectionObserver' in window)) {
-        document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  const close = () => {
+    exitAll();
+    big.pause?.();
+    big.removeAttribute('src'); // stop & free memory
+    modal.removeAttribute('open');
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    lastActive?.focus?.();
+  };
+
+  // Bind open on small video & play button
+  previews.forEach(p => {
+    const small = p.querySelector('video');
+    const btn   = p.querySelector('.card-video__play');
+    const src   = p.dataset.video || small?.currentSrc || small?.src || '';
+    btn?.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); open(src, small); });
+    small?.addEventListener('click',   () => open(src, small));
+    // Prevent accidental PiP from dblclick/context menu
+    small?.addEventListener('enterpictureinpicture', e => e.preventDefault());
+  });
+
+  // Robust closing
+  closeBtn?.addEventListener('click', e => { e.preventDefault(); close(); });
+  backdrop?.addEventListener('click', close);
+  modal.addEventListener('click', e => { if (e.target === modal) close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+
+  // Subtle reveal
+  const io = new IntersectionObserver((ents)=>{
+    ents.forEach(en => { if (en.isIntersecting) en.target.classList.add('is-in'); });
+  }, { threshold: 0.18 });
+  document.querySelectorAll('.section-split__head, .card-video, .split__copy')
+    .forEach(el => { el.classList.add('reveal'); io.observe(el); });
+})();
+</script>
+
+
+
+
+
+<!-- 3RD OUR SERVICES -->
+
+<section id="services-dark" style="--svc-bg:url('images/image__q_07130a8f.jpg')">
+  <div class="svc-wrap">
+    <header class="svc-head">
+      <h2 id="services-heading" class="svc-title">Our Services</h2>
+    </header>
+
+    <div class="svc-grid" data-slider="services">
+      <!-- 1) AI -->
+      <article class="svc-card">
+        <div class="svc-hero">
+          <img class="svc-icon" src="images/ai%20d.svg" alt="AI Assistant & Chatbots">
+          <h3 class="svc-card-title">AI Assistant &amp; Chatbots</h3>
+          <p class="svc-text">On-site assistants powered by open models (Free) and Pro features.</p>
+        </div>
+        <ul class="svc-feats">
+          <li><span class="tick"></span><span>PDF / Image Q&amp;A</span></li>
+          <li><span class="tick"></span><span>WhatsApp hand-off (Pro)</span></li>
+          <li><span class="tick"></span><span>Memory + priority queue</span></li>
+        </ul>
+      </article>
+
+      <!-- 2) Websites & Web Apps -->
+      <article class="svc-card">
+        <div class="svc-hero">
+          <img class="svc-icon" src="images/web%20d.svg" alt="Websites & Web Apps">
+          <h3 class="svc-card-title">Websites &amp; Web Apps</h3>
+          <p class="svc-text">Landing, portfolio/blog, e-commerce phase-1, custom dashboards.</p>
+        </div>
+        <ul class="svc-feats">
+          <li><span class="tick"></span><span>Multilingual-ready + SEO</span></li>
+          <li><span class="tick"></span><span>Performance, cache, SSL</span></li>
+          <li><span class="tick"></span><span>Site-embedded AI option</span></li>
+        </ul>
+      </article>
+
+      <!-- 3) CMS & Blog -->
+      <article class="svc-card">
+        <div class="svc-hero">
+          <img class="svc-icon" src="images/cms%20d.svg" alt="CMS & Blog">
+          <h3 class="svc-card-title">CMS &amp; Blog</h3>
+          <p class="svc-text">Clean editors with roles, fast publishing, schema &amp; sitemaps.</p>
+        </div>
+        <ul class="svc-feats">
+          <li><span class="tick"></span><span>Markdown/Blocks</span></li>
+          <li><span class="tick"></span><span>SEO-ready out of the box</span></li>
+          <li><span class="tick"></span><span>Image optimization</span></li>
+        </ul>
+      </article>
+
+      <!-- 4) Software Development -->
+      <article class="svc-card">
+        <div class="svc-hero">
+          <img class="svc-icon" src="images/software%20d.svg" alt="Software Development">
+          <h3 class="svc-card-title">Software Development</h3>
+          <p class="svc-text">APIs, dashboards, integrations—built with modern stacks.</p>
+        </div>
+        <ul class="svc-feats">
+          <li><span class="tick"></span><span>Node/Express, FastAPI</span></li>
+          <li><span class="tick"></span><span>React/Next.js apps</span></li>
+          <li><span class="tick"></span><span>3rd-party integrations</span></li>
+        </ul>
+      </article>
+
+      <!-- 5) Infrastructure & DevOps -->
+      <article class="svc-card">
+        <div class="svc-hero">
+          <img class="svc-icon" src="images/infra%20d.svg" alt="Infrastructure & DevOps">
+          <h3 class="svc-card-title">Infrastructure &amp; DevOps</h3>
+          <p class="svc-text">Reliable deploys with monitoring, backups, and SSL.</p>
+        </div>
+        <ul class="svc-feats">
+          <li><span class="tick"></span><span>Docker, Nginx, HTTPS</span></li>
+          <li><span class="tick"></span><span>Daily backups &amp; alerts</span></li>
+          <li><span class="tick"></span><span>Cloud (DO/AWS)</span></li>
+        </ul>
+      </article>
+
+      <!-- 6) QA & Quality -->
+      <article class="svc-card">
+        <div class="svc-hero">
+          <img class="svc-icon" src="images/quality%20d.svg" alt="QA & Quality">
+          <h3 class="svc-card-title">QA &amp; Quality</h3>
+          <p class="svc-text">Ship with confidence—tests, perf checks, and accessibility.</p>
+        </div>
+        <ul class="svc-feats">
+          <li><span class="tick"></span><span>Manual + Automation</span></li>
+          <li><span class="tick"></span><span>Performance tuning</span></li>
+          <li><span class="tick"></span><span>A11y best practices</span></li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="svc-dots" aria-hidden="true"></div>
+  </div>
+</section>
+<script>
+/* ORABYT Services slider — mobile dots + swipe + autoplay (stops on user touch) */
+(function () {
+  const section  = document.getElementById('services-dark');
+  if (!section) return;
+
+  const grid     = section.querySelector('.svc-grid');
+  const dotsWrap = section.querySelector('.svc-dots');
+  const mq       = window.matchMedia('(max-width: 700px)');
+
+  let track = null, slides = [], idx = 0, auto = null, raf;
+
+  function unwrap() {
+    if (!track) return;
+    [...track.children].forEach(el => grid.insertBefore(el, track));
+    track.remove(); track = null;
+  }
+
+  function build() {
+    stop();
+    unwrap();
+    if (dotsWrap) dotsWrap.innerHTML = '';
+
+    // Only make slider on mobile
+    if (!mq.matches) { if (dotsWrap) dotsWrap.style.display = 'none'; return; }
+
+    // Track
+    track = document.createElement('div');
+    track.className = 'svc-track';
+    Object.assign(track.style, {
+      display:'flex', gap:'14px', overflowX:'auto', overflowY:'hidden',
+      WebkitOverflowScrolling:'touch', scrollSnapType:'x mandatory',
+      scrollPadding:'12px', padding:'0 12px 4px', margin:'0'
+    });
+    [...grid.children].forEach(el => track.appendChild(el));
+    grid.appendChild(track);
+
+    // Slides
+    slides = [...track.children];
+    slides.forEach(el => { el.style.flex = '0 0 86%'; el.style.scrollSnapAlign = 'center'; });
+
+    // Dots
+    if (dotsWrap) {
+      dotsWrap.style.display = 'flex';   // force visible on mobile
+      slides.forEach((_, i) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'svc-dot';
+        b.setAttribute('aria-label', 'Slide ' + (i + 1));
+        b.addEventListener('click', () => { go(i, true); stop(); }); // click -> go & stop autoplay
+        dotsWrap.appendChild(b);
+      });
+    }
+    idx = 0; updateDots();
+    bind();
+    start(); // autoplay on mobile
+  }
+
+  function size() {
+    if (!slides.length) return 0;
+    const r   = slides[0].getBoundingClientRect();
+    const gap = parseFloat(getComputedStyle(track).gap || 14);
+    return r.width + gap;
+  }
+
+  function go(i, smooth) {
+    if (!track) return;
+    idx = (i + slides.length) % slides.length;
+    track.scrollTo({ left: idx * size(), behavior: smooth ? 'smooth' : 'auto' });
+    updateDots();
+  }
+
+  function next() { go(idx + 1, true); }
+
+  function start() { if (!auto) auto = setInterval(next, 3500); }
+  function stop()  { if (auto) { clearInterval(auto); auto = null; } }
+
+  function updateDots() {
+    if (!dotsWrap) return;
+    [...dotsWrap.children].forEach((d, i) => d.setAttribute('aria-current', i === idx ? 'true' : 'false'));
+  }
+
+  function bind() {
+    // Pause autoplay on any user interaction
+    ['pointerdown','touchstart','mouseenter','focusin'].forEach(ev =>
+      track.addEventListener(ev, stop, { passive: true })
+    );
+
+    // Drag-to-scroll (extra smooth)
+    let down = false, sx = 0, sl = 0;
+    track.addEventListener('pointerdown', e => {
+      down = true; sx = e.clientX; sl = track.scrollLeft; track.setPointerCapture(e.pointerId);
+    });
+    window.addEventListener('pointerup',   () => { down = false; });
+    window.addEventListener('pointercancel', () => { down = false; });
+    track.addEventListener('pointermove', e => { if (!down) return; track.scrollLeft = sl + (sx - e.clientX); });
+
+    // Keep dots synced while scrolling
+    track.addEventListener('scroll', () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const i = Math.round(track.scrollLeft / size());
+        if (i !== idx) { idx = i; updateDots(); }
+      });
+    }, { passive: true });
+  }
+
+  build();
+  window.addEventListener('resize', build, { passive: true });
+})();
+</script>
+
+
+
+<!-- ================== TESTIMONIALS (1st) ================== -->
+<section class="orby-testimonials" aria-label="Client testimonials">
+  <h2 class="orby-h2">What Clients Say About ORABYT</h2>
+
+  <div class="orby-t-viewport" data-autoplay="5200">
+    <!-- Slide 1 -->
+    <figure class="orby-t-slide is-active">
+      <blockquote class="orby-t-quote">
+        “Weekly demos kept progress transparent. SEO baseline helped from week one.”
+      </blockquote>
+      <figcaption class="orby-t-meta">
+        <strong class="orby-t-name">Founder Bahrain</strong>
+        <span class="orby-t-role">E-commerce starter</span>
+        <span class="orby-t-stars">★★★★★</span>
+      </figcaption>
+    </figure>
+
+    <!-- Slide 2 -->
+    <figure class="orby-t-slide">
+      <blockquote class="orby-t-quote">
+        “Clean build, clear pricing, and on-time handover. Team was responsive throughout.”
+      </blockquote>
+      <figcaption class="orby-t-meta">
+        <strong class="orby-t-name">Ops Lead  KSA</strong>
+        <span class="orby-t-role">Support automation</span>
+        <span class="orby-t-stars">★★★★</span>
+      </figcaption>
+    </figure>
+    <!-- Add more <figure class="orby-t-slide">…</figure> as needed -->
+  </div>
+
+  <div class="orby-t-dots" aria-label="Testimonial navigation"></div>
+</section>
+
+<!-- ================== PRICING (2nd) ================== -->
+<section id="pricing" class="pricing-v2" aria-labelledby="pricing-heading">
+  <div class="pv2-container">
+    <header class="pv2-head">
+      <h2 class="pv2-title" id="pricing-heading">Pricing</h2>
+      <div class="pv2-toggle" role="group" aria-label="Billing period">
+        <button class="pv2-tbtn active" data-bill="monthly">Monthly</button>
+        <button class="pv2-tbtn" data-bill="yearly">Yearly <span class="pv2-save">Save 15%</span></button>
+      </div>
+    </header>
+
+    <div class="pv2-rows" data-slider="pricing">
+      <article class="pv2-card">
+        <span class="pv2-ribbon">Free</span>
+        <div class="pv2-price"><span class="pv2-cur">BHD</span><span class="pv2-num" data-monthly="0" data-yearly="0">0</span></div>
+        <ul class="pv2-feats">
+          <li>Basic website section</li>
+          <li>On-site AI (limited)</li>
+          <li>Contact & lead form</li>
+        </ul>
+        <a class="pv2-btn pv2-outline" href="#enquiry">Start free</a>
+      </article>
+
+      <article class="pv2-card pv2-featured">
+        <span class="pv2-ribbon hot">Starter</span>
+        <div class="pv2-price"><span class="pv2-cur">BHD</span><span class="pv2-num" data-monthly="19" data-yearly="16">19</span><span class="pv2-per">/mo</span></div>
+        <ul class="pv2-feats">
+          <li>5 pages + menu / catalog</li>
+          <li>On-site AI assistant</li>
+          <li>SEO basics & analytics</li>
+          <li>Hosting + SSL</li>
+        </ul>
+        <a class="pv2-btn pv2-primary" href="#enquiry">Get Started</a>
+      </article>
+
+      <article class="pv2-card">
+        <span class="pv2-ribbon">Growth</span>
+        <div class="pv2-price"><span class="pv2-cur">BHD</span><span class="pv2-num" data-monthly="59" data-yearly="50">59</span><span class="pv2-per">/mo</span></div>
+        <ul class="pv2-feats">
+          <li>E-commerce / bookings</li>
+          <li>Roles & reports</li>
+          <li>PDF / image Q&A (AI)</li>
+          <li>Priority support</li>
+        </ul>
+        <a class="pv2-btn pv2-default" href="#enquiry">Book a demo</a>
+      </article>
+
+      <article class="pv2-card">
+        <span class="pv2-ribbon">Custom</span>
+        <div class="pv2-price pv2-talk">Let’s talk</div>
+        <ul class="pv2-feats">
+          <li>Private cloud (AWS/GCP/Azure)</li>
+          <li>SSO, RBAC, audit</li>
+          <li>SLAs & training</li>
+          <li>24×7 engineering access</li>
+        </ul>
+        <a class="pv2-btn pv2-default" href="#enquiry">Contact us</a>
+      </article>
+    </div>
+
+    <div class="pv2-dots" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- ================== TECHNOLOGY TABS (3rd) ================== -->
+<section class="orby-tech" aria-labelledby="tech-title">
+  <div class="orby-tech-wrap">
+    <h2 class="orby-tech-title" id="tech-title"><span>Technology</span> Stacks</h2>
+
+    <div class="orby-tech-tabs" role="tablist" aria-label="Technology categories">
+      <button class="orby-tech-tab is-active" role="tab" aria-selected="true" data-tab="ai">AI technologies</button>
+      <button class="orby-tech-tab" role="tab" aria-selected="false" data-tab="backend">Back-end</button>
+      <button class="orby-tech-tab" role="tab" aria-selected="false" data-tab="frontend">Front-end</button>
+      <button class="orby-tech-tab" role="tab" aria-selected="false" data-tab="apps">App development</button>
+      <button class="orby-tech-tab" role="tab" aria-selected="false" data-tab="cloud">Cloud</button>
+      <button class="orby-tech-tab" role="tab" aria-selected="false" data-tab="devops">DevOps</button>
+    </div>
+
+    <!-- AI -->
+    <div id="panel-ai" class="orby-tech-panel">
+      <ul class="orby-tech-grid">
+        <li class="orby-tech-item"><img src="/images/chatgpt.png" alt="ChatGPT"><span>ChatGPT (router)</span></li>
+        <li class="orby-tech-item"><img src="/images/llama.png" alt="Llama"><span>Llama</span></li>
+        <li class="orby-tech-item"><img src="/images/tensorflow.png" alt="TensorFlow"><span>TensorFlow</span></li>
+        <li class="orby-tech-item"><img src="/images/pytourch.png" alt="PyTorch"><span>PyTorch</span></li>
+        <li class="orby-tech-item"><img src="/images/opencv.png" alt="OpenCV"><span>OpenCV</span></li>
+        <li class="orby-tech-item"><img src="/images/kubeflow.png" alt="Kubeflow"><span>Kubeflow</span></li>
+        <li class="orby-tech-item"><img src="/images/spark.png" alt="Spark"><span>Spark</span></li>
+      </ul>
+    </div>
+
+    <!-- Back-end -->
+    <div id="panel-backend" class="orby-tech-panel" hidden>
+      <ul class="orby-tech-grid">
+        <li class="orby-tech-item"><img src="/images/node.png" alt="Node.js"><span>Node.js</span></li>
+        <li class="orby-tech-item"><img src="/images/java.png" alt="Java"><span>Java</span></li>
+        <li class="orby-tech-item"><img src="/images/dotnet-logo-new-1.webp" alt=".NET"><span>.NET</span></li>
+        <li class="orby-tech-item"><img src="/images/pyhton.png" alt="Python"><span>Python</span></li>
+        <li class="orby-tech-item"><img src="/images/kafka.png" alt="Kafka"><span>Kafka</span></li>
+      </ul>
+    </div>
+
+    <!-- Front-end -->
+    <div id="panel-frontend" class="orby-tech-panel" hidden>
+      <ul class="orby-tech-grid">
+        <li class="orby-tech-item"><img src="/images/react.png" alt="React"><span>React</span></li>
+        <li class="orby-tech-item"><img src="/images/vue.png" alt="Vue"><span>Vue</span></li>
+        <li class="orby-tech-item"><img src="/images/typescript.png" alt="TypeScript"><span>TypeScript</span></li>
+        <li class="orby-tech-item"><img src="/images/angular.png" alt="Angular"><span>Angular</span></li>
+      </ul>
+    </div>
+
+    <!-- Apps -->
+    <div id="panel-apps" class="orby-tech-panel" hidden>
+      <ul class="orby-tech-grid">
+        <li class="orby-tech-item"><img src="/images/ios.png" alt="iOS"><span>iOS</span></li>
+        <li class="orby-tech-item"><img src="/images/android.png" alt="Android"><span>Android</span></li>
+        <li class="orby-tech-item"><img src="/images/reactnaive.png" alt="React Native"><span>React Native</span></li>
+        <li class="orby-tech-item"><img src="/images/flutter.png" alt="Flutter"><span>Flutter</span></li>
+      </ul>
+    </div>
+
+    <!-- Cloud -->
+    <div id="panel-cloud" class="orby-tech-panel" hidden>
+      <ul class="orby-tech-grid">
+        <li class="orby-tech-item"><img src="/images/aws.png" alt="AWS"><span>AWS</span></li>
+        <li class="orby-tech-item"><img src="/images/googlecloud.png" alt="Google Cloud"><span>GCP</span></li>
+        <li class="orby-tech-item"><img src="/images/azure.png" alt="Azure"><span>Azure</span></li>
+      </ul>
+    </div>
+
+    <!-- DevOps -->
+    <div id="panel-devops" class="orby-tech-panel" hidden>
+      <ul class="orby-tech-grid">
+        <li class="orby-tech-item"><img src="/images/docker.png" alt="Docker"><span>Docker</span></li>
+        <li class="orby-tech-item"><img src="/images/kubernet.png" alt="Kubernetes"><span>Kubernetes</span></li>
+        <li class="orby-tech-item"><img src="/images/terraform.png" alt="Terraform"><span>Terraform</span></li>
+        <li class="orby-tech-item"><img src="/images/gitops.png" alt="GitOps"><span>GitOps</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================== FOUNDERS (4th) ================== -->
+<!-- ================== FOUNDERS (4th) ================== -->
+<section id="founders" class="founders-v1" aria-labelledby="founders-heading">
+  <div class="fv1-container">
+    <header class="fv1-head">
+      <h2 class="fv1-title" id="founders-heading">Meet the Founders</h2>
+    </header>
+
+    <div class="fv1-mosaic" data-slider="founders">
+      <!-- Ahmad (LEFT) -->
+      <article class="fv1-item tall">
+        <div class="fv1-card">
+          <div class="fv1-media">
+            <img src="/images/1727701561444.jpeg" alt="Ahmad Raza" loading="lazy">
+            <span class="fv1-badge">CTO</span>
+          </div>
+          <div class="fv1-body">
+            <div class="fv1-top">
+              <h3 class="fv1-name">
+                Ahmad Raza
+                <span class="fv1-contacts">
+                  <a class="fv1-ico" href="https://bh.linkedin.com/in/ahmadrza10" target="_blank" rel="noopener" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4.98 3.5A2.48 2.48 0 1 1 0 3.5a2.48 2.48 0 0 1 4.98 0zM.5 8.5h4V24h-4V8.5zM8.5 8.5h3.84v2.11h.05c.54-1.02 1.86-2.11 3.84-2.11 4.1 0 4.86 2.7 4.86 6.21V24h-4v-6.88c0-1.64-.03-3.74-2.28-3.74-2.28 0-2.63 1.78-2.63 3.62V24h-4V8.5z"/></svg>
+                  </a>
+                  <a class="fv1-ico" href="mailto:info@orabyt.com" aria-label="Email">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5v2Z"/></svg>
+                  </a>
+                </span>
+              </h3>
+              <p class="fv1-role">Co-Founder ex-IBM</p>
+            </div>
+
+            <ul class="fv1-chips">
+              <li data-ico="exp">4+ yrs</li>
+              <li data-ico="loc">Bahrain</li>
+              <li data-ico="role">Cloud & AI</li>
+            </ul>
+
+            <p class="fv1-blurb">
+              Architects web, cloud, and AI hands-on with bots and performance.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <div class="fv1-pillar one" aria-hidden="true"></div>
+
+      <!-- Arun (RIGHT) -->
+      <article class="fv1-item wide">
+        <div class="fv1-card">
+          <div class="fv1-media">
+            <img src="/images/arun ceo.jpeg" alt="Arunbal P" loading="lazy">
+            <span class="fv1-badge">CEO</span>
+          </div>
+          <div class="fv1-body">
+            <div class="fv1-top">
+              <h3 class="fv1-name">
+                Arunbal P
+                <span class="fv1-contacts">
+                  <a class="fv1-ico" href="https://in.linkedin.com/in/arunbal-p-366990181" target="_blank" rel="noopener" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4.98 3.5A2.48 2.48 0 1 1 0 3.5a2.48 2.48 0 0 1 4.98 0zM.5 8.5h4V24h-4V8.5zM8.5 8.5h3.84v2.11h.05c.54-1.02 1.86-2.11 3.84-2.11 4.1 0 4.86 2.7 4.86 6.21V24h-4v-6.88c0-1.64-.03-3.74-2.28-3.74-2.28 0-2.63 1.78-2.63 3.62V24h-4V8.5z"/></svg>
+                  </a>
+                  <a class="fv1-ico" href="mailto:info@orabyt.com" aria-label="Email">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5v2Z"/></svg>
+                  </a>
+                </span>
+              </h3>
+              <p class="fv1-role">Co-Founder ex-TCS</p>
+            </div>
+
+            <ul class="fv1-chips">
+              <li data-ico="exp">9+ yrs</li>
+              <li data-ico="loc">Bahrain</li>
+              <li data-ico="role">Delivery & Integrations</li>
+            </ul>
+
+            <p class="fv1-blurb">
+              Leads product and enterprise integrations across Bahrain & India.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <div class="fv1-pillar two" aria-hidden="true"></div>
+    </div>
+
+    <div class="fv1-dots" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- ================== FAQ (5th) ================== -->
+<section id="faq" class="section-faq-dark" aria-labelledby="faq-heading">
+  <div class="faq-container">
+    <header class="faq-head"><h2 class="faq-title" id="faq-heading">FAQ</h2></header>
+    <div class="faq-grid">
+      <details class="faq"><summary>Why Orabyt for small business?</summary><div class="faq-body">We’re a Bahrain & India team building fast sites with built-in AI assistants. Design, hosting, SSL, analytics, and support in one place.</div></details>
+      <details class="faq"><summary>Are you new? What experience do you have?</summary><div class="faq-body">Founders are ex-TCS & ex-IBM with delivery across web, cloud, and AI. We ship and maintain production systems.</div></details>
+      <details class="faq"><summary>Can I keep my current domain and email?</summary><div class="faq-body">Yes we link your domain, set up SSL, and route email via Google/Microsoft.</div></details>
+      <details class="faq"><summary>Do you support Arabic & RTL?</summary><div class="faq-body">Yes bilingual Arabic/English with RTL layout; the AI is trained on both.</div></details>
+      <details class="faq"><summary>How does the AI assistant work?</summary><div class="faq-body">We feed your menus, PDFs, and policies. The assistant answers, captures leads, and can push to WhatsApp (Pro).</div></details>
+      <details class="faq"><summary>How fast can we go live?</summary><div class="faq-body">Starter sites launch in 1–2 weeks. Growth & custom move in phases with weekly demos.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================== SCRIPTS (kept intact, placed after sections) ================== -->
+
+<script>
+/* -------- Testimonials autoplay + dots + swipe -------- */
+(() => {
+  const root = document.querySelector('.orby-testimonials .orby-t-viewport');
+  if (!root) return;
+  const slides = [...root.querySelectorAll('.orby-t-slide')];
+  const dotsWrap = root.parentElement.querySelector('.orby-t-dots');
+  const delay = +root.getAttribute('data-autoplay') || 4800;
+  let i = Math.max(0, slides.findIndex(s => s.classList.contains('is-active')));
+  let timer, down = false, sx = 0;
+
+  slides.forEach((_, idx) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'orby-t-dot';
+    b.addEventListener('click', () => go(idx, true));
+    dotsWrap.appendChild(b);
+  });
+
+  const paint = () => {
+    slides.forEach((s, n) => { s.classList.toggle('is-active', n === i); s.toggleAttribute('hidden', n !== i); });
+    dotsWrap.querySelectorAll('.orby-t-dot')
+      .forEach((d, n) => d.setAttribute('aria-current', n === i ? 'true' : 'false'));
+  };
+
+  const go = (n, user) => { i = (n + slides.length) % slides.length; paint(); if (user) restart(); };
+  const start = () => { if (!timer) timer = setInterval(() => go(i + 1), delay); };
+  const stop  = () => { if (timer) { clearInterval(timer); timer = null; } };
+  const restart = () => { stop(); start(); };
+
+  root.addEventListener('pointerdown', e => { down = true; sx = e.clientX; root.setPointerCapture(e.pointerId); stop(); });
+  root.addEventListener('pointerup',   e => { if (!down) return; down = false; const dx = e.clientX - sx; if (Math.abs(dx) > 40) go(i + (dx < 0 ? 1 : -1), true); start(); });
+  root.addEventListener('pointercancel', () => { down = false; start(); });
+  root.addEventListener('mouseenter', stop);
+  root.addEventListener('mouseleave', start);
+
+  paint(); start();
+})();
+
+/* -------- Tech tabs -------- */
+(() => {
+  const host = document.querySelector('.orby-tech'); if (!host) return;
+  const tabs = [...host.querySelectorAll('.orby-tech-tab')];
+  const activate = id => {
+    tabs.forEach(b => {
+      const on = b.dataset.tab === id;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+      const p = host.querySelector('#panel-' + b.dataset.tab);
+      if (p) on ? p.removeAttribute('hidden') : p.setAttribute('hidden', '');
+    });
+  };
+  tabs.forEach(b => {
+    b.addEventListener('click', () => activate(b.dataset.tab));
+    b.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      const i = tabs.indexOf(b);
+      const j = e.key === 'ArrowRight' ? (i + 1) % tabs.length : (i - 1 + tabs.length) % tabs.length;
+      tabs[j].focus(); activate(tabs[j].dataset.tab);
+    });
+  });
+
+  // Hide only broken logo images; no ugly placeholders
+  host.querySelectorAll('.orby-tech-item img').forEach(img =>
+    img.addEventListener('error', () => { img.style.display = 'none'; }, { once:true })
+  );
+
+  activate('ai');
+})();
+</script>
+
+<script>
+(function(){
+  const AUTOPLAY_MS = 3200;
+  const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function sliderUsingRoot(root, mqStr, dotsWrap, dotClass, itemSelector){
+    if (!root) return;
+    const mq = window.matchMedia(mqStr);
+    let idx = 0, timer = null, cards = [];
+
+    function cardWidth(){
+      if (!cards.length) return 0;
+      const r = cards[0].getBoundingClientRect();
+      const gap = parseFloat(getComputedStyle(root).gap || 14);
+      return r.width + gap;
+    }
+    function updateDots(){
+      if (!dotsWrap) return;
+      for (let i=0;i<dotsWrap.children.length;i++){
+        dotsWrap.children[i].setAttribute('aria-current', i===idx ? 'true' : 'false');
+      }
+    }
+    function goTo(i, smooth){
+      idx = (i + cards.length) % cards.length;
+      root.scrollTo({ left: idx * cardWidth(), behavior: smooth ? 'smooth' : 'auto' });
+      updateDots();
+    }
+    function next(){ goTo(idx+1, true); }
+    function start(){ if (!timer && mq.matches && !prefersReduce) timer = setInterval(next, AUTOPLAY_MS); }
+    function stop(){ if (timer){ clearInterval(timer); timer = null; } }
+
+    function build(){
+      stop();
+      cards = Array.from(root.querySelectorAll(itemSelector));
+      if (!mq.matches){
+        if (dotsWrap) dotsWrap.innerHTML = '';
         return;
       }
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            e.target.classList.add('visible');
-            io.unobserve(e.target);
-          }
+      if (dotsWrap){
+        dotsWrap.innerHTML = '';
+        cards.forEach((_,i)=>{
+          const b=document.createElement('button');
+          b.type='button'; b.className=dotClass;
+          b.setAttribute('aria-label','Slide '+(i+1));
+          b.addEventListener('click', ()=>goTo(i,true));
+          dotsWrap.appendChild(b);
         });
-      }, {threshold:.15});
-      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-    })();
-  </script>
+      }
+      goTo(0,false);
+      bind(); start();
+    }
+
+    function bind(){
+      ['pointerdown','mouseenter','touchstart','focusin'].forEach(ev => root.addEventListener(ev, stop, {passive:true}));
+      ['pointerup','mouseleave','touchend','focusout'].forEach(ev => root.addEventListener(ev, start, {passive:true}));
+      let down=false,sx=0,sl=0;
+      root.addEventListener('pointerdown', e=>{down=true;sx=e.clientX;sl=root.scrollLeft;root.setPointerCapture(e.pointerId);});
+      window.addEventListener('pointerup', ()=>{down=false;});
+      window.addEventListener('pointercancel', ()=>{down=false;});
+      root.addEventListener('pointermove', e=>{if(!down)return; root.scrollLeft = sl + (sx - e.clientX);});
+      root.addEventListener('wheel', e=>{ if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){ root.scrollLeft+=e.deltaY; e.preventDefault(); } }, {passive:false});
+      let raf;
+      root.addEventListener('scroll', ()=>{ cancelAnimationFrame(raf); raf=requestAnimationFrame(()=>{ const i=Math.round(root.scrollLeft/cardWidth()); if(i!==idx){idx=i; updateDots();} }); });
+    }
+
+    build();
+    window.addEventListener('resize', build, {passive:true});
+  }
+
+  // Founders: only founder cards (pillars are hidden on mobile)
+  sliderUsingRoot(
+    document.querySelector('.fv1-mosaic'),
+    '(max-width: 820px)',
+    document.querySelector('.fv1-dots'),
+    'fv1-dot',
+    '.fv1-item'
+  );
+
+  // Pricing: wrap into track on mobile
+  (function(){
+    const root = document.querySelector('.pv2-rows');
+    const dotsWrap = document.querySelector('.pv2-dots');
+    const mq = window.matchMedia('(max-width: 700px)');
+    let track=null, cards=[], idx=0, timer=null;
+
+    function build(){
+      stop();
+      if (track){
+        const kids=[...track.children];
+        kids.forEach(el=>root.insertBefore(el,track));
+        track.remove(); track=null;
+      }
+      if (!mq.matches){ if(dotsWrap) dotsWrap.innerHTML=''; return; }
+      track=document.createElement('div'); track.className='pv2-track';
+      [...root.children].forEach(el=>track.appendChild(el));
+      root.appendChild(track);
+      cards=[...track.children];
+      if (dotsWrap){
+        dotsWrap.innerHTML='';
+        cards.forEach((_,i)=>{const b=document.createElement('button');b.type='button';b.className='pv2-dot';b.setAttribute('aria-label','Slide '+(i+1));b.addEventListener('click',()=>goTo(i,true));dotsWrap.appendChild(b);});
+      }
+      goTo(0,false); bind(); start();
+    }
+    function cardWidth(){ if(!cards.length) return 0; const r=cards[0].getBoundingClientRect(); const gap=parseFloat(getComputedStyle(track).gap||14); return r.width+gap; }
+    function updateDots(){ if(!dotsWrap)return; for(let i=0;i<dotsWrap.children.length;i++){dotsWrap.children[i].setAttribute('aria-current', i===idx?'true':'false');}}
+    function goTo(i,smooth){ idx=(i+cards.length)%cards.length; track.scrollTo({left:idx*cardWidth(),behavior:smooth?'smooth':'auto'}); updateDots(); }
+    function next(){ goTo(idx+1,true); }
+    function start(){ if(!timer && mq.matches && !prefersReduce) timer=setInterval(next,3200); }
+    function stop(){ if(timer){clearInterval(timer);timer=null;} }
+    function bind(){
+      ['pointerdown','mouseenter','touchstart','focusin'].forEach(ev=>track.addEventListener(ev, stop, {passive:true}));
+      ['pointerup','mouseleave','touchend','focusout'].forEach(ev=>track.addEventListener(ev, start, {passive:true}));
+      let down=false,sx=0,sl=0;
+      track.addEventListener('pointerdown', e=>{down=true;sx=e.clientX;sl=track.scrollLeft;track.setPointerCapture(e.pointerId);});
+      window.addEventListener('pointerup', ()=>{down=false;});
+      window.addEventListener('pointercancel', ()=>{down=false;});
+      track.addEventListener('pointermove', e=>{if(!down)return; track.scrollLeft=sl+(sx-e.clientX);});
+      track.addEventListener('wheel', e=>{ if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){ track.scrollLeft+=e.deltaY; e.preventDefault(); } }, {passive:false});
+      let raf; track.addEventListener('scroll', ()=>{ cancelAnimationFrame(raf); raf=requestAnimationFrame(()=>{ const i=Math.round(track.scrollLeft/cardWidth()); if(i!==idx){idx=i; updateDots();} }); });
+    }
+    build(); window.addEventListener('resize', build, {passive:true});
+  })();
+
+  // Prices: monthly/yearly
+  (function(){
+    const buttons=document.querySelectorAll('.pv2-tbtn');
+    const nums=document.querySelectorAll('.pv2-num');
+    const setMode=(mode)=>{ buttons.forEach(b=>b.classList.toggle('active', b.dataset.bill===mode)); nums.forEach(el=>{const v=el.dataset[mode]; if(v!=null) el.textContent=v;}); };
+    buttons.forEach(b=>b.addEventListener('click', ()=>setMode(b.dataset.bill)));
+  })();
+
+  // FAQ: single-open
+  (function(){
+    const items=[...document.querySelectorAll('.faq-grid .faq')];
+    items.forEach(d=>d.addEventListener('toggle', ()=>{ if(d.open) items.forEach(o=>{if(o!==d) o.open=false;}); }));
+  })();
+})();
+</script>
+
+
+<!-- ================== BOOKING / CONTACT + MAP ================== -->
+<!-- ================== MAKE AN ENQUIRY (scoped) ================== -->
+<section id="enquiry" class="orby-enquiry">
+  <div class="eq-wrap">
+    <h2 class="eq-title">MAKE AN ENQUIRY</h2>
+
+    <form id="eqForm" class="eq-form" novalidate>
+      <!-- Row 1 -->
+      <label class="eq-field">
+        <span>First name*</span>
+        <input type="text" name="firstName" required>
+      </label>
+
+      <label class="eq-field">
+        <span>Last name*</span>
+        <input type="text" name="lastName" required>
+      </label>
+
+      <!-- Row 2 -->
+      <label class="eq-field">
+        <span>Email address*</span>
+        <input type="email" name="email" required>
+      </label>
+
+      <label class="eq-field eq-phone">
+        <span>Phone number</span>
+        <div class="eq-phone-wrap">
+          <select name="cc" class="eq-cc">
+            <option value="+973" selected>BH</option>
+            <option value="+91">IN</option>
+            <option value="+971">AE</option>
+            <option value="+966">SA</option>
+            <option value="+965">KW</option>
+          </select>
+          <input type="tel" name="phone" placeholder="+973">
+        </div>
+      </label>
+
+      <!-- Row 3 -->
+      <label class="eq-field">
+        <span>Project type*</span>
+        <select name="type" required>
+          <option value="">Select…</option>
+          <option>Business Website</option>
+          <option>E-commerce</option>
+          <option>Landing Page</option>
+          <option>AI Chatbot</option>
+          <option>Custom Web/App</option>
+        </select>
+      </label>
+
+      <label class="eq-field">
+        <span>Budget (monthly / retainer)*</span>
+        <select name="budget" required>
+          <option value="">Select…</option>
+          <option>Under BHD 300</option>
+          <option>BHD 300 – 800</option>
+          <option>BHD 800 – 1.5k</option>
+          <option>BHD 1.5k+</option>
+        </select>
+      </label>
+
+      <!-- Row 4 -->
+      <label class="eq-field eq-wide">
+        <span>Target go-live date*</span>
+        <input type="date" name="date" required>
+      </label>
+
+      <!-- Row 5 -->
+      <label class="eq-field eq-wide">
+        <span>Brief (optional)</span>
+        <textarea name="brief" rows="4" placeholder="Goals, pages, integrations, deadline…"></textarea>
+      </label>
+
+      <!-- Consent + Submit -->
+      <label class="eq-consent eq-wide">
+        <input type="checkbox" name="consent" required>
+        <span>I agree to ORABYT processing my data for this request.</span>
+      </label>
+
+      <div class="eq-actions eq-wide">
+        <button type="submit" class="eq-btn">SUBMIT ENQUIRY</button>
+        <p class="eq-small">
+          By clicking submit, you consent to ORABYT storing and processing your personal data to provide the requested content.
+        </p>
+      </div>
+    </form>
+  </div>
+
+  <!-- toast -->
+  <div class="eq-toast" role="status" aria-live="polite">Thanks! We’ll contact you shortly.</div>
+</section>
+<script>
+(() => {
+  // ===== CONFIG =====
+  // Mode: 'mailto' (no service) or 'emailjs' (client-side email service)
+  const EMAIL_MODE = 'mailto';  // change to 'emailjs' after you add EmailJS keys below
+
+  // EmailJS settings (only used if EMAIL_MODE === 'emailjs')
+  const EMAILJS_PUBLIC_KEY   = 'YOUR_PUBLIC_KEY';
+  const EMAILJS_SERVICE_ID   = 'YOUR_SERVICE_ID';
+  const EMAILJS_TEMPLATE_ID  = 'YOUR_TEMPLATE_ID';      // owner notification
+  const EMAILJS_TEMPLATE_ACK = 'YOUR_ACK_TEMPLATE_ID';  // user confirmation
+
+  const OWNER_EMAIL = 'info@orabyt.com';
+  const OWNER_NAME  = 'ORABYT';
+
+  // ===== UTIL =====
+  const $ = (s, r=document) => r.querySelector(s);
+  const esc = (s) => s ? s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])) : '';
+
+  // Small speech-bubble toast (bottom-right), inline-styled only
+  function bubble(msg, kind='ok'){
+    const b = document.createElement('div');
+    b.setAttribute('role','status');
+    b.style.position='fixed';
+    b.style.right='20px';
+    b.style.bottom='22px';
+    b.style.zIndex='99999';
+    b.style.maxWidth='92vw';
+    b.style.display='grid';
+    b.style.gridAutoFlow='row';
+    b.style.gap='6px';
+
+    const box = document.createElement('div');
+    box.style.background = kind==='ok' ? '#0f3a37' : '#7a1f1f';
+    box.style.color = '#fff';
+    box.style.padding = '12px 14px';
+    box.style.borderRadius = '16px';
+    box.style.boxShadow = '0 18px 34px rgba(0,0,0,.25)';
+    box.style.font = '600 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Arial';
+    box.textContent = msg;
+
+    const tail = document.createElement('span');
+    tail.style.width='0'; tail.style.height='0';
+    tail.style.borderLeft = '10px solid transparent';
+    tail.style.borderRight = '0 solid transparent';
+    tail.style.borderTop = (kind==='ok' ? '10px solid #0f3a37' : '10px solid #7a1f1f');
+    tail.style.marginLeft='auto';
+
+    b.appendChild(box); b.appendChild(tail);
+    document.body.appendChild(b);
+    setTimeout(()=>{ b.style.transition='opacity .25s ease, transform .25s ease'; b.style.opacity='0'; b.style.transform='translateY(6px)'; }, 2500);
+    setTimeout(()=> b.remove(), 2800);
+  }
+
+  // Inline success card (hides form)
+  function showSuccessCard(data){
+    const wrap = $('.orby-enquiry .eq-wrap');
+    const form = $('#eqForm');
+    form.style.display = 'none';
+
+    const card = document.createElement('div');
+    card.innerHTML = `
+      <div style="background:#fff;border:1px solid var(--eq-line);border-radius:10px;padding:22px 20px;box-shadow:0 20px 50px rgba(0,0,0,.08)">
+        <h3 style="margin:0 0 8px;font-size:28px;color:var(--eq-ink);letter-spacing:.02em">Thank you — your enquiry is booked!</h3>
+        <p style="margin:0 0 10px;color:var(--eq-muted);line-height:1.6">
+          We’ve received your request. Our team at <strong>${OWNER_NAME}</strong> will contact you shortly.
+          For anything urgent, email <a href="mailto:${OWNER_EMAIL}">${OWNER_EMAIL}</a>.
+        </p>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:14px 0 6px">
+          <div><small style="color:var(--eq-muted);text-transform:uppercase;letter-spacing:.08em">Name</small><div style="font-weight:700;color:var(--eq-ink)">${esc(data.firstName)} ${esc(data.lastName)}</div></div>
+          <div><small style="color:var(--eq-muted);text-transform:uppercase;letter-spacing:.08em">Project type</small><div style="font-weight:700;color:var(--eq-ink)">${esc(data.type)}</div></div>
+          <div><small style="color:var(--eq-muted);text-transform:uppercase;letter-spacing:.08em">Budget</small><div style="font-weight:700;color:var(--eq-ink)">${esc(data.budget)}</div></div>
+          <div><small style="color:var(--eq-muted);text-transform:uppercase;letter-spacing:.08em">Target date</small><div style="font-weight:700;color:var(--eq-ink)">${esc(data.date)}</div></div>
+        </div>
+
+        ${data.brief ? `<details style="margin:6px 0 10px"><summary style="cursor:pointer;color:var(--eq-ink)">View brief</summary><div style="white-space:pre-wrap;color:var(--eq-muted);margin-top:6px">${esc(data.brief)}</div></details>` : ''}
+
+        <p style="margin:10px 0 0;color:var(--eq-muted);font-size:12px">
+          By submitting, you agree to our <a href="/privacy">Privacy</a> and <a href="/terms">Terms</a>.
+        </p>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+          <button type="button" id="eqAgain"
+            style="appearance:none;border:1px solid var(--eq-line-focus);background:transparent;color:var(--eq-ink);padding:10px 14px;border-radius:6px;cursor:pointer">
+            Submit another enquiry
+          </button>
+          <a href="#services-dark"
+            style="display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border-radius:6px;background:var(--eq-btn);color:#fff;text-decoration:none">
+            Explore services
+          </a>
+        </div>
+      </div>
+    `;
+    wrap.appendChild(card);
+    card.scrollIntoView({behavior:'smooth', block:'start'});
+
+    $('#eqAgain', card)?.addEventListener('click', () => {
+      card.remove();
+      form.style.display = '';
+      form.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  }
+
+  // Build a plain-text email body
+  function buildEmailBody(d){
+    return [
+      `New enquiry via ORABYT site`,
+      `———————————————`,
+      `Name: ${d.firstName} ${d.lastName}`,
+      `Email: ${d.email}`,
+      `Phone: ${d.phoneFull}`,
+      `Project type: ${d.type}`,
+      `Budget: ${d.budget}`,
+      `Target date: ${d.date}`,
+      `Page: ${location.href}`,
+      d.brief ? `\nBrief:\n${d.brief}` : ''
+    ].join('\n');
+  }
+
+  // MAILTO fallback (opens composer, copies text)
+  function sendViaMailto(d){
+    const subject = encodeURIComponent(`New enquiry — ${d.firstName} ${d.lastName}`);
+    const body    = encodeURIComponent(buildEmailBody(d));
+    // copy to clipboard (non-blocking)
+    try { navigator.clipboard?.writeText(buildEmailBody(d)); } catch {}
+    // open composer to owner
+    window.location.href = `mailto:${OWNER_EMAIL}?subject=${subject}&body=${body}`;
+    // show bubble
+    bubble('Details copied. Your mail app will open — send it to finish. ✅','ok');
+  }
+
+  // EmailJS (client-side) — optional
+  async function sendViaEmailJS(d){
+    if (!window.emailjs) return false;
+    try {
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+
+      // owner notification
+      const ownerVars = {
+        owner_email: OWNER_EMAIL,
+        owner_name: OWNER_NAME,
+        first_name: d.firstName,
+        last_name:  d.lastName,
+        email:      d.email,
+        phone:      d.phoneFull,
+        type:       d.type,
+        budget:     d.budget,
+        date:       d.date,
+        brief:      d.brief,
+        page:       location.href
+      };
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, ownerVars);
+
+      // user confirmation
+      const ackVars = {
+        to_email:   d.email,
+        to_name:    `${d.firstName} ${d.lastName}`,
+        summary:    `Thanks for booking with ORABYT. We'll reach you shortly.`,
+        owner_email: OWNER_EMAIL
+      };
+      if (EMAILJS_TEMPLATE_ACK) {
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ACK, ackVars);
+      }
+      bubble('Enquiry sent. Check your email for confirmation. ✅','ok');
+      return true;
+    } catch (e){
+      console.warn('EmailJS error', e);
+      bubble('Sent locally. If no email, write to info@orabyt.com','warn');
+      return false;
+    }
+  }
+
+  // ===== FORM WIRING =====
+  const cc    = $('.orby-enquiry .eq-cc');
+  const phone = $('.orby-enquiry input[name="phone"]');
+  if (cc && phone) {
+    const sync = () => phone.placeholder = cc.value;
+    cc.addEventListener('change', sync); sync();
+  }
+
+  const form = $('#eqForm');
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // validate required
+    const req = form.querySelectorAll('[required]');
+    for (const el of req) {
+      if ((el.type==='checkbox' && !el.checked) || !el.value.trim()) {
+        el.reportValidity?.(); return;
+      }
+    }
+
+    // collect data
+    const data = {
+      firstName: form.firstName.value.trim(),
+      lastName:  form.lastName.value.trim(),
+      email:     form.email.value.trim(),
+      phoneFull: (cc ? cc.value : '') + ' ' + (phone ? phone.value.trim() : ''),
+      type:      form.type.value,
+      budget:    form.budget.value,
+      date:      form.date.value,
+      brief:     form.brief.value.trim(),
+      consent:   !!form.consent.checked
+    };
+
+    // lock button
+    const btn = form.querySelector('.eq-btn');
+    const old = btn?.textContent;
+    if (btn){ btn.disabled = true; btn.textContent = 'Sending…'; }
+
+    // send based on mode (no backend)
+    let ok = false;
+    if (EMAIL_MODE === 'emailjs') {
+      ok = await sendViaEmailJS(data);
+      if (!ok) sendViaMailto(data); // fallback
+    } else {
+      sendViaMailto(data);
+      ok = true; // we still show success UI
+    }
+
+    // success UI
+    showSuccessCard(data);
+
+    // reset + unlock
+    form.reset();
+    if (cc && phone) phone.placeholder = cc.value;
+    if (btn){ btn.disabled = false; btn.textContent = old || 'SUBMIT ENQUIRY'; }
+  });
+})();
+</script>
+
+
+
+<!--- foooter -->
+<!-- ====== ORABYT FOOTER ====== -->
+<footer class="ora-footer" id="footer">
+  <div class="ora-foot-inner">
+    <!-- 1) LOGO -->
+    <div class="ora-col col-logo">
+      <img class="ora-mark" src="/images/ORABYT_ white logo.svg" alt="ORABYT — AI & Web Studio">
+    </div>
+
+    <!-- 2) TAGLINE + CONTACT + ADDRESS -->
+    <div class="ora-col col-contact">
+      <section class="group">
+        <h3 class="group-title">Fast, Secure, and Intelligent Web Solutions</h3>
+        <ul class="contact-list">
+          <li>
+            <a href="https://orabyt.com" target="_blank" rel="noopener">
+              <span class="ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm0 0c-3 3-3 19 0 20m0-20c3 3 3 19 0 20M2 12h20"/></svg>
+              </span>
+              orabyt.com
+            </a>
+          </li>
+          <li>
+            <a href="mailto:info@orabyt.com">
+              <span class="ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" d="M3 6h18v12H3z"/><path fill="none" stroke="currentColor" stroke-width="2" d="m3 7 9 7 9-7"/></svg>
+              </span>
+              info@orabyt.com
+            </a>
+          </li>
+          <li>
+            <a href="tel:+918102326415">
+              <span class="ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" d="M22 16.92v2a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.15 8.81 19.8 19.8 0 0 1 .08 0 2 2 0 0 1 2.06 0h2a2 2 0 0 1 2 1.72 12.8 12.8 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11l-1.27 1.27a16 16 0 0 0 7.07 7.07l1.27-1.27a2 2 0 0 1 2.11-.45 12.8 12.8 0 0 0 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+              </span>
+              +91 8102326415
+            </a>
+          </li>
+          <li>
+            <a href="https://wa.me/918102326415" target="_blank" rel="noopener">
+              <span class="ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M20.5 3.5a11 11 0 0 0-17 12.5L2 22l6.2-1.6a11 11 0 0 0 12.3-16.9Zm-8.4 14a9 9 0 0 1-4.6-1.3l-.3-.2-2.7.7.7-2.6-.2-.3a9 9 0 1 1 7.1 3.7Zm4.5-4.6c-.2-.1-1.2-.6-1.4-.7s-.3-.1-.5.1l-.7.8c-.1.1-.3.2-.5.1a7.4 7.4 0 0 1-3.5-2.9c-.1-.2 0-.3.1-.4l.4-.5c.2-.3.2-.4.3-.6 0-.2 0-.4 0-.5l-.7-1.6c-.2-.4-.4-.4-.6-.4l-.6.1c-.2 0-.5.2-.7.4-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7a10.8 10.8 0 0 0 4.1 4 13 13 0 0 0 2 .9c.8.2 1.6.2 2.2.1.7-.1 1.2-.5 1.4-1 .2-.6.2-1 .1-1.1 0 0-.1 0-.3-.2Z"/></svg>
+              </span>
+              WhatsApp
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <section class="group">
+        <h3 class="group-title">Find us</h3>
+        <address class="addr">
+          Manama, Bahrain<br>ORABYT Software AI &amp; Web
+        </address>
+        <a class="link-underline" href="https://maps.google.com/?q=Manama+Bahrain+ORABYT" target="_blank" rel="noopener">Get Directions</a>
+      </section>
+    </div>
+
+    <!-- 3) MENU -->
+      <nav class="ora-col col-menu" aria-label="Footer">
+        <ul class="menu">
+          <li><a href="#apply" class="menu-link">WHAT WE DO</a></li>
+          <li><a href="#services-dark" class="menu-link">SERVICES</a></li>
+          <li><a href="#footer" class="menu-link">COMPANY</a></li>
+          <li><a href="#founders" class="menu-link">FOUNDER</a></li>
+          <li><a href="#pricing" class="menu-link">PRICING</a></li>
+          <li><a href="#faq" class="menu-link">FAQ</a></li>
+          <li><a href="#enquiry" class="menu-link">BOOK</a></li>
+        </ul>
+      </nav>
+
+    <!-- 4) LEGAL / UDYAM CARD -->
+    <div class="ora-col col-legal">
+      <section class="group legal-msme">
+        <div class="legal-card">
+          <header class="legal-head">
+            <h3 id="legal-title" class="legal-title">ORABYT Remote-first, legally registered</h3>
+            <span class="legal-pill">MSME / Udyam • Active</span>
+          </header>
+          <ul class="legal-points">
+            <li>Managed from <strong>Bahrain</strong>; legal entity registered in <strong>India</strong> (Govt. MSME/Udyam).</li>
+            <li>Worldwide delivery • <strong>online agreements &amp; invoicing</strong> • compliant T&amp;Cs.</li>
+            <li>Remote team • Zoom &amp; e-sign • No physical office required.</li>
+          </ul>
+          <button type="button" class="legal-cta" data-modal-open="udym" aria-haspopup="dialog" aria-controls="modal-udym">
+            View Udyam / MSME License
+            <svg class="legal-cta-arrow" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13 5l7 7-7 7M4 12h16"/></svg>
+          </button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="ora-line" aria-hidden="true"></div>
+
+  <div class="ora-legal">
+    <nav class="legal-left" aria-label="Legal links">
+      <a href="/terms">Terms</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/disclaimer">Disclaimer</a>
+    </nav>
+    <div class="legal-center">© <span id="year"></span> ORABYT. All rights reserved.</div>
+    <div class="legal-right">Site by <a href="/">ORABYT</a></div>
+  </div>
+</footer>
+
+<!-- ====== UDYAM LICENSE MODAL ====== -->
+<div class="ora-modal" id="modal-udym" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Udyam MSME License">
+  <div class="ora-modal-backdrop" data-modal-close></div>
+  <div class="ora-modal-dialog" role="document">
+    <button type="button" class="ora-modal-close" aria-label="Close" data-modal-close>×</button>
+    <img src="/images/orabyt licence.png" alt="Udyam MSME License" class="ora-modal-img">
+  </div>
+</div>
+
+
+<script>
+(() => {
+  // Year
+  const y = document.getElementById('year');
+  if (y) y.textContent = new Date().getFullYear();
+
+  // Modal
+  const modal = document.getElementById('modal-udym');
+  if (!modal) return;
+
+  const openers = document.querySelectorAll('[data-modal-open="udym"]');
+  const backdrop = modal.querySelector('.ora-modal-backdrop');
+  const closeBtn = modal.querySelector('.ora-modal-close');
+
+  function openModal(e){
+    if (e) e.preventDefault();
+    modal.setAttribute('aria-hidden','false');
+    document.body.classList.add('modal-open');
+    closeBtn && closeBtn.focus();
+  }
+  function closeModal(){
+    modal.setAttribute('aria-hidden','true');
+    document.body.classList.remove('modal-open');
+  }
+
+  openers.forEach(el => el.addEventListener('click', openModal));
+  backdrop.addEventListener('click', closeModal);
+  closeBtn.addEventListener('click', closeModal);
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+})();
+</script>
+
+
+  <script src="script.js" defer></script>
 </body>
 </html>
