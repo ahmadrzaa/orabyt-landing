@@ -4,36 +4,34 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
-      <!-- Title -->
+  
       <title>ORABYT AI Websites & Smart Chatbots</title>
 
-      <!-- Primary Meta Tags -->
+      
       <meta name="description" content="ORABYT builds AI-powered websites, chatbots, and digital platforms with hosting, SEO, and SSL solutions." />
       <meta name="robots" content="index, follow" />
       <link rel="canonical" href="https://orabyt.com/" />
 
-      <!-- Open Graph / Facebook -->
+
       <meta property="og:type" content="website" />
       <meta property="og:title" content="ORABYT — AI Websites & Smart Chatbots" />
       <meta property="og:description" content="Web, AI & software services for modern businesses. Websites, e-commerce, dashboards, bots." />
       <meta property="og:url" content="https://orabyt.com/" />
       <meta property="og:image" content="https://orabyt.com/images/ORABYT_preview.png" />
 
-      <!-- Twitter Card -->
+    
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content="ORABYT — AI Websites & Smart Chatbots" />
       <meta name="twitter:description" content="Build fast, modern web & AI platforms. Launch with Orabyt today." />
       <meta name="twitter:image" content="https://orabyt.com/images/ORABYT_preview.png" />
 
-      <!-- Favicon -->
       <link rel="icon" href="/images/ORABYT_logo.svg" type="image/svg+xml" />
       <link rel="icon" type="image/png" href="/images/favicon.png" sizes="32x32" />
 
-      <!-- Fonts & Icons -->
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:FILL@0..1;wght@100..700;GRAD@-50..200;opsz@20..48" rel="stylesheet" />
 
-      <!-- Styles & Scripts -->
+      
       <link rel="stylesheet" href="styles.css" />
       <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
@@ -106,15 +104,15 @@
     <body>
 
 
-  <!-- Sticky header -->
+  
 <header class="nav" role="banner">
   <div class="nav__wrap">
-    <!-- left: logo -->
+    
     <a href="/" class="brand" aria-label="Home">
       <img src="/images/ORABYT_logo.svg" alt="Orabyt logo" class="brand__logo" />
     </a>
 
-    <!-- center: navbar -->
+   
     <nav class="menu" aria-label="Primary">
       <ul class="menu__list">
         <li class="menu__item"><a class="menu__link" href="#apply">WHAT WE DO</a></li>
@@ -125,7 +123,7 @@
       </ul>
     </nav>
 
-    <!-- right: actions -->
+    
     <div class="nav__actions">
       <a class="btn-outline" href="#enquiry">Book a demo</a>
       <button class="burger" aria-label="Open menu" aria-controls="drawer" aria-expanded="false">
@@ -135,7 +133,7 @@
   </div>
 </header>
 
-<!-- Fullscreen Mobile drawer -->
+
 <div id="drawer" class="drawer" aria-hidden="true" role="dialog" aria-modal="true">
   <div class="drawer__panel">
     <div class="drawer__top">
@@ -157,7 +155,7 @@
   </div>
 </div>
 
-<!-- HERO with full-bleed video -->
+
 <section class="hero">
   <video class="hero__video" src="/media/bg.mp4" autoplay muted loop playsinline></video>
   <div class="hero__veil"></div>
@@ -179,20 +177,19 @@
 
 
 
-<!-- WHAT WE DO (light band with white wrapper) -->
+<!-- wedo --->
 <section class="section-split" id="apply" aria-labelledby="apply-heading">
 
-  <!-- ROW 1: Big heading only -->
+ 
   <div class="container section-split__head">
     <p class="feature2__eyebrow">What we do</p>
     <h2 class="feature2__title" id="apply-heading">End-to-end web, apps &amp; AI built to scale</h2>
   </div>
 
-  <!-- ROW 2: Left video, Right copy -->
+ 
   <div class="split container">
 
-    <!-- Left: autoplay video card -->
-      <!-- Left: autoplay video card -->
+    
       <figure class="card-video js-video-preview" data-video="/media/orabyt_bot_compressed.mp4">
         <video class="card-video__media"
               src="/media/orabyt_bot_compressed.mp4"
@@ -206,7 +203,7 @@
       </figure>
 
 
-    <!-- Right: subheading + bullets -->
+    
     <div class="split__copy">
       <p class="feature2__lead">
         We ship full-stack products: frontend, backend, cloud—plus an on-site AI assistant trained on your content. One team. Fast delivery.
@@ -229,7 +226,7 @@
   </div>
 </section>
 
-<!-- Video Modal -->
+
 <div id="video-modal-2" class="vidmodal" aria-hidden="true" role="dialog" aria-modal="true">
   <div class="vidmodal__backdrop"></div>
   <div class="vidmodal__panel">
@@ -255,7 +252,7 @@
   const backdrop = modal.querySelector('.vidmodal__backdrop');
   let lastActive = null;
 
-  // Some browsers may spawn PiP or stickyness; ensure we exit anything forced.
+  
   const exitAll = () => {
     if (document.pictureInPictureElement) {
       document.exitPictureInPicture?.().catch(()=>{});
@@ -273,39 +270,39 @@
     modal.setAttribute('open','');
     modal.setAttribute('aria-hidden','false');
     document.body.style.overflow = 'hidden';
-    // play if user-gesture allows
-    big.play?.().catch(()=>{ /* ignore autoplay block */ });
+   
+    big.play?.().catch(()=>{  });
     closeBtn?.focus();
   };
 
   const close = () => {
     exitAll();
     big.pause?.();
-    big.removeAttribute('src'); // stop & free memory
+    big.removeAttribute('src'); 
     modal.removeAttribute('open');
     modal.setAttribute('aria-hidden','true');
     document.body.style.overflow = '';
     lastActive?.focus?.();
   };
 
-  // Bind open on small video & play button
+  
   previews.forEach(p => {
     const small = p.querySelector('video');
     const btn   = p.querySelector('.card-video__play');
     const src   = p.dataset.video || small?.currentSrc || small?.src || '';
     btn?.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); open(src, small); });
     small?.addEventListener('click',   () => open(src, small));
-    // Prevent accidental PiP from dblclick/context menu
+   
     small?.addEventListener('enterpictureinpicture', e => e.preventDefault());
   });
 
-  // Robust closing
+
   closeBtn?.addEventListener('click', e => { e.preventDefault(); close(); });
   backdrop?.addEventListener('click', close);
   modal.addEventListener('click', e => { if (e.target === modal) close(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
 
-  // Subtle reveal
+
   const io = new IntersectionObserver((ents)=>{
     ents.forEach(en => { if (en.isIntersecting) en.target.classList.add('is-in'); });
   }, { threshold: 0.18 });
@@ -318,7 +315,7 @@
 
 
 
-<!-- 3RD OUR SERVICES -->
+<!--serivices -->                                                                                                                                                                     
 
 <section id="services-dark" style="--svc-bg:url('images/image__q_07130a8f.jpg')">
   <div class="svc-wrap">
@@ -327,7 +324,7 @@
     </header>
 
     <div class="svc-grid" data-slider="services">
-      <!-- 1) AI -->
+      
       <article class="svc-card">
         <div class="svc-hero">
           <img class="svc-icon" src="images/ai%20d.svg" alt="AI Assistant & Chatbots">
@@ -341,7 +338,7 @@
         </ul>
       </article>
 
-      <!-- 2) Websites & Web Apps -->
+     
       <article class="svc-card">
         <div class="svc-hero">
           <img class="svc-icon" src="images/web%20d.svg" alt="Websites & Web Apps">
@@ -355,7 +352,7 @@
         </ul>
       </article>
 
-      <!-- 3) CMS & Blog -->
+      
       <article class="svc-card">
         <div class="svc-hero">
           <img class="svc-icon" src="images/cms%20d.svg" alt="CMS & Blog">
@@ -369,7 +366,7 @@
         </ul>
       </article>
 
-      <!-- 4) Software Development -->
+      
       <article class="svc-card">
         <div class="svc-hero">
           <img class="svc-icon" src="images/software%20d.svg" alt="Software Development">
@@ -383,7 +380,7 @@
         </ul>
       </article>
 
-      <!-- 5) Infrastructure & DevOps -->
+     
       <article class="svc-card">
         <div class="svc-hero">
           <img class="svc-icon" src="images/infra%20d.svg" alt="Infrastructure & DevOps">
@@ -397,7 +394,7 @@
         </ul>
       </article>
 
-      <!-- 6) QA & Quality -->
+      
       <article class="svc-card">
         <div class="svc-hero">
           <img class="svc-icon" src="images/quality%20d.svg" alt="QA & Quality">
@@ -416,7 +413,7 @@
   </div>
 </section>
 <script>
-/* ORABYT Services slider — mobile dots + swipe + autoplay (stops on user touch) */
+
 (function () {
   const section  = document.getElementById('services-dark');
   if (!section) return;
@@ -438,10 +435,10 @@
     unwrap();
     if (dotsWrap) dotsWrap.innerHTML = '';
 
-    // Only make slider on mobile
+    
     if (!mq.matches) { if (dotsWrap) dotsWrap.style.display = 'none'; return; }
 
-    // Track
+  
     track = document.createElement('div');
     track.className = 'svc-track';
     Object.assign(track.style, {
@@ -452,25 +449,24 @@
     [...grid.children].forEach(el => track.appendChild(el));
     grid.appendChild(track);
 
-    // Slides
     slides = [...track.children];
     slides.forEach(el => { el.style.flex = '0 0 86%'; el.style.scrollSnapAlign = 'center'; });
 
-    // Dots
+   
     if (dotsWrap) {
-      dotsWrap.style.display = 'flex';   // force visible on mobile
+      dotsWrap.style.display = 'flex';    
       slides.forEach((_, i) => {
         const b = document.createElement('button');
         b.type = 'button';
         b.className = 'svc-dot';
         b.setAttribute('aria-label', 'Slide ' + (i + 1));
-        b.addEventListener('click', () => { go(i, true); stop(); }); // click -> go & stop autoplay
+        b.addEventListener('click', () => { go(i, true); stop(); }); 
         dotsWrap.appendChild(b);
       });
     }
     idx = 0; updateDots();
     bind();
-    start(); // autoplay on mobile
+    start(); 
   }
 
   function size() {
@@ -498,12 +494,12 @@
   }
 
   function bind() {
-    // Pause autoplay on any user interaction
+   
     ['pointerdown','touchstart','mouseenter','focusin'].forEach(ev =>
       track.addEventListener(ev, stop, { passive: true })
     );
 
-    // Drag-to-scroll (extra smooth)
+    
     let down = false, sx = 0, sl = 0;
     track.addEventListener('pointerdown', e => {
       down = true; sx = e.clientX; sl = track.scrollLeft; track.setPointerCapture(e.pointerId);
@@ -512,7 +508,7 @@
     window.addEventListener('pointercancel', () => { down = false; });
     track.addEventListener('pointermove', e => { if (!down) return; track.scrollLeft = sl + (sx - e.clientX); });
 
-    // Keep dots synced while scrolling
+    
     track.addEventListener('scroll', () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
@@ -529,12 +525,12 @@
 
 
 
-<!-- ================== TESTIMONIALS (1st) ================== -->
+<!-- testmonial -->
 <section class="orby-testimonials" aria-label="Client testimonials">
   <h2 class="orby-h2">What Clients Say About ORABYT</h2>
 
   <div class="orby-t-viewport" data-autoplay="5200">
-    <!-- Slide 1 -->
+   
     <figure class="orby-t-slide is-active">
       <blockquote class="orby-t-quote">
         “Weekly demos kept progress transparent. SEO baseline helped from week one.”
@@ -546,7 +542,7 @@
       </figcaption>
     </figure>
 
-    <!-- Slide 2 -->
+    
     <figure class="orby-t-slide">
       <blockquote class="orby-t-quote">
         “Clean build, clear pricing, and on-time handover. Team was responsive throughout.”
@@ -557,7 +553,7 @@
         <span class="orby-t-stars">★★★★</span>
       </figcaption>
     </figure>
-    <!-- Add more <figure class="orby-t-slide">…</figure> as needed -->
+   
   </div>
 
   <div class="orby-t-dots" aria-label="Testimonial navigation"></div>
@@ -627,7 +623,7 @@
   </div>
 </section>
 
-<!-- ================== TECHNOLOGY TABS (3rd) ================== -->
+<!-- tech -->
 <section class="orby-tech" aria-labelledby="tech-title">
   <div class="orby-tech-wrap">
     <h2 class="orby-tech-title" id="tech-title"><span>Technology</span> Stacks</h2>
@@ -641,7 +637,7 @@
       <button class="orby-tech-tab" role="tab" aria-selected="false" data-tab="devops">DevOps</button>
     </div>
 
-    <!-- AI -->
+    
     <div id="panel-ai" class="orby-tech-panel">
       <ul class="orby-tech-grid">
         <li class="orby-tech-item"><img src="/images/chatgpt.png" alt="ChatGPT"><span>ChatGPT (router)</span></li>
@@ -654,7 +650,7 @@
       </ul>
     </div>
 
-    <!-- Back-end -->
+    
     <div id="panel-backend" class="orby-tech-panel" hidden>
       <ul class="orby-tech-grid">
         <li class="orby-tech-item"><img src="/images/node.png" alt="Node.js"><span>Node.js</span></li>
@@ -665,7 +661,7 @@
       </ul>
     </div>
 
-    <!-- Front-end -->
+    
     <div id="panel-frontend" class="orby-tech-panel" hidden>
       <ul class="orby-tech-grid">
         <li class="orby-tech-item"><img src="/images/react.png" alt="React"><span>React</span></li>
@@ -675,7 +671,7 @@
       </ul>
     </div>
 
-    <!-- Apps -->
+    
     <div id="panel-apps" class="orby-tech-panel" hidden>
       <ul class="orby-tech-grid">
         <li class="orby-tech-item"><img src="/images/ios.png" alt="iOS"><span>iOS</span></li>
@@ -685,7 +681,7 @@
       </ul>
     </div>
 
-    <!-- Cloud -->
+    
     <div id="panel-cloud" class="orby-tech-panel" hidden>
       <ul class="orby-tech-grid">
         <li class="orby-tech-item"><img src="/images/aws.png" alt="AWS"><span>AWS</span></li>
@@ -694,7 +690,7 @@
       </ul>
     </div>
 
-    <!-- DevOps -->
+    
     <div id="panel-devops" class="orby-tech-panel" hidden>
       <ul class="orby-tech-grid">
         <li class="orby-tech-item"><img src="/images/docker.png" alt="Docker"><span>Docker</span></li>
@@ -706,8 +702,7 @@
   </div>
 </section>
 
-<!-- ================== FOUNDERS (4th) ================== -->
-<!-- ================== FOUNDERS (4th) ================== -->
+<!-- founder -->
 <section id="founders" class="founders-v1" aria-labelledby="founders-heading">
   <div class="fv1-container">
     <header class="fv1-head">
@@ -715,7 +710,7 @@
     </header>
 
     <div class="fv1-mosaic" data-slider="founders">
-      <!-- Ahmad (LEFT) -->
+      
       <article class="fv1-item tall">
         <div class="fv1-card">
           <div class="fv1-media">
@@ -753,7 +748,7 @@
 
       <div class="fv1-pillar one" aria-hidden="true"></div>
 
-      <!-- Arun (RIGHT) -->
+      
       <article class="fv1-item wide">
         <div class="fv1-card">
           <div class="fv1-media">
@@ -796,7 +791,7 @@
   </div>
 </section>
 
-<!-- ================== FAQ (5th) ================== -->
+<!-- faq -->
 <section id="faq" class="section-faq-dark" aria-labelledby="faq-heading">
   <div class="faq-container">
     <header class="faq-head"><h2 class="faq-title" id="faq-heading">FAQ</h2></header>
@@ -811,10 +806,10 @@
   </div>
 </section>
 
-<!-- ================== SCRIPTS (kept intact, placed after sections) ================== -->
+
 
 <script>
-/* -------- Testimonials autoplay + dots + swipe -------- */
+
 (() => {
   const root = document.querySelector('.orby-testimonials .orby-t-viewport');
   if (!root) return;
@@ -875,7 +870,7 @@
     });
   });
 
-  // Hide only broken logo images; no ugly placeholders
+ 
   host.querySelectorAll('.orby-tech-item img').forEach(img =>
     img.addEventListener('error', () => { img.style.display = 'none'; }, { once:true })
   );
@@ -953,7 +948,7 @@
     window.addEventListener('resize', build, {passive:true});
   }
 
-  // Founders: only founder cards (pillars are hidden on mobile)
+  
   sliderUsingRoot(
     document.querySelector('.fv1-mosaic'),
     '(max-width: 820px)',
@@ -962,7 +957,7 @@
     '.fv1-item'
   );
 
-  // Pricing: wrap into track on mobile
+ 
   (function(){
     const root = document.querySelector('.pv2-rows');
     const dotsWrap = document.querySelector('.pv2-dots');
@@ -1007,7 +1002,7 @@
     build(); window.addEventListener('resize', build, {passive:true});
   })();
 
-  // Prices: monthly/yearly
+
   (function(){
     const buttons=document.querySelectorAll('.pv2-tbtn');
     const nums=document.querySelectorAll('.pv2-num');
@@ -1015,7 +1010,6 @@
     buttons.forEach(b=>b.addEventListener('click', ()=>setMode(b.dataset.bill)));
   })();
 
-  // FAQ: single-open
   (function(){
     const items=[...document.querySelectorAll('.faq-grid .faq')];
     items.forEach(d=>d.addEventListener('toggle', ()=>{ if(d.open) items.forEach(o=>{if(o!==d) o.open=false;}); }));
@@ -1024,14 +1018,14 @@
 </script>
 
 
-<!-- ================== BOOKING / CONTACT + MAP ================== -->
-<!-- ================== MAKE AN ENQUIRY (scoped) ================== -->
+
+<!-- ENQUIRY -->
 <section id="enquiry" class="orby-enquiry">
   <div class="eq-wrap">
     <h2 class="eq-title">MAKE AN ENQUIRY</h2>
 
     <form id="eqForm" class="eq-form" novalidate>
-      <!-- Row 1 -->
+      
       <label class="eq-field">
         <span>First name*</span>
         <input type="text" name="firstName" required>
@@ -1042,7 +1036,7 @@
         <input type="text" name="lastName" required>
       </label>
 
-      <!-- Row 2 -->
+      
       <label class="eq-field">
         <span>Email address*</span>
         <input type="email" name="email" required>
@@ -1062,7 +1056,7 @@
         </div>
       </label>
 
-      <!-- Row 3 -->
+      
       <label class="eq-field">
         <span>Project type*</span>
         <select name="type" required>
@@ -1086,19 +1080,19 @@
         </select>
       </label>
 
-      <!-- Row 4 -->
+      
       <label class="eq-field eq-wide">
         <span>Target go-live date*</span>
         <input type="date" name="date" required>
       </label>
 
-      <!-- Row 5 -->
+      
       <label class="eq-field eq-wide">
         <span>Brief (optional)</span>
         <textarea name="brief" rows="4" placeholder="Goals, pages, integrations, deadline…"></textarea>
       </label>
 
-      <!-- Consent + Submit -->
+
       <label class="eq-consent eq-wide">
         <input type="checkbox" name="consent" required>
         <span>I agree to ORABYT processing my data for this request.</span>
@@ -1113,29 +1107,27 @@
     </form>
   </div>
 
-  <!-- toast -->
+  
   <div class="eq-toast" role="status" aria-live="polite">Thanks! We’ll contact you shortly.</div>
 </section>
 <script>
 (() => {
-  // ===== CONFIG =====
-  // Mode: 'mailto' (no service) or 'emailjs' (client-side email service)
-  const EMAIL_MODE = 'mailto';  // change to 'emailjs' after you add EmailJS keys below
-
-  // EmailJS settings (only used if EMAIL_MODE === 'emailjs')
+  
+  const EMAIL_MODE = 'mailto';  
+ 
   const EMAILJS_PUBLIC_KEY   = 'YOUR_PUBLIC_KEY';
   const EMAILJS_SERVICE_ID   = 'YOUR_SERVICE_ID';
-  const EMAILJS_TEMPLATE_ID  = 'YOUR_TEMPLATE_ID';      // owner notification
-  const EMAILJS_TEMPLATE_ACK = 'YOUR_ACK_TEMPLATE_ID';  // user confirmation
+  const EMAILJS_TEMPLATE_ID  = 'YOUR_TEMPLATE_ID';      
+  const EMAILJS_TEMPLATE_ACK = 'YOUR_ACK_TEMPLATE_ID';  
 
   const OWNER_EMAIL = 'info@orabyt.com';
   const OWNER_NAME  = 'ORABYT';
 
-  // ===== UTIL =====
+  
   const $ = (s, r=document) => r.querySelector(s);
   const esc = (s) => s ? s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])) : '';
 
-  // Small speech-bubble toast (bottom-right), inline-styled only
+  
   function bubble(msg, kind='ok'){
     const b = document.createElement('div');
     b.setAttribute('role','status');
@@ -1170,7 +1162,7 @@
     setTimeout(()=> b.remove(), 2800);
   }
 
-  // Inline success card (hides form)
+  
   function showSuccessCard(data){
     const wrap = $('.orby-enquiry .eq-wrap');
     const form = $('#eqForm');
@@ -1220,7 +1212,7 @@
     });
   }
 
-  // Build a plain-text email body
+
   function buildEmailBody(d){
     return [
       `New enquiry via ORABYT site`,
@@ -1236,25 +1228,23 @@
     ].join('\n');
   }
 
-  // MAILTO fallback (opens composer, copies text)
+ 
   function sendViaMailto(d){
     const subject = encodeURIComponent(`New enquiry — ${d.firstName} ${d.lastName}`);
     const body    = encodeURIComponent(buildEmailBody(d));
-    // copy to clipboard (non-blocking)
+  
     try { navigator.clipboard?.writeText(buildEmailBody(d)); } catch {}
-    // open composer to owner
+
     window.location.href = `mailto:${OWNER_EMAIL}?subject=${subject}&body=${body}`;
-    // show bubble
+
     bubble('Details copied. Your mail app will open — send it to finish. ✅','ok');
   }
 
-  // EmailJS (client-side) — optional
   async function sendViaEmailJS(d){
     if (!window.emailjs) return false;
     try {
       emailjs.init(EMAILJS_PUBLIC_KEY);
 
-      // owner notification
       const ownerVars = {
         owner_email: OWNER_EMAIL,
         owner_name: OWNER_NAME,
@@ -1270,7 +1260,7 @@
       };
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, ownerVars);
 
-      // user confirmation
+  
       const ackVars = {
         to_email:   d.email,
         to_name:    `${d.firstName} ${d.lastName}`,
@@ -1289,7 +1279,7 @@
     }
   }
 
-  // ===== FORM WIRING =====
+  // ===== FORM  =====
   const cc    = $('.orby-enquiry .eq-cc');
   const phone = $('.orby-enquiry input[name="phone"]');
   if (cc && phone) {
@@ -1301,7 +1291,6 @@
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // validate required
     const req = form.querySelectorAll('[required]');
     for (const el of req) {
       if ((el.type==='checkbox' && !el.checked) || !el.value.trim()) {
@@ -1309,7 +1298,7 @@
       }
     }
 
-    // collect data
+
     const data = {
       firstName: form.firstName.value.trim(),
       lastName:  form.lastName.value.trim(),
@@ -1322,25 +1311,25 @@
       consent:   !!form.consent.checked
     };
 
-    // lock button
+  
     const btn = form.querySelector('.eq-btn');
     const old = btn?.textContent;
     if (btn){ btn.disabled = true; btn.textContent = 'Sending…'; }
 
-    // send based on mode (no backend)
+   
     let ok = false;
     if (EMAIL_MODE === 'emailjs') {
       ok = await sendViaEmailJS(data);
-      if (!ok) sendViaMailto(data); // fallback
+      if (!ok) sendViaMailto(data); 
     } else {
       sendViaMailto(data);
-      ok = true; // we still show success UI
+      ok = true; 
     }
 
-    // success UI
+    
     showSuccessCard(data);
 
-    // reset + unlock
+    
     form.reset();
     if (cc && phone) phone.placeholder = cc.value;
     if (btn){ btn.disabled = false; btn.textContent = old || 'SUBMIT ENQUIRY'; }
@@ -1351,15 +1340,15 @@
 
 
 <!--- foooter -->
-<!-- ====== ORABYT FOOTER ====== -->
+
 <footer class="ora-footer" id="footer">
   <div class="ora-foot-inner">
-    <!-- 1) LOGO -->
+    
     <div class="ora-col col-logo">
       <img class="ora-mark" src="/images/ORABYT_ white logo.svg" alt="ORABYT — AI & Web Studio">
     </div>
 
-    <!-- 2) TAGLINE + CONTACT + ADDRESS -->
+    
     <div class="ora-col col-contact">
       <section class="group">
         <h3 class="group-title">Fast, Secure, and Intelligent Web Solutions</h3>
@@ -1407,8 +1396,6 @@
         <a class="link-underline" href="https://maps.google.com/?q=Manama+Bahrain+ORABYT" target="_blank" rel="noopener">Get Directions</a>
       </section>
     </div>
-
-    <!-- 3) MENU -->
       <nav class="ora-col col-menu" aria-label="Footer">
         <ul class="menu">
           <li><a href="#apply" class="menu-link">WHAT WE DO</a></li>
@@ -1421,7 +1408,7 @@
         </ul>
       </nav>
 
-    <!-- 4) LEGAL / UDYAM CARD -->
+  
     <div class="ora-col col-legal">
       <section class="group legal-msme">
         <div class="legal-card">
@@ -1456,7 +1443,7 @@
   </div>
 </footer>
 
-<!-- ====== UDYAM LICENSE MODAL ====== -->
+
 <div class="ora-modal" id="modal-udym" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Udyam MSME License">
   <div class="ora-modal-backdrop" data-modal-close></div>
   <div class="ora-modal-dialog" role="document">
@@ -1468,11 +1455,11 @@
 
 <script>
 (() => {
-  // Year
+  
   const y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();
 
-  // Modal
+
   const modal = document.getElementById('modal-udym');
   if (!modal) return;
 

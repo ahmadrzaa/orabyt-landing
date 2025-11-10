@@ -1,24 +1,20 @@
-/* ================= Load Fonts (Google) ================= */
-/* If you already load fonts in <head>, keep them. This @import is safe. */
+
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap');
 
-/* ================= Root / Base ================= */
 :root{
   --nav-h:64px;
 
-  /* site base (unchanged dark body) */
   --bg:#000;
   --text:#f5f7fb;
   --muted:#cfd3db;
   --white:#fff;
   --line:#747474;
 
-  /* new brand tones for the "property" look */
-  --brand-deep:#0A3B35;      /* deep green for headings/nav text */
-  --brand-gold:#CDA06A;      /* warm accent for labels */
-  --brand-cream:#ECEFEF;     /* light, misty header glass */
+  
+  --brand-deep:#0A3B35;      
+  --brand-gold:#CDA06A;      
+  --brand-cream:#ECEFEF;     
 
-  /* header specific */
   --nav-bg: linear-gradient(180deg, rgba(236,239,239,.95), rgba(236,239,239,.90));
   --nav-fg: var(--brand-deep);
 
@@ -26,7 +22,7 @@
   --radius:10px;
   --speed:220ms;
 
-  /* fonts */
+ 
   --font-ui: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-display: "Bebas Neue", var(--font-ui);
   --font-serif: "Merriweather", Georgia, serif;
@@ -34,27 +30,26 @@
 
 *{ box-sizing:border-box }
 html,body{ height:100% }
-html{ scroll-behavior:smooth } /* smooth anchor scroll */
+html{ scroll-behavior:smooth }
 body{
   margin:0; background:var(--bg); color:var(--text);
   font-family:var(--font-ui);
   -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
 }
-/* ensure anchored sections don’t hide under sticky header */
+
 [id]{ scroll-margin-top: calc(var(--nav-h) + 10px) }
 
 a{ color:inherit; text-decoration:none }
 
-/* ===== small helpers ===== */
+
 @keyframes fadeUp { 0%{opacity:0; transform:translateY(8px) scale(.985)} 100%{opacity:1; transform:none} }
 @keyframes popIn { 0%{opacity:0; transform:translateY(10px) scale(.98)} 60%{opacity:1; transform:translateY(0) scale(1.01)} 100%{transform:scale(1)} }
 
-/* ================= Header / Nav ================= */
 .nav{
   position:sticky; top:0; z-index:9999;
   height:var(--nav-h); min-height:var(--nav-h);
 
-  /* light misty header */
+ 
   background:var(--nav-bg);
   backdrop-filter:saturate(120%) blur(10px);
   border-bottom:1px solid rgba(10,59,53,.10);
@@ -81,7 +76,7 @@ a{ color:inherit; text-decoration:none }
 }
 .menu__link:hover{ opacity:1; background:rgba(10,59,53,.05) }
 
-/* keep if you still have any .menu__btn elements around */
+
 .menu__btn{
   background:transparent; border:0; outline:0; appearance:none; -webkit-appearance:none;
   color:var(--nav-fg); opacity:.95; padding:.55rem 1rem; cursor:pointer;
@@ -92,13 +87,12 @@ a{ color:inherit; text-decoration:none }
 
 .chev{ width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; opacity:.95; transition:transform var(--speed) ease }
 
-/* ================= GLASS Dropdown (CENTERED) ================= */
-/* NON-DROPDOWN MODE: hard-disable dropdown panels and backdrop */
+/* Dropdown */
+
 .dd{ display:none !important }
 .has-dd.open .dd{ display:none !important }
 body:has(.has-dd.open)::after{ display:none !important }
 
-/* ================= Right Actions ================= */
 .nav__actions{ display:flex; align-items:center; gap:10px }
 .link-ghost{ opacity:.95; padding:.5rem .75rem; border-radius:8px; color:var(--nav-fg) }
 .link-ghost:hover{ background:rgba(10,59,53,.05) }
@@ -110,11 +104,10 @@ body:has(.has-dd.open)::after{ display:none !important }
 }
 .btn-outline:hover{ transform:translateY(-1px); border-color:rgba(10,59,53,.5); background:rgba(10,59,53,.06) }
 
-/* burger adopts dark color on light header */
 .burger{ display:none; background:none; border:0; padding:8px; border-radius:10px; cursor:pointer }
 .burger span{ display:block; width:22px; height:2px; background:var(--nav-fg); margin:4px 0 }
 
-/* ================= FULLSCREEN Drawer (Mobile) ================= */
+/* Drawer (Mobile) */
 .drawer{
   position:fixed; inset:0; z-index:10050;
   background:rgba(0,0,0,.55); backdrop-filter:blur(4px);
@@ -125,8 +118,7 @@ body:has(.has-dd.open)::after{ display:none !important }
 .drawer__panel{
   position:absolute; inset:0;
   width:100svw;
-  height:100vh; height:100dvh;          /* full height on all phones */
-  background:rgba(10,12,16,.96);
+  height:100vh; height:100dvh;          
   transform:translateX(100%);
   transition:transform var(--speed) ease;
   display:flex; flex-direction:column;
@@ -146,7 +138,7 @@ body:has(.has-dd.open)::after{ display:none !important }
   color:var(--text); border-radius:10px; padding:6px 10px; cursor:pointer;
 }
 
-/* in your HTML you now have simple links in the drawer; keep hover */
+
 .drawer__nav{ display:flex; flex-direction:column; gap:0; padding:10px 0; overflow:auto }
 .drawer__nav a{
   display:flex; align-items:center; justify-content:space-between;
@@ -155,7 +147,6 @@ body:has(.has-dd.open)::after{ display:none !important }
 }
 .drawer__nav a:hover{ background:rgba(255,255,255,.06) }
 
-/* keep details styles in case you still have any in markup */
 .drawer__nav summary{
   display:flex; align-items:center; justify-content:space-between;
   padding:16px 20px; color:var(--text); border-radius:0; background:transparent;
@@ -174,7 +165,7 @@ body:has(.has-dd.open)::after{ display:none !important }
 .drawer__cta{ margin-top:auto; padding:14px; display:flex; flex-direction:column; gap:10px }
 .drawer__cta .btn-outline{ width:100% }
 
-/* ================= Hero ================= */
+/* Hero */
 .hero{ position:relative; min-height:74vh; display:grid; place-items:center; overflow:hidden }
 .hero__video{
   position:absolute; inset:0; width:100%; height:100%;
@@ -191,7 +182,7 @@ body:has(.has-dd.open)::after{ display:none !important }
   padding:60px 0 32px; animation:fadeUp .45s ease both .05s;
 }
 
-/* ===== TYPOGRAPHY THEME ===== */
+/*  TYPOGRAPHY THEME  */
 .eyebrow{
   font-family:var(--font-ui);
   font-size:.95rem;
@@ -230,7 +221,6 @@ body:has(.has-dd.open)::after{ display:none !important }
   font-size:clamp(1rem, 2.2vw, 1.2rem); line-height:1.5;
 }
 
-/* CTA buttons */
 .hero__cta{ display:flex; gap:12px; flex-wrap:wrap; justify-content:center }
 .btn-solid,.btn-ghost{
   display:inline-flex; align-items:center; justify-content:center;
@@ -241,7 +231,7 @@ body:has(.has-dd.open)::after{ display:none !important }
 .btn-ghost{ border:1px solid var(--line); color:#fff; background:rgba(255,255,255,.03) }
 .btn-ghost:hover{ background:rgba(255,255,255,.07) }
 
-/* glossy CTA ring (if used elsewhere) */
+
 .cta-primary{
   --r: 8px;
   --ring-speed: 5.2s;
@@ -297,8 +287,8 @@ body:has(.has-dd.open)::after{ display:none !important }
   .cta-primary::before{ animation:none }
 }
 
-/* ================= Responsive ================= */
-/* IMPORTANT: when burger shows (≤980px), hide center .menu. Desktop stays same. */
+/* Responsive  */
+
 @media (max-width:980px){
   .menu{ display:none !important; }
   .nav__actions .link-ghost{ display:none }
@@ -308,9 +298,9 @@ body:has(.has-dd.open)::after{ display:none !important }
   .nav__actions{ margin-left:auto; }
 }
 
-/* phone tightening only */
+
 @media (max-width:640px){
-  .dd{ display:none !important } /* keep hidden on small screens too */
+  .dd{ display:none !important } 
 }
 
 
@@ -318,13 +308,10 @@ body:has(.has-dd.open)::after{ display:none !important }
 
 
 
-/* next section what we do   */
-/* ====== WHAT WE DO — light/misty + warm accent (no HTML changes) ====== */
-/* Scope: .section-split and its children only */
-
+/* wedo section  */
 .section-split{
-  /* Borrow tokens from earlier; provide fallbacks if not defined */
-  --sky-a: var(--bg-a, #ced5d5);          /* misty blue-grey (image #1 vibe) */
+  
+  --sky-a: var(--bg-a, #ced5d5);          
   --sky-b: var(--bg-b, #f5f1ed);          /* warm beige (image #2 vibe)      */
   --ink:   var(--ink, #072429);
   --muted: var(--muted, #4e6166);
@@ -332,7 +319,7 @@ body:has(.has-dd.open)::after{ display:none !important }
   --line:  var(--line, #dbe3e5);
 
   background:
-    /* soft “cloudy” light blooms */
+   
     radial-gradient(900px 520px at 80% 18%, rgba(255,255,255,.55) 0 45%, rgba(255,255,255,0) 70%),
     radial-gradient(600px 380px at 15% 75%, rgba(255,255,255,.28) 0 35%, rgba(255,255,255,0) 70%),
     /* gentle vertical wash from blue-grey into beige */
@@ -344,7 +331,7 @@ body:has(.has-dd.open)::after{ display:none !important }
 }
 .section-split .container{ width:min(1280px,92vw); margin:0 auto }
 
-/* ── Top heading row ─────────────────────────────────────────────────── */
+/*  Top heaidng */
 .section-split__head{ margin-bottom:32px }
 .feature2__eyebrow{
   text-transform:uppercase; letter-spacing:.15em; font-size:.78rem;
@@ -477,11 +464,9 @@ body:has(.has-dd.open)::after{ display:none !important }
   color:#0f1115; font-size:18px; line-height:1
 }
 
-/* ── Subtle reveal (unchanged behavior) ──────────────────────────────── */
 .reveal{ opacity:0; transform:translateY(10px); transition:opacity .35s ease, transform .35s ease }
 .reveal.is-in{ opacity:1; transform:none }
 
-/* ── Responsive (layout preserved, only sizing) ─────────────────────── */
 @media (max-width:1100px){
   .split{ grid-template-columns:1fr; gap:28px; align-items:start }
   .feature2__title{ font-size:clamp(2rem,7.2vw,2.8rem) }
@@ -491,18 +476,14 @@ body:has(.has-dd.open)::after{ display:none !important }
 
 
 
-
-
-
-
-/* 3rd section services */
+/* services */
 
 #services-dark{
-  /* fonts (new) */
+  
   --font-head: 'Neue Helvetica Pro','Inter','Helvetica Neue',Helvetica,Arial,system-ui,sans-serif;
   --font-body: 'Inter','Helvetica Neue','Neue Helvetica Pro',Helvetica,Arial,system-ui,sans-serif;
 
-  --overlay-top: .20;               /* unchanged */
+  --overlay-top: .20;               
   --overlay-bot: .35;
 
   background:
@@ -517,27 +498,26 @@ body:has(.has-dd.open)::after{ display:none !important }
   color: #e6edf3;
   padding: 56px 0 36px;
 
-  /* font-family changed to use body stack */
+ 
   font-family: var(--font-body);
 }
 #services-dark *{ box-sizing:border-box; }
 
-/* --- Container + Head --- */
 #services-dark .svc-wrap{ width:min(1120px,92vw); margin:0 auto; }
 #services-dark .svc-head{ margin:0 0 18px; }
 #services-dark .svc-title{
   margin:0; font-weight:900; letter-spacing:-.01em;
   font-size:clamp(1.9rem,3.6vw,2.4rem); color:#fff;
-  /* new: heading font stack */
+
   font-family: var(--font-head);
 }
 #services-dark .svc-sub{
   margin:.35rem 0 0; color:#8aa0b3;
-  /* new: body font stack */
+
   font-family: var(--font-body);
 }
 
-/* --- Grid (desktop/tablet); mobile becomes slider via CSS/JS below --- */
+
 #services-dark .svc-grid{
   display:grid; gap:16px;
   grid-template-columns:repeat(3,minmax(0,1fr));
@@ -547,8 +527,6 @@ body:has(.has-dd.open)::after{ display:none !important }
   #services-dark .svc-grid{ grid-template-columns:repeat(2,1fr); }
 }
 
-/* --- Card (transparent “glass”, no blur) --- */
-/* (unchanged glass values) */
 #services-dark .svc-card{
   position:relative;
   display:flex; flex-direction:column; gap:10px;
@@ -565,7 +543,6 @@ body:has(.has-dd.open)::after{ display:none !important }
   border-color:#2f4156;
 }
 
-/* --- Icon + Title + Text --- */
 #services-dark .svc-hero{
   display:grid; grid-template:auto auto auto / auto 1fr;
   column-gap:12px; row-gap:6px; align-items:center;
@@ -577,21 +554,20 @@ body:has(.has-dd.open)::after{ display:none !important }
 #services-dark .svc-card-title{
   grid-column:2/3; margin:0; font-weight:800; letter-spacing:-.01em;
   font-size:1.05rem; color:#e9f2ff;
-  /* new: heading font stack */
+  
   font-family: var(--font-head);
 }
 #services-dark .svc-text{
   grid-column:2/3; margin:0; color:#9bb1c3;
-  /* new: body font stack */
+
   font-family: var(--font-body);
 }
 
-/* --- Feature list with round green tick --- */
 #services-dark .svc-feats{ list-style:none; margin:6px 0 0; padding:0; }
 #services-dark .svc-feats li{
   display:flex; gap:10px; align-items:flex-start;
   margin:7px 0; color:#e6edf3; font-weight:600;
-  /* new: body font stack */
+
   font-family: var(--font-body);
 }
 #services-dark .tick{
@@ -606,7 +582,7 @@ body:has(.has-dd.open)::after{ display:none !important }
   transform:rotate(-45deg); margin-top:-1px;
 }
 
-/* --- Mobile: slider feel (hide bars, show dots) --- */
+/* Mobile */
 @media (max-width:700px){
   #services-dark{ overflow:hidden; }
 
@@ -624,7 +600,7 @@ body:has(.has-dd.open)::after{ display:none !important }
   }
 }
 
-/* Always hide scrollbars for grid or JS track */
+
 #services-dark .svc-grid, #services-dark .svc-track{
   -ms-overflow-style:none; scrollbar-width:none;
 }
@@ -633,40 +609,33 @@ body:has(.has-dd.open)::after{ display:none !important }
   display:none; width:0; height:0;
 }
 
-/* Dots appearance */
-#services-dark .svc-dots{ display:none; }        /* desktop hidden */
+
+#services-dark .svc-dots{ display:none; }        
 #services-dark .svc-dot{
   width:8px; height:8px; border-radius:50%; border:0; background:#2c3a4b;
 }
 #services-dark .svc-dot[aria-current="true"]{ background:#10b981; }
 
-/* Tighten to next section if any */
+
 #services-dark + section{ margin-top:6px; }
 
 
 
 /*4th section */
- /* ORABYT — LIGHT THEME TUNE-UP (colors + fonts only)
-   Image #1 bg → sections 1–3
-   Image #2 bg → sections 4–5
-*/
-
-/* ================= BASE TOKENS (LIGHT) ================= */
 :root{
-  /* Backgrounds from your screenshots */
-  --bg-a:#ced5d5;       /* misty blue-grey (Amenities section look) */
-  --bg-b:#f5f1ed;       /* warm beige (Explore Apartments look) */
+ 
+  --bg-a:#ced5d5;      
+  --bg-b:#f5f1ed;       
 
   /* Surfaces & lines */
   --card:#ffffff;
   --line:#dbe3e5;
   --line-2:#c7d1d5;
 
-  /* Typography */
-  --ink:#072429;        /* deep teal ink */
-  --muted:#4e6166;      /* subdued body copy */
-
-  /* Accent (gold/tan used for small labels) */
+ 
+  --ink:#072429;       
+  --muted:#4e6166;     
+  /* Accent (gold/tan 
   --accent:#b08556;
   --accent-ink:#072429;
 
@@ -684,26 +653,26 @@ body:has(.has-dd.open)::after{ display:none !important }
 *{box-sizing:border-box}
 html,body{max-width:100%;overflow-x:hidden}
 body{
-  background:var(--bg-a);     /* default to image #1 bg */
+  background:var(--bg-a);     
   color:var(--ink);
   font-family:var(--font-body);
   line-height:1.5;
 }
 
-/* Tighten default margins to avoid surprises */
+
 blockquote, dd, dl, fieldset, figure, h1, h2, h3, h4, h5, h6, hr, p, pre { margin:0 }
 
-/* Headings → heavier + heading font */
+
 h1,h2,h3,h4,h5,h6{font-family:var(--font-head); color:var(--ink); letter-spacing:-.01em}
 
-/* Reset any old pseudo frames that might bleed in */
+
 .fv1-card::before,.fv1-card::after,.pv2-card::before,.pv2-card::after,.faq::before{
   content:none!important;animation:none!important
 }
 
-/* ===================================================== */
+
 /* 1) TESTIMONIALS — uses image #1 background            */
-/* ===================================================== */
+
 .orby-testimonials{padding:18px 0 10px;background:var(--bg-a);color:var(--ink)}
 .orby-testimonials .orby-h2{
   margin:0 0 10px;text-align:center;font-weight:800;
@@ -728,9 +697,8 @@ h1,h2,h3,h4,h5,h6{font-family:var(--font-head); color:var(--ink); letter-spacing
 }
 .orby-testimonials .orby-t-dot[aria-current="true"]{opacity:1;background:var(--accent);border-color:var(--accent)}
 
-/* ===================================================== */
 /* 2) PRICING (4 columns desktop, swipe on mobile)       */
-/* ===================================================== */
+
 .pricing-v2{padding:44px 0 48px;background:var(--bg-a);color:var(--ink)}
 .pv2-container{width:min(1240px,92vw);margin:0 auto}
 .pv2-head{
@@ -804,9 +772,9 @@ h1,h2,h3,h4,h5,h6{font-family:var(--font-head); color:var(--ink); letter-spacing
   .pv2-dot[aria-current="true"]{background:var(--accent)}
 }
 
-/* ===================================================== */
-/* 3) TECHNOLOGY TABS (compact logos, no boxes)          */
-/* ===================================================== */
+
+/* 3) tech section */
+
 .orby-tech{padding:14px 14px 24px;background:var(--bg-a);color:var(--ink)}
 .orby-tech .orby-tech-wrap{max-width:1180px;margin:0 auto}
 .orby-tech .orby-tech-title{
@@ -847,16 +815,15 @@ h1,h2,h3,h4,h5,h6{font-family:var(--font-head); color:var(--ink); letter-spacing
 .orby-tech .orby-tech-item img{display:block;margin:0 auto;max-width:120px;max-height:44px;width:auto;height:auto;object-fit:contain;filter:none}
 .orby-tech .orby-tech-item span{font-size:13px;opacity:.9;color:inherit}
 
-/* ===================================================== */
-/* 4) FOUNDERS — uses image #2 background                */
-/* ===================================================== */
+
+/* 4) FOUNDERS section  */
+
 .founders-v1 { padding: 56px 0 40px; background:var(--bg-b); color:var(--ink) }
 .fv1-container { width: min(1200px, 92vw); margin: 0 auto; }
 .fv1-head { text-align: center; margin-bottom: 14px; }
 .fv1-title { margin: 0; font-weight: 900; font-size: clamp(1.8rem, 3.2vw, 2.3rem); font-family:var(--font-head) }
 .fv1-kicker { display: block; color: var(--muted); margin-top: 6px; }
 
-/* layout */
 .fv1-mosaic {
   display: grid; gap: 18px;
   grid-template-columns: 1.1fr .18fr 1.6fr .18fr;
@@ -964,9 +931,8 @@ h1,h2,h3,h4,h5,h6{font-family:var(--font-head); color:var(--ink); letter-spacing
   .fv1-dot[aria-current="true"] { background: var(--accent); }
 }
 
-/* ===================================================== */
-/* 5) FAQ — uses image #2 background                     */
-/* ===================================================== */
+/* 5) FAQ  */
+
 .section-faq-dark{padding:40px 0 60px;background:var(--bg-b);color:var(--ink)}
 .faq-container{width:min(1100px,92vw);margin:0 auto}
 .faq-head{text-align:center;margin-bottom:8px}
@@ -988,7 +954,7 @@ h1,h2,h3,h4,h5,h6{font-family:var(--font-head); color:var(--ink); letter-spacing
 .faq[open] > summary::after{transform:rotate(180deg)}
 .faq-body{padding:0 0 16px;color:var(--muted);line-height:1.7}
 
-/* tighten space between Pricing and FAQ if adjacent */
+
 #pricing + #faq, #pricing + .section-faq-dark{margin-top:6px}
 
 
@@ -996,14 +962,14 @@ h1,h2,h3,h4,h5,h6{font-family:var(--font-head); color:var(--ink); letter-spacing
 
 
 /* BOOKING NEXT SECTION */
-/* ================== scoped styles ================== */
+
 .orby-enquiry{
   --eq-bg:#f7f3ec;        /* page background, light beige to match ref */
   --eq-ink:#0e2a2a;       /* dark teal text */
   --eq-muted:#4e605f;
-  --eq-line:#e9dccb;      /* input border (subtle sand) */
-  --eq-line-focus:#0f3a37;/* focus border */
-  --eq-btn:#0f3a37;       /* button fill */
+  --eq-line:#e9dccb;      
+  --eq-line-focus:#0f3a37;
+  --eq-btn:#0f3a37;      
   --eq-btn-ink:#ffffff;
   --eq-radius:4px;
 
@@ -1102,7 +1068,7 @@ h1,h2,h3,h4,h5,h6{font-family:var(--font-head); color:var(--ink); letter-spacing
 
 
 /* footer */
-/* ============== THEME ============== */
+
 .ora-footer{
   --bg:#082529; --text:#e8f4f3; --muted:#9ed9d4; --ink:#eaf7f6;
   --line:#0e3a40; --line-2:#1a5960; --accent:#72e0cf; --link:#c7eef0;
@@ -1190,7 +1156,6 @@ h1,h2,h3,h4,h5,h6{font-family:var(--font-head); color:var(--ink); letter-spacing
 .legal-cta-arrow{width:18px;height:18px;transform:translateX(0);transition:transform .18s ease}
 .legal-cta:hover .legal-cta-arrow{transform:translateX(4px)}
 
-/* Divider and bottom row */
 .ora-line{max-width:1240px;height:1px;background:var(--line);margin:16px auto 10px}
 .ora-legal{
   max-width:1240px;margin:0 auto;padding:8px 0 12px;
@@ -1204,7 +1169,7 @@ h1,h2,h3,h4,h5,h6{font-family:var(--font-head); color:var(--ink); letter-spacing
 .legal-right a{color:var(--text);font-weight:900;text-decoration:none;transition:opacity .15s ease}
 .legal-right a:hover{opacity:.95}
 
-/* ============== MODAL ============== */
+/*  MODAL*/
 body.modal-open{overflow:hidden}
 .ora-modal{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center}
 .ora-modal[aria-hidden="false"]{display:flex;animation:fadeIn .18s ease}
@@ -1217,13 +1182,12 @@ body.modal-open{overflow:hidden}
   .ora-modal-close{right:8px;top:8px;background:rgba(0,0,0,.6)}
 }
 
-/* --- helpers to avoid overflow on small screens --- */
+
 .ora-foot-inner > * { min-width: 0; }
 .contact-list a, .menu-link { word-break: break-word; }
 
-/* ============== RESPONSIVE — FIXED MOBILE ============== */
+/*  RESPONSIVE MOBILE */
 
-/* Tablet: 2 cols with clear order */
 @media (max-width: 992px){
   .ora-foot-inner{
     grid-template-columns: 1fr 1fr;
@@ -1236,11 +1200,11 @@ body.modal-open{overflow:hidden}
   .col-logo    { grid-area: logo; }
   .col-contact { grid-area: contact; }
   .col-menu    { grid-area: menu; }
-  .col-legal, .col-social { grid-area: legal; } /* support either class */
+  .col-legal, .col-social { grid-area: legal; } 
   .ora-mark{ max-width: 180px; height:auto; }
 }
 
-/* Phones: single column, left-aligned (no centering) */
+/* Phones */
 @media (max-width: 640px){
   .ora-foot-inner{
     grid-template-columns: 1fr;
@@ -1253,16 +1217,15 @@ body.modal-open{overflow:hidden}
   }
   .col-logo,.col-contact,.col-legal,.col-social,.col-menu{
     justify-self: stretch; width:100%;
-    text-align:left;                      /* force left alignment */
+    text-align:left;                      
   }
   .menu{ justify-items:start; text-align:left; }
-  .menu-link{ display:block; }            /* full-width tap targets */
+  .menu-link{ display:block; }            
   .ora-mark{ width: 160px; }
   .legal-card{ padding: 12px; }
   .group-title{ margin-bottom: 10px; }
 }
 
-/* Bottom legal bar centered only on phones */
 @media (max-width: 640px){
   .ora-legal{
     grid-template-columns: 1fr;
@@ -1271,6 +1234,5 @@ body.modal-open{overflow:hidden}
   .legal-right{ text-align: center; }
 }
 
-/* simple keyframes for modal */
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes pop{from{transform:scale(.985)}to{transform:scale(1)}}
