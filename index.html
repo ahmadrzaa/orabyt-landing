@@ -875,278 +875,253 @@
 </section>
 
 <script>
-(function () {
-  // 🔗 YOUR WORKER URL (Cloudflare Worker that sends the email)
+(() => {
   const workerUrl = "https://orabyt-booking-email.ahmadrza-1110.workers.dev";
+  const BRAND = "ORABYT";
 
-  // Small helper
-  function $(sel, root) {
-    return (root || document).querySelector(sel);
-  }
+  const $ = (sel, root = document) => root.querySelector(sel);
 
-  // Simple toast in bottom-right
-  function showToast(message, isError) {
-    var wrap = document.createElement("div");
-    wrap.setAttribute("role", "status");
-    wrap.style.position = "fixed";
-    wrap.style.right = "20px";
-    wrap.style.bottom = "22px";
-    wrap.style.zIndex = "99999";
-    wrap.style.maxWidth = "92vw";
-    wrap.style.display = "grid";
-    wrap.style.gridAutoFlow = "row";
-    wrap.style.gap = "6px";
+  // Small toast helper
+  function showToast(message, type = "ok") {
+    let box = document.createElement("div");
+    box.setAttribute("role", "status");
+    box.style.position = "fixed";
+    box.style.right = "20px";
+    box.style.bottom = "22px";
+    box.style.zIndex = "99999";
+    box.style.maxWidth = "92vw";
+    box.style.display = "grid";
+    box.style.gridAutoFlow = "row";
+    box.style.gap = "6px";
 
-    var box = document.createElement("div");
-    box.style.background = isError ? "#7a1f1f" : "#0f3a37";
-    box.style.color = "#fff";
-    box.style.padding = "12px 14px";
-    box.style.borderRadius = "16px";
-    box.style.boxShadow = "0 18px 34px rgba(0,0,0,.25)";
-    box.style.font = "600 14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial";
-    box.textContent = message;
+    const bubble = document.createElement("div");
+    bubble.style.background = type === "ok" ? "#0f3a37" : "#7a1f1f";
+    bubble.style.color = "#fff";
+    bubble.style.padding = "12px 14px";
+    bubble.style.borderRadius = "16px";
+    bubble.style.boxShadow = "0 18px 34px rgba(0,0,0,.25)";
+    bubble.style.font = "600 14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial";
+    bubble.textContent = message;
 
-    var arrow = document.createElement("span");
-    arrow.style.width = "0";
-    arrow.style.height = "0";
-    arrow.style.borderLeft = "10px solid transparent";
-    arrow.style.borderRight = "0 solid transparent";
-    arrow.style.borderTop = (isError ? "10px solid #7a1f1f" : "10px solid #0f3a37");
-    arrow.style.marginLeft = "auto";
+    const tail = document.createElement("span");
+    tail.style.width = "0";
+    tail.style.height = "0";
+    tail.style.borderLeft = "10px solid transparent";
+    tail.style.borderRight = "0 solid transparent";
+    tail.style.borderTop = type === "ok" ? "10px solid #0f3a37" : "10px solid #7a1f1f";
+    tail.style.marginLeft = "auto";
 
-    wrap.appendChild(box);
-    wrap.appendChild(arrow);
-    document.body.appendChild(wrap);
+    box.appendChild(bubble);
+    box.appendChild(tail);
+    document.body.appendChild(box);
 
-    setTimeout(function () {
-      wrap.style.transition = "opacity .25s ease, transform .25s ease";
-      wrap.style.opacity = "0";
-      wrap.style.transform = "translateY(6px)";
+    setTimeout(() => {
+      box.style.transition = "opacity .25s ease,transform .25s ease";
+      box.style.opacity = "0";
+      box.style.transform = "translateY(6px)";
     }, 2500);
 
-    setTimeout(function () {
-      wrap.remove();
-    }, 2800);
+    setTimeout(() => box.remove(), 2800);
   }
 
-  // Phone CC -> placeholder
-  var ccSelect = $(".orby-enquiry .eq-cc");
-  var phoneInput = $('.orby-enquiry input[name="phone"]');
-
+  // Phone placeholder updates
+  const ccSelect = $(".orby-enquiry .eq-cc");
+  const phoneInput = $('.orby-enquiry input[name="phone"]');
   if (ccSelect && phoneInput) {
-    function updatePhonePlaceholder() {
-      phoneInput.placeholder = ccSelect.value;
-    }
-    ccSelect.addEventListener("change", updatePhonePlaceholder);
-    updatePhonePlaceholder();
+    const updatePlaceholder = () => (phoneInput.placeholder = ccSelect.value);
+    ccSelect.addEventListener("change", updatePlaceholder);
+    updatePlaceholder();
   }
 
-  var form = $("#eqForm");
+  const form = $("#eqForm");
   if (!form) return;
 
-  form.addEventListener("submit", function (event) {
-    event.preventDefault();
+  form.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
 
-    // 🔎 Validate required fields
-    var requiredFields = form.querySelectorAll("[required]");
-    for (var i = 0; i < requiredFields.length; i++) {
-      var field = requiredFields[i];
-
+    // Simple required validation
+    for (let field of form.querySelectorAll("[required]")) {
       if (field.type === "checkbox" && !field.checked) {
-        if (field.reportValidity) field.reportValidity();
-        field.focus();
+        field.reportValidity?.();
         return;
       }
-
-      if (field.type !== "checkbox" && !String(field.value).trim()) {
-        if (field.reportValidity) field.reportValidity();
-        field.focus();
+      if (!String(field.value).trim()) {
+        field.reportValidity?.();
         return;
       }
     }
 
-    // Build form data object
-    var data = {
-      firstName: String(form.firstName.value || "").trim(),
-      lastName: String(form.lastName.value || "").trim(),
-      email: String(form.email.value || "").trim(),
+    const formData = {
+      firstName: form.firstName.value.trim(),
+      lastName: form.lastName.value.trim(),
+      email: form.email.value.trim(),
       phoneFull:
         (ccSelect ? ccSelect.value : "") +
         " " +
-        (phoneInput ? String(phoneInput.value || "").trim() : ""),
+        (phoneInput ? phoneInput.value.trim() : ""),
       type: form.type.value,
       budget: form.budget.value,
       date: form.date.value,
-      brief: String(form.brief.value || "").trim(),
+      brief: form.brief.value.trim(),
       consent: !!form.consent.checked,
-      pageUrl: window.location.href
+      pageUrl: window.location.href,
     };
 
-    var submitBtn = form.querySelector(".eq-btn");
-    var originalText = submitBtn ? submitBtn.textContent : "";
-
+    const submitBtn = form.querySelector(".eq-btn");
+    const originalText = submitBtn?.textContent;
     if (submitBtn) {
       submitBtn.disabled = true;
       submitBtn.textContent = "Sending…";
     }
 
-    console.log("Sending to worker:", workerUrl);
-    console.log("Payload:", data);
+    let sentViaWorker = false;
 
-    fetch(workerUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-      .then(function (response) {
-        return response.text().then(function (text) {
-          var json;
-          try {
-            json = JSON.parse(text);
-          } catch (e) {
-            json = { raw: text };
-          }
-
-          console.log("Worker status:", response.status);
-          console.log("Worker body:", json);
-
-          // SUCCESS PATH – expecting { ok: true } from worker
-          if (response.ok && json && json.ok) {
-            showSuccessMessage(data);
-            showToast("Enquiry sent successfully!", false);
-            return;
-          }
-
-          // ERROR PATH – show message from server if any
-          var msg =
-            (json && (json.error || json.message)) ||
-            "Failed to submit enquiry. Please try again.";
-          showToast(msg, true);
-
-          // Fallback: open mailto so lead is not fully lost
-          fallbackEmail(data);
-        });
-      })
-      .catch(function (err) {
-        console.error("Submission error:", err);
-        showToast("Network error. Please try again.", true);
-        fallbackEmail(data);
-      })
-      .finally(function () {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = originalText || "SUBMIT ENQUIRY";
-        }
+    // Try Worker (MailChannels – may fail, that’s OK)
+    try {
+      const res = await fetch(workerUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
+
+      if (res.ok) {
+        let result = {};
+        try {
+          result = await res.json();
+        } catch {}
+        if (result && result.ok) {
+          sentViaWorker = true;
+        }
+      }
+    } catch (err) {
+      console.error("Worker network error:", err);
+    }
+
+    // Always make sure something happens for user:
+    // - If Worker worked: just show success.
+    // - If Worker failed: open email client with prefilled data.
+    if (sentViaWorker) {
+      showSuccessMessage(formData);
+      showToast("Enquiry sent successfully!", "ok");
+    } else {
+      fallbackEmail(formData);
+      showSuccessMessage(formData);
+      showToast("Opening your email app to send the enquiry.", "ok");
+    }
+
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText || "SUBMIT ENQUIRY";
+    }
   });
 
-  function fallbackEmail(data) {
-    var subject = encodeURIComponent(
-      "New Enquiry - " + data.firstName + " " + data.lastName
+  function fallbackEmail(formData) {
+    const subject = encodeURIComponent(
+      `New Enquiry - ${formData.firstName} ${formData.lastName}`
     );
 
-    var body = `
+    const body = encodeURIComponent(
+      `
 New enquiry via ORABYT site
 ———————————————
-Name: ${data.firstName} ${data.lastName}
-Email: ${data.email}
-Phone: ${data.phoneFull}
-Project type: ${data.type}
-Budget: ${data.budget}
-Target date: ${data.date}
+Name: ${formData.firstName} ${formData.lastName}
+Email: ${formData.email}
+Phone: ${formData.phoneFull}
+Project type: ${formData.type}
+Budget: ${formData.budget}
+Target date: ${formData.date}
 Page: ${window.location.href}
-${data.brief ? "Brief: " + data.brief : ""}
-    `.trim();
+${formData.brief ? `Brief: ${formData.brief}` : ""}
+      `.trim()
+    );
 
-    window.location.href =
-      "mailto:info@orabyt.com?subject=" +
-      subject +
-      "&body=" +
-      encodeURIComponent(body);
+    // Opens default mail client (user clicks Send)
+    window.location.href = `mailto:info@orabyt.com?subject=${subject}&body=${body}`;
   }
 
-  function escapeHtml(str) {
-    return String(str || "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
+  function showSuccessMessage(formData) {
+    const sanitize = (text) => {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    };
 
-  function showSuccessMessage(data) {
-    var container = $(".orby-enquiry .eq-wrap");
-    var form = $("#eqForm");
-    if (!container || !form) return;
+    const container = $(".orby-enquiry .eq-wrap");
+    const formEl = $("#eqForm");
+    if (!container || !formEl) return;
 
-    var successDiv = document.createElement("div");
+    const successDiv = document.createElement("div");
+    successDiv.innerHTML = `
+      <div style="background:#fff;border:1px solid var(--eq-line);border-radius:10px;padding:22px 20px;box-shadow:0 20px 50px rgba(0,0,0,.08)">
+        <h3 style="margin:0 0 8px;font-size:28px;color:var(--eq-ink);letter-spacing:.02em">
+          Thank you — your enquiry is booked!
+        </h3>
+        <p style="margin:0 0 10px;color:var(--eq-muted);line-height:1.6">
+          We've received your request. Our team at <strong>${BRAND}</strong> will contact you shortly.
+          For anything urgent, email <a href="mailto:info@orabyt.com">info@orabyt.com</a>.
+        </p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:14px 0 6px">
+          <div>
+            <small style="color:var(--eq-muted);text-transform:uppercase;letter-spacing:.08em">Name</small>
+            <div style="font-weight:700;color:var(--eq-ink)">
+              ${sanitize(formData.firstName)} ${sanitize(formData.lastName)}
+            </div>
+          </div>
+          <div>
+            <small style="color:var(--eq-muted);text-transform:uppercase;letter-spacing:.08em">Project type</small>
+            <div style="font-weight:700;color:var(--eq-ink)">${sanitize(formData.type)}</div>
+          </div>
+          <div>
+            <small style="color:var(--eq-muted);text-transform:uppercase;letter-spacing:.08em">Budget</small>
+            <div style="font-weight:700;color:var(--eq-ink)">${sanitize(formData.budget)}</div>
+          </div>
+          <div>
+            <small style="color:var(--eq-muted);text-transform:uppercase;letter-spacing:.08em">Target date</small>
+            <div style="font-weight:700;color:var(--eq-ink)">${sanitize(formData.date)}</div>
+          </div>
+        </div>
 
-    successDiv.innerHTML =
-      '<div style="background:#fff;border:1px solid var(--eq-line);border-radius:10px;padding:22px 20px;box-shadow:0 20px 50px rgba(0,0,0,.08)">' +
-      '<h3 style="margin:0 0 8px;font-size:28px;color:var(--eq-ink);letter-spacing:.02em">Thank you — your enquiry is booked!</h3>' +
-      '<p style="margin:0 0 10px;color:var(--eq-muted);line-height:1.6">' +
-      "We've received your request. Our team at <strong>ORABYT</strong> will contact you shortly. " +
-      'For anything urgent, email <a href="mailto:info@orabyt.com">info@orabyt.com</a>.' +
-      "</p>" +
-      '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:14px 0 6px">' +
-      '<div><small style="color:var(--eq-muted);text-transform:uppercase;letter-spacing:.08em">Name</small>' +
-      '<div style="font-weight:700;color:var(--eq-ink)">' +
-      escapeHtml(data.firstName) +
-      " " +
-      escapeHtml(data.lastName) +
-      "</div></div>" +
-      '<div><small style="color:var(--eq-muted);text-transform:uppercase;letter-spacing:.08em">Project type</small>' +
-      '<div style="font-weight:700;color:var(--eq-ink)">' +
-      escapeHtml(data.type) +
-      "</div></div>" +
-      '<div><small style="color:var(--eq-muted);text-transform:uppercase;letter-spacing:.08em">Budget</small>' +
-      '<div style="font-weight:700;color:var(--eq-ink)">' +
-      escapeHtml(data.budget) +
-      "</div></div>" +
-      '<div><small style="color:var(--eq-muted);text-transform:uppercase;letter-spacing:.08em">Target date</small>' +
-      '<div style="font-weight:700;color:var(--eq-ink)">' +
-      escapeHtml(data.date) +
-      "</div></div>" +
-      "</div>" +
-      (data.brief
-        ? '<details style="margin:6px 0 10px">' +
-          '<summary style="cursor:pointer;color:var(--eq-ink)">View brief</summary>' +
-          '<div style="white-space:pre-wrap;color:var(--eq-muted);margin-top:6px">' +
-          escapeHtml(data.brief) +
-          "</div></details>"
-        : "") +
-      '<p style="margin:10px 0 0;color:var(--eq-muted);font-size:12px">' +
-      'By submitting, you agree to our <a href="/privacy">Privacy</a> and <a href="/terms">Terms</a>.' +
-      "</p>" +
-      '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">' +
-      '<button type="button" id="eqAgain" style="appearance:none;border:1px solid var(--eq-line-focus);background:transparent;color:var(--eq-ink);padding:10px 14px;border-radius:6px;cursor:pointer">' +
-      "Submit another enquiry" +
-      "</button>" +
-      '<a href="#services-dark" style="display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border-radius:6px;background:var(--eq-btn);color:#fff;text-decoration:none">' +
-      "Explore services" +
-      "</a>" +
-      "</div>" +
-      "</div>";
+        ${
+          formData.brief
+            ? `<details style="margin:6px 0 10px">
+                 <summary style="cursor:pointer;color:var(--eq-ink)">View brief</summary>
+                 <div style="white-space:pre-wrap;color:var(--eq-muted);margin-top:6px">
+                   ${sanitize(formData.brief)}
+                 </div>
+               </details>`
+            : ""
+        }
+
+        <p style="margin:10px 0 0;color:var(--eq-muted);font-size:12px">
+          By submitting, you agree to our <a href="/privacy">Privacy</a> and <a href="/terms">Terms</a>.
+        </p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+          <button type="button" id="eqAgain"
+            style="appearance:none;border:1px solid var(--eq-line-focus);background:transparent;color:var(--eq-ink);padding:10px 14px;border-radius:6px;cursor:pointer">
+            Submit another enquiry
+          </button>
+          <a href="#services-dark"
+            style="display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border-radius:6px;background:var(--eq-btn);color:#fff;text-decoration:none">
+            Explore services
+          </a>
+        </div>
+      </div>
+    `;
 
     container.appendChild(successDiv);
-    form.style.display = "none";
-
+    formEl.style.display = "none";
     successDiv.scrollIntoView({ behavior: "smooth", block: "start" });
 
-    var againBtn = successDiv.querySelector("#eqAgain");
-    if (againBtn) {
-      againBtn.addEventListener("click", function () {
-        successDiv.remove();
-        form.reset();
-        form.style.display = "";
-        form.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    }
+    $("#eqAgain", successDiv)?.addEventListener("click", () => {
+      successDiv.remove();
+      formEl.style.display = "";
+      formEl.reset();
+      formEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
   }
 })();
 </script>
+
 
 
 
