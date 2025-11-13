@@ -792,252 +792,364 @@
       })()
     </script>
 
+<!-- enquiry -->
+<section id="enquiry" class="orby-enquiry">
+  <div class="eq-wrap">
+    <h2 class="eq-title">MAKE AN ENQUIRY</h2>
+    <form id="eqForm" method="post" action="" class="eq-form" novalidate>
+      <label class="eq-field">
+        <span>First name*</span>
+        <input type="text" name="firstName" required>
+      </label>
 
-    <section id="enquiry" class="orby-enquiry">
-      <div class="eq-wrap">
-        <h2 class="eq-title">MAKE AN ENQUIRY</h2>
-        <form id="eqForm" method="post" action="" class="eq-form" novalidate><label class="eq-field"><span>First name*</span><input type="text" name="firstName" required></label><label class="eq-field"><span>Last name*</span><input type="text" name="lastName" required></label><label class="eq-field"><span>Email address*</span><input type="email" name="email" required></label><label class="eq-field eq-phone"><span>Phone number</span>
-            <div class="eq-phone-wrap"><select name="cc" class="eq-cc">
-                <option value="+973" selected="selected">BH</option>
-                <option value="+91">IN</option>
-                <option value="+971">AE</option>
-                <option value="+966">SA</option>
-                <option value="+965">KW</option>
-              </select><input type="tel" name="phone" placeholder="+973"></div>
-          </label><label class="eq-field"><span>Project type*</span><select name="type" required>
-              <option value="">Select…</option>
-              <option>Business Website</option>
-              <option>E-commerce</option>
-              <option>Landing Page</option>
-              <option>AI Chatbot</option>
-              <option>Custom Web/App</option>
-            </select></label><label class="eq-field"><span>Budget (monthly / retainer)*</span><select name="budget" required>
-              <option value="">Select…</option>
-              <option>Under BHD 300</option>
-              <option>BHD 300 – 800</option>
-              <option>BHD 800 – 1.5k</option>
-              <option>BHD 1.5k+</option>
-            </select></label><label class="eq-field eq-wide"><span>Target go-live date*</span><input type="date" name="date" required></label><label class="eq-field eq-wide"><span>Brief (optional)</span><textarea name="brief" rows="4" placeholder="Goals, pages, integrations, deadline…"></textarea></label><label class="eq-consent eq-wide"><input type="checkbox" name="consent" required><span>I agree to ORABYT processing my data for this request.</span></label>
-          <div class="eq-actions eq-wide"><button type="submit" class="eq-btn">SUBMIT ENQUIRY</button>
-            <p class="eq-small">By clicking submit, you consent to ORABYT storing and processing your personal data to provide the requested content.</p>
-          </div>
-        </form>
+      <label class="eq-field">
+        <span>Last name*</span>
+        <input type="text" name="lastName" required>
+      </label>
+
+      <label class="eq-field">
+        <span>Email address*</span>
+        <input type="email" name="email" required>
+      </label>
+
+      <label class="eq-field eq-phone">
+        <span>Phone number</span>
+        <div class="eq-phone-wrap">
+          <select name="cc" class="eq-cc">
+            <option value="+973" selected="selected">BH</option>
+            <option value="+91">IN</option>
+            <option value="+971">AE</option>
+            <option value="+966">SA</option>
+            <option value="+965">KW</option>
+          </select>
+          <input type="tel" name="phone" placeholder="+973">
+        </div>
+      </label>
+
+      <label class="eq-field">
+        <span>Project type*</span>
+        <select name="type" required>
+          <option value="">Select…</option>
+          <option>Business Website</option>
+          <option>E-commerce</option>
+          <option>Landing Page</option>
+          <option>AI Chatbot</option>
+          <option>Custom Web/App</option>
+        </select>
+      </label>
+
+      <label class="eq-field">
+        <span>Budget (monthly / retainer)*</span>
+        <select name="budget" required>
+          <option value="">Select…</option>
+          <option>Under BHD 300</option>
+          <option>BHD 300 – 800</option>
+          <option>BHD 800 – 1.5k</option>
+          <option>BHD 1.5k+</option>
+        </select>
+      </label>
+
+      <label class="eq-field eq-wide">
+        <span>Target go-live date*</span>
+        <input type="date" name="date" required>
+      </label>
+
+      <label class="eq-field eq-wide">
+        <span>Brief (optional)</span>
+        <textarea name="brief" rows="4" placeholder="Goals, pages, integrations, deadline…"></textarea>
+      </label>
+
+      <label class="eq-consent eq-wide">
+        <input type="checkbox" name="consent" required>
+        <span>I agree to ORABYT processing my data for this request.</span>
+      </label>
+
+      <div class="eq-actions eq-wide">
+        <button type="submit" class="eq-btn">SUBMIT ENQUIRY</button>
+        <p class="eq-small">
+          By clicking submit, you consent to ORABYT storing and processing your personal data to provide the requested content.
+        </p>
       </div>
-      <div class="eq-toast" role="status" aria-live="polite">Thanks! We’ll contact you shortly.</div>
-    </section>
+    </form>
+  </div>
+</section>
 
+<script>
+(function () {
+  // 🔗 YOUR WORKER URL (Cloudflare Worker that sends the email)
+  const workerUrl = "https://orabyt-booking-email.ahmadrza-1110.workers.dev";
 
-
-
-  <script>
-(() => {
-  const workerUrl = 'https://orabyt-booking-email.ahmadrza-1110.workers.dev'; 
-  
-  let n = "ORABYT",
-    s = (e, t = document) => t.querySelector(e);
-
-  function showToast(message, type = "ok") {
-    let r = document.createElement("div");
-    r.setAttribute("role", "status");
-    r.style.position = "fixed";
-    r.style.right = "20px";
-    r.style.bottom = "22px";
-    r.style.zIndex = "99999";
-    r.style.maxWidth = "92vw";
-    r.style.display = "grid";
-    r.style.gridAutoFlow = "row";
-    r.style.gap = "6px";
-    
-    var a = document.createElement("div");
-    a.style.background = "ok" === type ? "#0f3a37" : "#7a1f1f";
-    a.style.color = "#fff";
-    a.style.padding = "12px 14px";
-    a.style.borderRadius = "16px";
-    a.style.boxShadow = "0 18px 34px rgba(0,0,0,.25)";
-    a.style.font = "600 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Arial";
-    a.textContent = message;
-    
-    var e = document.createElement("span");
-    e.style.width = "0";
-    e.style.height = "0";
-    e.style.borderLeft = "10px solid transparent";
-    e.style.borderRight = "0 solid transparent";
-    e.style.borderTop = "ok" === type ? "10px solid #0f3a37" : "10px solid #7a1f1f";
-    e.style.marginLeft = "auto";
-    
-    r.appendChild(a);
-    r.appendChild(e);
-    document.body.appendChild(r);
-    
-    setTimeout(() => {
-      r.style.transition = "opacity .25s ease, transform .25s ease";
-      r.style.opacity = "0";
-      r.style.transform = "translateY(6px)";
-    }, 2500);
-    
-    setTimeout(() => r.remove(), 2800);
+  // Small helper
+  function $(sel, root) {
+    return (root || document).querySelector(sel);
   }
 
-  let m = s(".orby-enquiry .eq-cc"),
-    c = s('.orby-enquiry input[name="phone"]');
-  
-  // Update phone placeholder when country code changes
-  if (m && c) {
-    const updatePhonePlaceholder = () => c.placeholder = m.value;
-    m.addEventListener("change", updatePhonePlaceholder);
+  // Simple toast in bottom-right
+  function showToast(message, isError) {
+    var wrap = document.createElement("div");
+    wrap.setAttribute("role", "status");
+    wrap.style.position = "fixed";
+    wrap.style.right = "20px";
+    wrap.style.bottom = "22px";
+    wrap.style.zIndex = "99999";
+    wrap.style.maxWidth = "92vw";
+    wrap.style.display = "grid";
+    wrap.style.gridAutoFlow = "row";
+    wrap.style.gap = "6px";
+
+    var box = document.createElement("div");
+    box.style.background = isError ? "#7a1f1f" : "#0f3a37";
+    box.style.color = "#fff";
+    box.style.padding = "12px 14px";
+    box.style.borderRadius = "16px";
+    box.style.boxShadow = "0 18px 34px rgba(0,0,0,.25)";
+    box.style.font = "600 14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial";
+    box.textContent = message;
+
+    var arrow = document.createElement("span");
+    arrow.style.width = "0";
+    arrow.style.height = "0";
+    arrow.style.borderLeft = "10px solid transparent";
+    arrow.style.borderRight = "0 solid transparent";
+    arrow.style.borderTop = (isError ? "10px solid #7a1f1f" : "10px solid #0f3a37");
+    arrow.style.marginLeft = "auto";
+
+    wrap.appendChild(box);
+    wrap.appendChild(arrow);
+    document.body.appendChild(wrap);
+
+    setTimeout(function () {
+      wrap.style.transition = "opacity .25s ease, transform .25s ease";
+      wrap.style.opacity = "0";
+      wrap.style.transform = "translateY(6px)";
+    }, 2500);
+
+    setTimeout(function () {
+      wrap.remove();
+    }, 2800);
+  }
+
+  // Phone CC -> placeholder
+  var ccSelect = $(".orby-enquiry .eq-cc");
+  var phoneInput = $('.orby-enquiry input[name="phone"]');
+
+  if (ccSelect && phoneInput) {
+    function updatePhonePlaceholder() {
+      phoneInput.placeholder = ccSelect.value;
+    }
+    ccSelect.addEventListener("change", updatePhonePlaceholder);
     updatePhonePlaceholder();
   }
 
-  let u = s("#eqForm");
-  u?.addEventListener("submit", async function(e) {
-    e.preventDefault();
-    
-    // Validate required fields
-    for (let field of u.querySelectorAll("[required]")) {
+  var form = $("#eqForm");
+  if (!form) return;
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    // 🔎 Validate required fields
+    var requiredFields = form.querySelectorAll("[required]");
+    for (var i = 0; i < requiredFields.length; i++) {
+      var field = requiredFields[i];
+
       if (field.type === "checkbox" && !field.checked) {
-        field.reportValidity?.();
+        if (field.reportValidity) field.reportValidity();
+        field.focus();
         return;
       }
-      if (!field.value.trim()) {
-        field.reportValidity?.();
+
+      if (field.type !== "checkbox" && !String(field.value).trim()) {
+        if (field.reportValidity) field.reportValidity();
+        field.focus();
         return;
       }
     }
 
-    var formData = {
-        firstName: u.firstName.value.trim(),
-        lastName: u.lastName.value.trim(),
-        email: u.email.value.trim(),
-        phoneFull: (m ? m.value : "") + " " + (c ? c.value.trim() : ""),
-        type: u.type.value,
-        budget: u.budget.value,
-        date: u.date.value,
-        brief: u.brief.value.trim(),
-        consent: !!u.consent.checked,
-        pageUrl: window.location.href
-      },
-      submitBtn = u.querySelector(".eq-btn"),
-      originalText = submitBtn?.textContent;
+    // Build form data object
+    var data = {
+      firstName: String(form.firstName.value || "").trim(),
+      lastName: String(form.lastName.value || "").trim(),
+      email: String(form.email.value || "").trim(),
+      phoneFull:
+        (ccSelect ? ccSelect.value : "") +
+        " " +
+        (phoneInput ? String(phoneInput.value || "").trim() : ""),
+      type: form.type.value,
+      budget: form.budget.value,
+      date: form.date.value,
+      brief: String(form.brief.value || "").trim(),
+      consent: !!form.consent.checked,
+      pageUrl: window.location.href
+    };
 
-    // Disable submit button
+    var submitBtn = form.querySelector(".eq-btn");
+    var originalText = submitBtn ? submitBtn.textContent : "";
+
     if (submitBtn) {
       submitBtn.disabled = true;
       submitBtn.textContent = "Sending…";
     }
 
-    try {
-          const response = await fetch(workerUrl, {
-          method: 'POST',
-          headers: {
-          'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData)
-          });
+    console.log("Sending to worker:", workerUrl);
+    console.log("Payload:", data);
 
-          let raw = await response.text();
-          let result;
+    fetch(workerUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(function (response) {
+        return response.text().then(function (text) {
+          var json;
           try {
-          result = JSON.parse(raw);
-          } catch {
-          result = { raw };
+            json = JSON.parse(text);
+          } catch (e) {
+            json = { raw: text };
           }
 
-          console.log('Worker status:', response.status);
-          console.log('Worker body:', result);
+          console.log("Worker status:", response.status);
+          console.log("Worker body:", json);
 
-          if (!response.ok || !result.ok) {
-          throw new Error(result.error || 'Failed to submit enquiry');
+          // SUCCESS PATH – expecting { ok: true } from worker
+          if (response.ok && json && json.ok) {
+            showSuccessMessage(data);
+            showToast("Enquiry sent successfully!", false);
+            return;
           }
-      // Success - show confirmation
-      showSuccessMessage(formData);
-      showToast("Enquiry sent successfully!", "ok");
-      
-    } catch (error) {
-      console.error('Submission error:', error);
-      showToast("Failed to send enquiry. Please try again.", "error");
-      
-      // Fallback: open email client
-      fallbackEmail(formData);
-    } finally {
-      // Re-enable submit button
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText || "SUBMIT ENQUIRY";
-      }
-    }
+
+          // ERROR PATH – show message from server if any
+          var msg =
+            (json && (json.error || json.message)) ||
+            "Failed to submit enquiry. Please try again.";
+          showToast(msg, true);
+
+          // Fallback: open mailto so lead is not fully lost
+          fallbackEmail(data);
+        });
+      })
+      .catch(function (err) {
+        console.error("Submission error:", err);
+        showToast("Network error. Please try again.", true);
+        fallbackEmail(data);
+      })
+      .finally(function () {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText || "SUBMIT ENQUIRY";
+        }
+      });
   });
 
-  function fallbackEmail(formData) {
-    const subject = encodeURIComponent(`New Enquiry - ${formData.firstName} ${formData.lastName}`);
-    const body = encodeURIComponent(`
+  function fallbackEmail(data) {
+    var subject = encodeURIComponent(
+      "New Enquiry - " + data.firstName + " " + data.lastName
+    );
+
+    var body = `
 New enquiry via ORABYT site
 ———————————————
-Name: ${formData.firstName} ${formData.lastName}
-Email: ${formData.email}
-Phone: ${formData.phoneFull}
-Project type: ${formData.type}
-Budget: ${formData.budget}
-Target date: ${formData.date}
+Name: ${data.firstName} ${data.lastName}
+Email: ${data.email}
+Phone: ${data.phoneFull}
+Project type: ${data.type}
+Budget: ${data.budget}
+Target date: ${data.date}
 Page: ${window.location.href}
-${formData.brief ? `Brief: ${formData.brief}` : ''}
-    `.trim());
-    
-    window.location.href = `mailto:info@orabyt.com?subject=${subject}&body=${body}`;
+${data.brief ? "Brief: " + data.brief : ""}
+    `.trim();
+
+    window.location.href =
+      "mailto:info@orabyt.com?subject=" +
+      subject +
+      "&body=" +
+      encodeURIComponent(body);
   }
 
-  function showSuccessMessage(formData) {
-    const sanitize = (text) => {
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
-    };
+  function escapeHtml(str) {
+    return String(str || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
 
-    var container = s(".orby-enquiry .eq-wrap");
-    let form = s("#eqForm");
-    let successDiv = document.createElement("div");
-    
-    successDiv.innerHTML = `
-      <div style="background:#fff;border:1px solid var(--eq-line);border-radius:10px;padding:22px 20px;box-shadow:0 20px 50px rgba(0,0,0,.08)">
-        <h3 style="margin:0 0 8px;font-size:28px;color:var(--eq-ink);letter-spacing:.02em">Thank you — your enquiry is booked!</h3>
-        <p style="margin:0 0 10px;color:var(--eq-muted);line-height:1.6">
-          We've received your request. Our team at <strong>${n}</strong> will contact you shortly.
-          For anything urgent, email <a href="mailto:info@orabyt.com">info@orabyt.com</a>.
-        </p>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:14px 0 6px">
-          <div><small style="color:var(--eq-muted);text-transform:uppercase;letter-spacing:.08em">Name</small><div style="font-weight:700;color:var(--eq-ink)">${sanitize(formData.firstName)} ${sanitize(formData.lastName)}</div></div>
-          <div><small style="color:var(--eq-muted);text-transform:uppercase;letter-spacing:.08em">Project type</small><div style="font-weight:700;color:var(--eq-ink)">${sanitize(formData.type)}</div></div>
-          <div><small style="color:var(--eq-muted);text-transform:uppercase;letter-spacing:.08em">Budget</small><div style="font-weight:700;color:var(--eq-ink)">${sanitize(formData.budget)}</div></div>
-          <div><small style="color:var(--eq-muted);text-transform:uppercase;letter-spacing:.08em">Target date</small><div style="font-weight:700;color:var(--eq-ink)">${sanitize(formData.date)}</div></div>
-        </div>
+  function showSuccessMessage(data) {
+    var container = $(".orby-enquiry .eq-wrap");
+    var form = $("#eqForm");
+    if (!container || !form) return;
 
-        ${formData.brief ? `<details style="margin:6px 0 10px"><summary style="cursor:pointer;color:var(--eq-ink)">View brief</summary><div style="white-space:pre-wrap;color:var(--eq-muted);margin-top:6px">${sanitize(formData.brief)}</div></details>` : ""}
+    var successDiv = document.createElement("div");
 
-        <p style="margin:10px 0 0;color:var(--eq-muted);font-size:12px">
-          By submitting, you agree to our <a href="/privacy">Privacy</a> and <a href="/terms">Terms</a>.
-        </p>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
-          <button type="button" id="eqAgain" style="appearance:none;border:1px solid var(--eq-line-focus);background:transparent;color:var(--eq-ink);padding:10px 14px;border-radius:6px;cursor:pointer">
-            Submit another enquiry
-          </button>
-          <a href="#services-dark" style="display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border-radius:6px;background:var(--eq-btn);color:#fff;text-decoration:none">
-            Explore services
-          </a>
-        </div>
-      </div>
-    `;
-    
+    successDiv.innerHTML =
+      '<div style="background:#fff;border:1px solid var(--eq-line);border-radius:10px;padding:22px 20px;box-shadow:0 20px 50px rgba(0,0,0,.08)">' +
+      '<h3 style="margin:0 0 8px;font-size:28px;color:var(--eq-ink);letter-spacing:.02em">Thank you — your enquiry is booked!</h3>' +
+      '<p style="margin:0 0 10px;color:var(--eq-muted);line-height:1.6">' +
+      "We've received your request. Our team at <strong>ORABYT</strong> will contact you shortly. " +
+      'For anything urgent, email <a href="mailto:info@orabyt.com">info@orabyt.com</a>.' +
+      "</p>" +
+      '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:14px 0 6px">' +
+      '<div><small style="color:var(--eq-muted);text-transform:uppercase;letter-spacing:.08em">Name</small>' +
+      '<div style="font-weight:700;color:var(--eq-ink)">' +
+      escapeHtml(data.firstName) +
+      " " +
+      escapeHtml(data.lastName) +
+      "</div></div>" +
+      '<div><small style="color:var(--eq-muted);text-transform:uppercase;letter-spacing:.08em">Project type</small>' +
+      '<div style="font-weight:700;color:var(--eq-ink)">' +
+      escapeHtml(data.type) +
+      "</div></div>" +
+      '<div><small style="color:var(--eq-muted);text-transform:uppercase;letter-spacing:.08em">Budget</small>' +
+      '<div style="font-weight:700;color:var(--eq-ink)">' +
+      escapeHtml(data.budget) +
+      "</div></div>" +
+      '<div><small style="color:var(--eq-muted);text-transform:uppercase;letter-spacing:.08em">Target date</small>' +
+      '<div style="font-weight:700;color:var(--eq-ink)">' +
+      escapeHtml(data.date) +
+      "</div></div>" +
+      "</div>" +
+      (data.brief
+        ? '<details style="margin:6px 0 10px">' +
+          '<summary style="cursor:pointer;color:var(--eq-ink)">View brief</summary>' +
+          '<div style="white-space:pre-wrap;color:var(--eq-muted);margin-top:6px">' +
+          escapeHtml(data.brief) +
+          "</div></details>"
+        : "") +
+      '<p style="margin:10px 0 0;color:var(--eq-muted);font-size:12px">' +
+      'By submitting, you agree to our <a href="/privacy">Privacy</a> and <a href="/terms">Terms</a>.' +
+      "</p>" +
+      '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">' +
+      '<button type="button" id="eqAgain" style="appearance:none;border:1px solid var(--eq-line-focus);background:transparent;color:var(--eq-ink);padding:10px 14px;border-radius:6px;cursor:pointer">' +
+      "Submit another enquiry" +
+      "</button>" +
+      '<a href="#services-dark" style="display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border-radius:6px;background:var(--eq-btn);color:#fff;text-decoration:none">' +
+      "Explore services" +
+      "</a>" +
+      "</div>" +
+      "</div>";
+
     container.appendChild(successDiv);
     form.style.display = "none";
+
     successDiv.scrollIntoView({ behavior: "smooth", block: "start" });
-    
-    s("#eqAgain", successDiv)?.addEventListener("click", () => {
-      successDiv.remove();
-      form.style.display = "";
-      form.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
+
+    var againBtn = successDiv.querySelector("#eqAgain");
+    if (againBtn) {
+      againBtn.addEventListener("click", function () {
+        successDiv.remove();
+        form.reset();
+        form.style.display = "";
+        form.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
   }
 })();
 </script>
+
+
+
     <footer class="ora-footer" id="footer">
       <div class="ora-foot-inner">
         <div class="ora-col col-logo"><img class="ora-mark" src="/images/ORABYT_ white logo.svg" alt="ORABYT — AI & Web Studio"></div>
