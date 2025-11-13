@@ -796,7 +796,7 @@
     <section id="enquiry" class="orby-enquiry">
       <div class="eq-wrap">
         <h2 class="eq-title">MAKE AN ENQUIRY</h2>
-        <form id="eqForm" class="eq-form" novalidate><label class="eq-field"><span>First name*</span><input type="text" name="firstName" required></label><label class="eq-field"><span>Last name*</span><input type="text" name="lastName" required></label><label class="eq-field"><span>Email address*</span><input type="email" name="email" required></label><label class="eq-field eq-phone"><span>Phone number</span>
+        <form id="eqForm" method="post" action="" class="eq-form" novalidate><label class="eq-field"><span>First name*</span><input type="text" name="firstName" required></label><label class="eq-field"><span>Last name*</span><input type="text" name="lastName" required></label><label class="eq-field"><span>Email address*</span><input type="email" name="email" required></label><label class="eq-field eq-phone"><span>Phone number</span>
             <div class="eq-phone-wrap"><select name="cc" class="eq-cc">
                 <option value="+973" selected="selected">BH</option>
                 <option value="+91">IN</option>
@@ -825,6 +825,10 @@
       </div>
       <div class="eq-toast" role="status" aria-live="polite">Thanks! We’ll contact you shortly.</div>
     </section>
+
+
+
+
   <script>
 (() => {
   const workerUrl = 'https://orabyt-booking-email.ahmadrza-1110.workers.dev'; 
@@ -922,21 +926,28 @@
     }
 
     try {
-      // Send to Cloudflare Worker
-      const response = await fetch(workerUrl, {
-        method: 'POST',
-        headers: {
+          const response = await fetch(workerUrl, {
+          method: 'POST',
+          headers: {
           'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      });
+          },
+          body: JSON.stringify(formData)
+          });
 
-      const result = await response.json();
+          let raw = await response.text();
+          let result;
+          try {
+          result = JSON.parse(raw);
+          } catch {
+          result = { raw };
+          }
 
-      if (!response.ok) {
-        throw new Error(result.error || 'Failed to submit enquiry');
-      }
+          console.log('Worker status:', response.status);
+          console.log('Worker body:', result);
 
+          if (!response.ok || !result.ok) {
+          throw new Error(result.error || 'Failed to submit enquiry');
+          }
       // Success - show confirmation
       showSuccessMessage(formData);
       showToast("Enquiry sent successfully!", "ok");
