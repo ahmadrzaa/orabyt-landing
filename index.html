@@ -873,34 +873,34 @@
     </form>
   </div>
 </section>
-
-<<script>
+<script>
 (() => {
-  const workerUrl = 'https://orabyt-booking-email.ahmadrza-1110.workers.dev'; 
-  
-  let BRAND = "ORABYT";
+  // Your Cloudflare Worker URL
+  const workerUrl = "https://orabyt-booking-email.ahmadrza-1110.workers.dev";
+
+  const BRAND = "ORABYT";
   const $ = (sel, root = document) => root.querySelector(sel);
 
   function showToast(message, type = "ok") {
-    let wrap = document.createElement("div");
-    wrap.setAttribute("role", "status");
-    wrap.style.position = "fixed";
-    wrap.style.right = "20px";
-    wrap.style.bottom = "22px";
-    wrap.style.zIndex = "99999";
-    wrap.style.maxWidth = "92vw";
-    wrap.style.display = "grid";
-    wrap.style.gridAutoFlow = "row";
-    wrap.style.gap = "6px";
-
     let box = document.createElement("div");
-    box.style.background = type === "ok" ? "#0f3a37" : "#7a1f1f";
-    box.style.color = "#fff";
-    box.style.padding = "12px 14px";
-    box.style.borderRadius = "16px";
-    box.style.boxShadow = "0 18px 34px rgba(0,0,0,.25)";
-    box.style.font = "600 14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial";
-    box.textContent = message;
+    box.setAttribute("role", "status");
+    box.style.position = "fixed";
+    box.style.right = "20px";
+    box.style.bottom = "22px";
+    box.style.zIndex = "99999";
+    box.style.maxWidth = "92vw";
+    box.style.display = "grid";
+    box.style.gridAutoFlow = "row";
+    box.style.gap = "6px";
+
+    let bubble = document.createElement("div");
+    bubble.style.background = type === "ok" ? "#0f3a37" : "#7a1f1f";
+    bubble.style.color = "#fff";
+    bubble.style.padding = "12px 14px";
+    bubble.style.borderRadius = "16px";
+    bubble.style.boxShadow = "0 18px 34px rgba(0,0,0,.25)";
+    bubble.style.font = "600 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Arial";
+    bubble.textContent = message;
 
     let tail = document.createElement("span");
     tail.style.width = "0";
@@ -910,33 +910,38 @@
     tail.style.borderTop = type === "ok" ? "10px solid #0f3a37" : "10px solid #7a1f1f";
     tail.style.marginLeft = "auto";
 
-    wrap.appendChild(box);
-    wrap.appendChild(tail);
-    document.body.appendChild(wrap);
+    box.appendChild(bubble);
+    box.appendChild(tail);
+    document.body.appendChild(box);
 
     setTimeout(() => {
-      wrap.style.transition = "opacity .25s ease, transform .25s ease";
-      wrap.style.opacity = "0";
-      wrap.style.transform = "translateY(6px)";
+      box.style.transition = "opacity .25s ease, transform .25s ease";
+      box.style.opacity = "0";
+      box.style.transform = "translateY(6px)";
     }, 2500);
 
-    setTimeout(() => wrap.remove(), 2800);
+    setTimeout(() => box.remove(), 2800);
   }
 
-  // phone code + placeholder
-  let ccSel = $(".orby-enquiry .eq-cc");
+  // Phone country code → placeholder
+  let ccSelect = $(".orby-enquiry .eq-cc");
   let phoneInput = $('.orby-enquiry input[name="phone"]');
-  if (ccSel && phoneInput) {
-    const updatePhonePlaceholder = () => phoneInput.placeholder = ccSel.value;
-    ccSel.addEventListener("change", updatePhonePlaceholder);
+
+  if (ccSelect && phoneInput) {
+    const updatePhonePlaceholder = () => {
+      phoneInput.placeholder = ccSelect.value;
+    };
+    ccSelect.addEventListener("change", updatePhonePlaceholder);
     updatePhonePlaceholder();
   }
 
   let form = $("#eqForm");
-  form?.addEventListener("submit", async (ev) => {
+  if (!form) return;
+
+  form.addEventListener("submit", async (ev) => {
     ev.preventDefault();
 
-    // HTML5 validation for required fields
+    // Simple client-side validation
     for (let field of form.querySelectorAll("[required]")) {
       if (field.type === "checkbox" && !field.checked) {
         field.reportValidity?.();
@@ -952,27 +957,31 @@
       firstName: form.firstName.value.trim(),
       lastName:  form.lastName.value.trim(),
       email:     form.email.value.trim(),
-      phoneFull: (ccSel ? ccSel.value : "") + " " + (phoneInput ? phoneInput.value.trim() : ""),
-      type:      form.type.value,
-      budget:    form.budget.value,
-      date:      form.date.value,
-      brief:     form.brief.value.trim(),
-      consent:   !!form.consent.checked,
-      pageUrl:   window.location.href
+      phoneFull:
+        (ccSelect ? ccSelect.value : "") +
+        " " +
+        (phoneInput ? phoneInput.value.trim() : ""),
+      type:    form.type.value,
+      budget:  form.budget.value,
+      date:    form.date.value,
+      brief:   form.brief.value.trim(),
+      consent: !!form.consent.checked,
+      pageUrl: window.location.href
     };
 
-    const btn = form.querySelector(".eq-btn");
-    const originalText = btn?.textContent;
-    if (btn) {
-      btn.disabled = true;
-      btn.textContent = "Sending…";
+    const submitBtn   = form.querySelector(".eq-btn");
+    const originalTxt = submitBtn?.textContent;
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending…";
     }
 
     try {
       const response = await fetch(workerUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formData)
       });
 
       const raw = await response.text();
@@ -986,30 +995,32 @@
       console.log("Worker status:", response.status);
       console.log("Worker body:", result);
 
-      if (!response.ok || !result.ok) {
-        throw new Error(result.error || "Failed to submit enquiry");
+      // ✅ Success path (Worker returns { ok: true })
+      if (response.ok && result.ok) {
+        showSuccessMessage(formData);
+        showToast("Enquiry sent successfully!", "ok");
+        return;
       }
 
-      // SUCCESS – replace form with confirmation card
-      showSuccessMessage(formData);
-      showToast("Enquiry sent successfully!", "ok");
-
+      // ❌ Worker returned an error
+      console.error("Worker error:", result);
+      showToast("We could not send the enquiry. Please try again.", "error");
+      // no more mailto() fallback – no popup
     } catch (err) {
-      console.error("Submission error:", err);
-      // IMPORTANT: no mailto() here anymore
-      showToast("Sorry, something went wrong. Please try again later.", "error");
+      console.error("Network error:", err);
+      showToast("Network error. Please try again.", "error");
     } finally {
-      if (btn) {
-        btn.disabled = false;
-        btn.textContent = originalText || "SUBMIT ENQUIRY";
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalTxt || "SUBMIT ENQUIRY";
       }
     }
   });
 
   function showSuccessMessage(formData) {
-    const sanitize = (txt) => {
+    const sanitize = (text) => {
       const div = document.createElement("div");
-      div.textContent = txt;
+      div.textContent = text;
       return div.innerHTML;
     };
 
@@ -1071,7 +1082,6 @@
 
     $("#eqAgain", successDiv)?.addEventListener("click", () => {
       successDiv.remove();
-      form.reset();
       form.style.display = "";
       form.scrollIntoView({ behavior: "smooth", block: "start" });
     });
