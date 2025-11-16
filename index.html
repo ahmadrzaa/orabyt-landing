@@ -792,10 +792,10 @@
       })()
     </script>
 
-<!-- enquiry -->
+<!-- enquiry / booking -->
 <section id="enquiry" class="orby-enquiry">
   <div class="eq-wrap">
-    <h2 class="eq-title">MAKE AN ENQUIRY</h2>
+    <h2 class="eq-title">MAKE A BOOKING</h2>
     <form id="eqForm" method="post" action="" class="eq-form" novalidate>
       <label class="eq-field">
         <span>First name*</span>
@@ -861,22 +861,23 @@
 
       <label class="eq-consent eq-wide">
         <input type="checkbox" name="consent" required>
-        <span>I agree to ORABYT processing my data for this request.</span>
+        <span>I agree to ORABYT processing my data for this booking.</span>
       </label>
 
       <div class="eq-actions eq-wide">
-        <button type="submit" class="eq-btn">SUBMIT ENQUIRY</button>
+        <button type="submit" class="eq-btn">SUBMIT BOOKING</button>
         <p class="eq-small">
-          By clicking submit, you consent to ORABYT storing and processing your personal data to provide the requested content.
+          By clicking submit, you consent to ORABYT storing your details to confirm this booking.
         </p>
       </div>
     </form>
   </div>
 </section>
+
 <script>
 (() => {
-  // Your Cloudflare Worker URL
-  const workerUrl = "https://orabyt-booking-email.ahmadrza-1110.workers.dev";
+  // Your Cloudflare Worker URL (booking backend)
+   const workerUrl = "https://orabyt-booking.ahmadraza-1110.workers.dev";// <-- put your Worker URL here
 
   const BRAND = "ORABYT";
   const $ = (sel, root = document) => root.querySelector(sel);
@@ -927,10 +928,13 @@
   let ccSelect = $(".orby-enquiry .eq-cc");
   let phoneInput = $('.orby-enquiry input[name="phone"]');
 
-  if (ccSelect && phoneInput) {
-    const updatePhonePlaceholder = () => {
+  function updatePhonePlaceholder() {
+    if (ccSelect && phoneInput) {
       phoneInput.placeholder = ccSelect.value;
-    };
+    }
+  }
+
+  if (ccSelect && phoneInput) {
     ccSelect.addEventListener("change", updatePhonePlaceholder);
     updatePhonePlaceholder();
   }
@@ -974,7 +978,7 @@
 
     if (submitBtn) {
       submitBtn.disabled = true;
-      submitBtn.textContent = "Sending…";
+      submitBtn.textContent = "Booking…";
     }
 
     try {
@@ -985,39 +989,50 @@
       });
 
       const raw = await response.text();
-      let result;
+      let result = null;
       try {
         result = JSON.parse(raw);
       } catch {
-        result = { raw };
+        result = null;
       }
 
       console.log("Worker status:", response.status);
       console.log("Worker body:", result);
 
-      // ✅ Success path (Worker returns { ok: true })
-      if (response.ok && result.ok) {
-        showSuccessMessage(formData);
-        showToast("Enquiry sent successfully!", "ok");
+      if (response.ok && result && result.ok) {
+        // bookingId from backend
+        const bookingId = result.bookingId || "";
+        showSuccessMessage(formData, bookingId);
+        showToast(
+          bookingId
+            ? `Booking confirmed! Ref: ${bookingId}`
+            : "Booking confirmed!",
+          "ok"
+        );
+
+        // reset form fields
+        form.reset();
+        if (ccSelect) {
+          ccSelect.value = "+973";
+          updatePhonePlaceholder();
+        }
         return;
       }
 
-      // ❌ Worker returned an error
       console.error("Worker error:", result);
-      showToast("We could not send the enquiry. Please try again.", "error");
-      // no more mailto() fallback – no popup
+      showToast("Could not complete booking. Please try again.", "error");
     } catch (err) {
       console.error("Network error:", err);
       showToast("Network error. Please try again.", "error");
     } finally {
       if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.textContent = originalTxt || "SUBMIT ENQUIRY";
+        submitBtn.textContent = originalTxt || "SUBMIT BOOKING";
       }
     }
   });
 
-  function showSuccessMessage(formData) {
+  function showSuccessMessage(formData, bookingId) {
     const sanitize = (text) => {
       const div = document.createElement("div");
       div.textContent = text;
@@ -1028,14 +1043,20 @@
     const form = $("#eqForm");
     const successDiv = document.createElement("div");
 
+    const bookingLine = bookingId
+      ? `<p style="margin:0 0 8px;color:var(--eq-muted);font-size:13px">
+          Booking reference: <strong>${sanitize(bookingId)}</strong>
+        </p>`
+      : "";
+
     successDiv.innerHTML = `
       <div style="background:#fff;border:1px solid var(--eq-line);border-radius:10px;padding:22px 20px;box-shadow:0 20px 50px rgba(0,0,0,.08)">
         <h3 style="margin:0 0 8px;font-size:28px;color:var(--eq-ink);letter-spacing:.02em">
-          Thank you — your enquiry is booked!
+          Thank you — your booking is confirmed!
         </h3>
+        ${bookingLine}
         <p style="margin:0 0 10px;color:var(--eq-muted);line-height:1.6">
-          We've received your request. Our team at <strong>${BRAND}</strong> will contact you shortly.
-          For anything urgent, email <a href="mailto:info@orabyt.com">info@orabyt.com</a>.
+          We've received your booking. Our team at <strong>${BRAND}</strong> will contact you shortly to finalize details.
         </p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:14px 0 6px">
           <div>
@@ -1063,11 +1084,11 @@
           </details>` : ""}
 
         <p style="margin:10px 0 0;color:var(--eq-muted);font-size:12px">
-          By submitting, you agree to our <a href="/privacy">Privacy</a> and <a href="/terms">Terms</a>.
+          You can keep this page or your reference number as proof of booking.
         </p>
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
           <button type="button" id="eqAgain" style="appearance:none;border:1px solid var(--eq-line-focus);background:transparent;color:var(--eq-ink);padding:10px 14px;border-radius:6px;cursor:pointer">
-            Submit another enquiry
+            Make another booking
           </button>
           <a href="#services-dark" style="display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border-radius:6px;background:var(--eq-btn);color:#fff;text-decoration:none">
             Explore services
@@ -1159,34 +1180,54 @@
       <div class="ora-modal-backdrop" data-modal-close></div>
       <div class="ora-modal-dialog" role="document"><button type="button" class="ora-modal-close" aria-label="Close" data-modal-close>×</button><img src="/images/orabyt licence.png" alt="Udyam MSME License" class="ora-modal-img"></div>
     </div>
-    <script>
-      (() => {
-        var e = document.getElementById("year");
-        e && (e.textContent = (new Date).getFullYear());
-        let d = document.getElementById("modal-udym");
-        if (d) {
-          var e = document.querySelectorAll('[data-modal-open="udym"]'),
-            a = d.querySelector(".ora-modal-backdrop");
-          let t = d.querySelector(".ora-modal-close");
+        <script>
+        (() => {
+          var e = document.getElementById("year");
+          e && (e.textContent = (new Date).getFullYear());
+          let d = document.getElementById("modal-udym");
+          if (d) {
+            var e = document.querySelectorAll('[data-modal-open="udym"]'),
+              a = d.querySelector(".ora-modal-backdrop");
+            let t = d.querySelector(".ora-modal-close");
 
-          function o(e) {
-            e && e.preventDefault(), d.setAttribute("aria-hidden", "false"), document.body.classList.add("modal-open"), t && t.focus()
-          }
+            function o(e) {
+              e && e.preventDefault(), 
+              d.setAttribute("aria-hidden", "false"), 
+              document.body.classList.add("modal-open"), 
+              t && t.focus();
+            }
 
-          function n() {
-            d.setAttribute("aria-hidden", "true"), document.body.classList.remove("modal-open")
+            function n() {
+              d.setAttribute("aria-hidden", "true"), 
+              document.body.classList.remove("modal-open");
+            }
+
+            e.forEach(e => e.addEventListener("click", o));
+            a.addEventListener("click", n);
+            t.addEventListener("click", n);
+            window.addEventListener("keydown", e => {
+              "Escape" === e.key && n();
+            });
           }
-          e.forEach(e => e.addEventListener("click", o)), a.addEventListener("click", n), t.addEventListener("click", n), window.addEventListener("keydown", e => {
-            "Escape" === e.key && n()
-          })
-        }
-      })()
-    </>
-    <script>
-      document.addEventListener("contextmenu", e => e.preventDefault()), document.onkeydown = function(e) {
-        if (123 == e.keyCode || e.ctrlKey && e.shiftKey && e.keyCode == "I".charCodeAt(0) || e.ctrlKey && e.shiftKey && e.keyCode == "C".charCodeAt(0) || e.ctrlKey && e.shiftKey && e.keyCode == "J".charCodeAt(0) || e.ctrlKey && e.keyCode == "U".charCodeAt(0)) return !1
-      }
-    </script>
-    <script src="script.js" defer="defer"></script>
+        })();
+      </script>
+
+      <script>
+        document.addEventListener("contextmenu", e => e.preventDefault());
+        document.onkeydown = function(e) {
+          if (
+            e.keyCode == 123 ||
+            (e.ctrlKey && e.shiftKey && e.keyCode == "I".charCodeAt(0)) ||
+            (e.ctrlKey && e.shiftKey && e.keyCode == "C".charCodeAt(0)) ||
+            (e.ctrlKey && e.shiftKey && e.keyCode == "J".charCodeAt(0)) ||
+            (e.ctrlKey && e.keyCode == "U".charCodeAt(0))
+          ) {
+            return false;
+          }
+        };
+      </script>
+
+<script src="script.js" defer="defer"></script>
+
   </body>
 </html>
