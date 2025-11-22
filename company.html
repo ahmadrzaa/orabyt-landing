@@ -23,51 +23,91 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <!-- same nav as homepage, but COMPANY points to this page -->
-   <header class="nav" role="banner">
-      <div class="nav__wrap">
-        <a href="/" class="brand" aria-label="Home">
-          <img src="/images/ORABYT_logo.svg" alt="Orabyt logo" class="brand__logo">
-        </a>
-        <nav class="menu" aria-label="Primary">
-          <ul class="menu__list">
-            <li class="menu__item"><a class="menu__link" href="#apply">WHAT WE DO</a></li>
-            <li class="menu__item"><a class="menu__link" href="/#services-dark">SERVICES</a></li>
-             <li class="menu__item"><a class="menu__link" href="/cases.html">CASE STUDIES</a></li>
-            <li class="menu__item"><a class="menu__link" href="/company.html">COMPANY</a></li>
-            <li class="menu__item"><a class="menu__link" href="/#founders">FOUNDER</a></li>
-            <li class="menu__item"><a class="menu__link" href="/#faq">FAQ</a></li>
-          </ul>
-        </nav>
-        <div class="nav__actions">
-          <a class="btn-outline" href="/#enquiry">Book a demo</a>
-          <button class="burger" aria-label="Open menu" aria-controls="drawer" aria-expanded="false">
-            <span></span><span></span><span></span>
-          </button>
-        </div>
-      </div>
-    </header>
+<!-- NAVBAR -->
+<header class="nav" role="banner">
+  <div class="nav__wrap">
+    <!-- Logo goes to HOME -->
+    <a href="index.html" class="brand" aria-label="Home">
+      <img src="images/ORABYT_ white logo.svg" alt="Orabyt logo" class="brand__logo">
+    </a>
 
-    <!-- Mobile drawer for this page -->
-    <div id="drawer" class="drawer" aria-hidden="true" role="dialog" aria-modal="true">
-      <div class="drawer__panel">
-        <div class="drawer__top">
-          <img src="/images/ORABYT_ white logo.svg" alt="Orabyt" class="drawer__logo">
-          <button class="drawer__close" aria-label="Close menu">✕</button>
-        </div>
-        <nav class="drawer__nav" aria-label="Mobile">
-          <a href="/">HOME</a>
-          <a href="/#apply">WHAT WE DO</a>
-          <a href="/#services-dark">SERVICES</a>
-          <a href="/cases.html">CASE STUDIES</a>
-          <a href="/company.html">COMPANY</a>
-          <a href="/#founders">FOUNDER</a>
-          <a href="/#faq">FAQ</a>
-          <a href="/#pricing">PRICING</a>
-          <a href="/#enquiry">BOOK</a>
-        </nav>
-      </div>
+    <!-- DESKTOP MENU -->
+    <nav class="menu" aria-label="Primary">
+      <ul class="menu__list">
+        <li class="menu__item">
+          <!-- Scroll to section on HOME PAGE -->
+          <a class="menu__link" href="index.html#apply">WHAT WE DO</a>
+        </li>
+
+        <li class="menu__item">
+          <a class="menu__link" href="index.html#services-dark">SERVICES</a>
+        </li>
+
+        <!-- ABOUT US DROPDOWN -->
+        <li class="menu__item has-dd">
+          <button class="menu__btn" type="button" aria-expanded="false">
+            ABOUT US
+            <svg class="chev" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M3 5l5 6 5-6" />
+            </svg>
+          </button>
+
+          <div class="dd" role="menu">
+            <!-- Separate pages -->
+            <a href="company.html" class="dd__link" role="menuitem">Company</a>
+            <a href="cases.html" class="dd__link" role="menuitem">Case Studies</a>
+            <!-- Founders section on HOME -->
+            <a href="index.html#founders" class="dd__link" role="menuitem">Founders</a>
+          </div>
+        </li>
+
+        <li class="menu__item">
+          <a class="menu__link" href="index.html#faq">FAQ</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="nav__actions">
+      <!-- BOOK DEMO goes to HOME enquiry section -->
+      <a class="btn-outline" href="index.html#enquiry">BOOK A DEMO</a>
+
+      <!-- MOBILE BURGER -->
+      <button class="burger" aria-label="Open menu" aria-controls="drawer" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+  </div>
+</header>
+
+<!-- MOBILE DRAWER -->
+<div id="drawer" class="drawer" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="drawer__panel">
+    <div class="drawer__top">
+      <img src="images/ORABYT_logo.svg" alt="Orabyt" class="drawer__logo">
+      <button class="drawer__close" aria-label="Close menu">✕</button>
+    </div>
+
+    <nav class="drawer__nav" aria-label="Mobile">
+      <a href="index.html#apply">WHAT WE DO</a>
+      <a href="index.html#services-dark">SERVICES</a>
+
+      <!-- ABOUT US MOBILE DROPDOWN -->
+      <details>
+        <summary>ABOUT US</summary>
+        <a href="company.html">Company</a>
+        <a href="cases.html">Case Studies</a>
+        <a href="index.html#founders">Founders</a>
+      </details>
+
+      <a href="index.html#faq">FAQ</a>
+
+      <div class="drawer__cta">
+        <a class="btn-outline" href="index.html#enquiry">BOOK A DEMO</a>
+      </div>
+    </nav>
+  </div>
+</div>
+
     <!-- COMPANY HERO -->
 <!-- ===== COMPANY HERO (top section: heading + globe image) ===== -->
 <section class="ora-company-hero-block">

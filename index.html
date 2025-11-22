@@ -75,110 +75,307 @@
     </script>
   </head>
   <body>
-    <header class="nav" role="banner">
-      <div class="nav__wrap"><a href="/" class="brand" aria-label="Home"><img src="/images/ORABYT_logo.svg" alt="Orabyt logo" class="brand__logo"></a>
-        <nav class="menu" aria-label="Primary">
-          <ul class="menu__list">
-            <li class="menu__item"><a class="menu__link" href="#apply">WHAT WE DO</a></li>
-            <li class="menu__item"><a class="menu__link" href="#services-dark">SERVICES</a></li>
-             <li class="menu__item"><a class="menu__link" href="/cases.html">CASE STUDIES</a></li>
-            <li class="menu__item"><a class="menu__link" href="/company.html">COMPANY</a></li>
-            <li class="menu__item"><a class="menu__link" href="#founders">FOUNDER</a></li>
-            <li class="menu__item"><a class="menu__link" href="#faq">FAQ</a></li>
-          </ul>
-        </nav>
-        <div class="nav__actions"><a class="btn-outline" href="#enquiry">Book a demo</a><button class="burger" aria-label="Open menu" aria-controls="drawer" aria-expanded="false"><span></span><span></span><span></span></button></div>
+  
+<!-- NAVBAR -->
+<header class="nav" role="banner">
+  <div class="nav__wrap">
+    <!-- Logo goes to HOME -->
+    <a href="index.html" class="brand" aria-label="Home">
+      <img src="images/ORABYT_ white logo.svg" alt="Orabyt logo" class="brand__logo">
+    </a>
+
+    <!-- DESKTOP MENU -->
+    <nav class="menu" aria-label="Primary">
+      <ul class="menu__list">
+        <li class="menu__item">
+          <!-- Scroll to section on HOME PAGE -->
+          <a class="menu__link" href="index.html#apply">WHAT WE DO</a>
+        </li>
+
+        <li class="menu__item">
+          <a class="menu__link" href="index.html#services-dark">SERVICES</a>
+        </li>
+
+        <!-- ABOUT US DROPDOWN -->
+        <li class="menu__item has-dd">
+          <button class="menu__btn" type="button" aria-expanded="false">
+            ABOUT US
+            <svg class="chev" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M3 5l5 6 5-6" />
+            </svg>
+          </button>
+
+          <div class="dd" role="menu">
+            <!-- Separate pages -->
+            <a href="company.html" class="dd__link" role="menuitem">Company</a>
+            <a href="cases.html" class="dd__link" role="menuitem">Case Studies</a>
+            <!-- Founders section on HOME -->
+            <a href="index.html#founders" class="dd__link" role="menuitem">Founders</a>
+          </div>
+        </li>
+
+        <li class="menu__item">
+          <a class="menu__link" href="index.html#faq">FAQ</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="nav__actions">
+      <!-- BOOK DEMO goes to HOME enquiry section -->
+      <a class="btn-outline" href="index.html#enquiry">BOOK A DEMO</a>
+
+      <!-- MOBILE BURGER -->
+      <button class="burger" aria-label="Open menu" aria-controls="drawer" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE DRAWER -->
+<div id="drawer" class="drawer" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="drawer__panel">
+    <div class="drawer__top">
+      <img src="images/ORABYT_logo.svg" alt="Orabyt" class="drawer__logo">
+      <button class="drawer__close" aria-label="Close menu">✕</button>
+    </div>
+
+    <nav class="drawer__nav" aria-label="Mobile">
+      <a href="index.html#apply">WHAT WE DO</a>
+      <a href="index.html#services-dark">SERVICES</a>
+
+      <!-- ABOUT US MOBILE DROPDOWN -->
+      <details>
+        <summary>ABOUT US</summary>
+        <a href="company.html">Company</a>
+        <a href="cases.html">Case Studies</a>
+        <a href="index.html#founders">Founders</a>
+      </details>
+
+      <a href="index.html#faq">FAQ</a>
+
+      <div class="drawer__cta">
+        <a class="btn-outline" href="index.html#enquiry">BOOK A DEMO</a>
       </div>
-    </header>
-    <div id="drawer" class="drawer" aria-hidden="true" role="dialog" aria-modal="true">
-      <div class="drawer__panel">
-        <div class="drawer__top"><img src="/images/ORABYT_ white logo.svg" alt="Orabyt" class="drawer__logo"><button class="drawer__close" aria-label="Close menu">✕</button></div>
-        <nav class="drawer__nav" aria-label="Mobile"><a href="#apply">WHAT WE DO</a><a href="#services-dark">SERVICES</a><a href="/cases.html">CASE STUDIES</a><a href="/company.html">COMPANY</a><a href="#founders">FOUNDER</a><a href="#faq">FAQ</a>
-          <div class="drawer__cta"><a class="btn-outline" href="#enquiry">Book a demo</a></div>
-        </nav>
+    </nav>
+  </div>
+</div>
+
+
+  <!-- HERO -->
+  <section class="hero">
+    <video class="hero__video" src="/media/bg.mp4" autoplay muted loop playsinline></video>
+    <div class="hero__veil"></div>
+
+    <div class="hero__inner">
+      <!-- Orbitron-style headline like “COMMAND YOUR ONLINE EMPIRE” -->
+      <h1 class="heading-xl">
+        <span>COMMAND YOUR</span>
+        <span>ONLINE EMPIRE</span>
+      </h1>
+
+      <p class="lead">
+        From adoption to expansion, Orabyt partners with you at every stage,
+        empowering innovation, scalability, and sustainable growth throughout your
+        complete digital transformation journey.
+      </p>
+
+      <div class="hero__cta">
+        <a class="btn-solid" href="#enquiry" aria-label="Book a demo">GET STARTED</a>
       </div>
     </div>
-    <section class="hero"><video class="hero__video" src="/media/bg.mp4" autoplay muted loop playsinline></video>
-      <div class="hero__veil"></div>
-      <div class="hero__inner">
-        <h1 class="heading-xl"><span>AI accelerated software,</span><br><span>delivered fast.</span></h1>
-        <p class="lead">Websites, e-commerce & custom apps with an on site AI assistant.</p>
-        <div class="hero__cta"><a class="btn-solid" href="#enquiry" aria-label="Book a demo">Book a demo</a></div>
-      </div>
-    </section>
-    <section class="section-split" id="apply" aria-labelledby="apply-heading">
-      <div class="container section-split__head">
-        <p class="feature2__eyebrow">What we do</p>
-        <h2 class="feature2__title" id="apply-heading">End-to-end web, apps &amp; AI built to scale</h2>
-      </div>
-      <div class="split container">
-        <figure class="card-video js-video-preview" data-video="/media/orabyt_bot_compressed.mp4"><video class="card-video__media" src="/media/orabyt_bot_compressed.mp4" autoplay muted loop playsinline disablepictureinpicture></video><button class="card-video__play" type="button" aria-label="Play full video"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#111" stroke-width="2" aria-hidden="true">
-              <path d="M8 5v14l11-7-11-7z" />
-            </svg></button></figure>
-        <div class="split__copy">
-          <p class="feature2__lead">We ship full-stack products: frontend, backend, cloud—plus an on-site AI assistant trained on your content. One team. Fast delivery.</p>
-          <ul class="feature2__list">
-            <li><strong>Websites &amp; Stores:</strong> corporate, restaurant/food, groceries, bookings, marketplaces, secure checkout.</li>
-            <li><strong>Custom Apps &amp; Dashboards:</strong> portals, CRMs, analytics, roles/permissions, exports, charts.</li>
-            <li><strong>AI Chatbots &amp; Agents:</strong> website &amp; WhatsApp bots for leads/support, product search, PDF Q&amp;A, voice &amp; image.</li>
-            <li><strong>Integrations &amp; Automations:</strong> payments, POS, inventory/ERP, email/SMS, webhooks, RPA tasks.</li>
-            <li><strong>Cloud &amp; DevOps:</strong> hosting, SSL/CDN, backups, monitoring, scaling (Node/React/Next/WordPress).</li>
-            <li><strong>Ongoing Care:</strong> monthly updates, security patches, SLAs, feature sprints.</li>
-          </ul>
-          <p class="feature2__note"><strong>For CS students (BCA/MCA/BTech):</strong> final-year project mentoring + internship certificate &amp; training letter.</p>
-        </div>
-      </div>
-    </section>
-    <div id="video-modal-2" class="vidmodal" aria-hidden="true" role="dialog" aria-modal="true">
-      <div class="vidmodal__backdrop"></div>
-      <div class="vidmodal__panel">
-        <div class="vidmodal__inner" role="document"><button class="vidmodal__close" type="button" aria-label="Close video">✕</button><video class="vidmodal__video" controls playsinline disablepictureinpicture controlslist="nodownload noplaybackrate"></video></div>
-      </div>
+  </section>
+
+
+
+<section class="section-split" id="apply" aria-labelledby="apply-heading">
+  <div class="container section-split__head">
+    <p class="feature2__eyebrow">What we do</p>
+    <h2 class="feature2__title" id="apply-heading">
+      End to end web, apps &amp; AI built to scale
+    </h2>
+  </div>
+
+  <div class="split container">
+    <figure class="card-video js-video-preview" data-video="/media/orabyt_bot_compressed.mp4">
+      <video
+        class="card-video__media"
+        src="/media/orabyt_bot_compressed.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        disablepictureinpicture
+      ></video>
+
+      <button class="card-video__play" type="button" aria-label="Play full video">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#111" stroke-width="2" aria-hidden="true">
+          <path d="M8 5v14l11-7-11-7z" />
+        </svg>
+      </button>
+    </figure>
+
+    <div class="split__copy">
+      <p class="feature2__lead">
+        ORABYT is a remote build studio. You brief us online and we ship production-ready
+        websites, apps and AI experiences without you hiring an in-house team.
+      </p>
+
+      <ul class="feature2__list">
+        <li>
+          <strong>Websites in any style:</strong> corporate, portfolio, blog, property,
+          restaurant, clinic or service sites.
+        </li>
+        <li>
+          <strong>E-commerce &amp; delivery:</strong> product catalogues, carts, checkout,
+          coupons, food &amp; grocery delivery flows.
+        </li>
+        <li>
+          <strong>AI chatbots &amp; agents:</strong> website &amp; WhatsApp bots for leads,
+          FAQs, product search and basic support.
+        </li>
+        <li>
+          <strong>Dashboards &amp; internal tools:</strong> admin panels, approval flows,
+          reports, roles &amp; permissions.
+        </li>
+        <li>
+          <strong>Multi-language builds:</strong> Arabic, English and other languages with proper
+          RTL/LTR layouts.
+        </li>
+        <li>
+          <strong>Integrations &amp; automation:</strong> payments, POS, inventory, email/SMS,
+          webhooks and background jobs.
+        </li>
+      </ul>
+
+      <p class="feature2__note">
+        <strong>Who builds it:</strong> a small senior team (AI engineer, full-stack developer
+        and software lead) working remotely with you startup studio, enterprise experience.
+      </p>
     </div>
-    <script>
-      (() => {
-        var e = document.querySelectorAll(".js-video-preview");
-        let n = document.getElementById("video-modal-2");
-        if (e.length && n) {
-          let r = n.querySelector(".vidmodal__video"),
-            c = n.querySelector(".vidmodal__close");
-          var l = n.querySelector(".vidmodal__backdrop");
-          let d = null,
-            o = (e, t) => {
-              try {
-                t?.pause()
-              } catch (e) {}
-              d = document.activeElement, r.src = e || "", r.load?.(), n.setAttribute("open", ""), n.setAttribute("aria-hidden", "false"), document.body.style.overflow = "hidden", r.play?.().catch(() => {}), c?.focus()
-            },
-            t = () => {
-              document.pictureInPictureElement && document.exitPictureInPicture?.().catch(() => {}), document.fullscreenElement && document.exitFullscreen?.().catch(() => {}), r.pause?.(), r.removeAttribute("src"), n.removeAttribute("open"), n.setAttribute("aria-hidden", "true"), document.body.style.overflow = "", d?.focus?.()
-            },
-            i = (e.forEach(e => {
-              let t = e.querySelector("video");
-              var r = e.querySelector(".card-video__play");
-              let c = e.dataset.video || t?.currentSrc || t?.src || "";
-              r?.addEventListener("click", e => {
-                e.preventDefault(), e.stopPropagation(), o(c, t)
-              }), t?.addEventListener("click", () => o(c, t)), t?.addEventListener("enterpictureinpicture", e => e.preventDefault())
-            }), c?.addEventListener("click", e => {
-              e.preventDefault(), t()
-            }), l?.addEventListener("click", t), n.addEventListener("click", e => {
-              e.target === n && t()
-            }), document.addEventListener("keydown", e => {
-              "Escape" === e.key && t()
-            }), new IntersectionObserver(e => {
-              e.forEach(e => {
-                e.isIntersecting && e.target.classList.add("is-in")
-              })
-            }, {
-              threshold: .18
-            }));
-          document.querySelectorAll(".section-split__head, .card-video, .split__copy").forEach(e => {
-            e.classList.add("reveal"), i.observe(e)
-          })
-        }
-      })()
-    </script>
+  </div>
+</section>
+
+<!-- VIDEO MODAL -->
+<div
+  id="video-modal-2"
+  class="vidmodal"
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  hidden
+>
+  <div class="vidmodal__backdrop"></div>
+  <div class="vidmodal__panel">
+    <div class="vidmodal__inner" role="document">
+      <button class="vidmodal__close" type="button" aria-label="Close video">✕</button>
+      <video
+        class="vidmodal__video"
+        controls
+        playsinline
+        disablepictureinpicture
+        controlslist="nodownload noplaybackrate"
+      ></video>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const previews = document.querySelectorAll(".js-video-preview");
+  const modal = document.getElementById("video-modal-2");
+  if (!previews.length || !modal) return;
+
+  const modalVideo = modal.querySelector(".vidmodal__video");
+  const closeBtn = modal.querySelector(".vidmodal__close");
+  const backdrop = modal.querySelector(".vidmodal__backdrop");
+  let lastFocused = null;
+
+  const openModal = (src, previewVideo) => {
+    try { previewVideo?.pause(); } catch (_) {}
+
+    lastFocused = document.activeElement;
+
+    modalVideo.src = src || "";
+    modalVideo.load?.();
+
+    modal.setAttribute("open", "");           // triggers CSS [open]
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+
+    modalVideo.play?.().catch(() => {});
+    closeBtn?.focus();
+  };
+
+  const closeModal = () => {
+    if (document.pictureInPictureElement) {
+      document.exitPictureInPicture?.().catch(() => {});
+    }
+    if (document.fullscreenElement) {
+      document.exitFullscreen?.().catch(() => {});
+    }
+
+    modalVideo.pause?.();
+    modalVideo.removeAttribute("src");
+
+    modal.removeAttribute("open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+
+    lastFocused?.focus?.();
+  };
+
+  // attach events to preview card(s)
+  previews.forEach(card => {
+    const vid = card.querySelector("video");
+    const btn = card.querySelector(".card-video__play");
+    const src = card.dataset.video || vid?.currentSrc || vid?.src || "";
+
+    btn?.addEventListener("click", evt => {
+      evt.preventDefault();
+      evt.stopPropagation();
+      openModal(src, vid);
+    });
+
+    vid?.addEventListener("click", () => openModal(src, vid));
+    vid?.addEventListener("enterpictureinpicture", evt => evt.preventDefault());
+  });
+
+  closeBtn?.addEventListener("click", evt => {
+    evt.preventDefault();
+    closeModal();
+  });
+
+  backdrop?.addEventListener("click", closeModal);
+
+  modal.addEventListener("click", evt => {
+    if (evt.target === modal) closeModal();
+  });
+
+  document.addEventListener("keydown", evt => {
+    if (evt.key === "Escape") closeModal();
+  });
+
+  // reveal animation on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-in");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.18 });
+
+  document
+    .querySelectorAll(".section-split__head, .card-video, .split__copy")
+    .forEach(el => {
+      el.classList.add("reveal");
+      observer.observe(el);
+    });
+})();
+</script>
+
+
     <section id="services-dark" style="--svc-bg:url('images/image__q_07130a8f.jpg')">
       <div class="svc-wrap">
         <header class="svc-head">
@@ -461,60 +658,310 @@
         </div>
       </div>
     </section>
-    <section id="founders" class="founders-v1" aria-labelledby="founders-heading">
-      <div class="fv1-container">
-        <header class="fv1-head">
-          <h2 class="fv1-title" id="founders-heading">Meet the Founders</h2>
-        </header>
-        <div class="fv1-mosaic" data-slider="founders">
-          <article class="fv1-item tall">
-            <div class="fv1-card">
-              <div class="fv1-media"><img src="/images/ahmadrza.jpeg" alt="Ahmad Raza" loading="lazy"><span class="fv1-badge">CTO</span></div>
-              <div class="fv1-body">
-                <div class="fv1-top">
-                  <h3 class="fv1-name">Ahmad Raza <span class="fv1-contacts"><a class="fv1-ico" href="https://bh.linkedin.com/in/ahmadrza10" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true">
-                          <path fill="currentColor" d="M4.98 3.5A2.48 2.48 0 1 1 0 3.5a2.48 2.48 0 0 1 4.98 0zM.5 8.5h4V24h-4V8.5zM8.5 8.5h3.84v2.11h.05c.54-1.02 1.86-2.11 3.84-2.11 4.1 0 4.86 2.7 4.86 6.21V24h-4v-6.88c0-1.64-.03-3.74-2.28-3.74-2.28 0-2.63 1.78-2.63 3.62V24h-4V8.5z" />
-                        </svg></a><a class="fv1-ico" href="mailto:info@orabyt.com" aria-label="Email"><svg viewBox="0 0 24 24" aria-hidden="true">
-                          <path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5v2Z" />
-                        </svg></a></span></h3>
-                  <p class="fv1-role">Co-Founder</p>
-                </div>
-                <ul class="fv1-chips">
-                  <li data-ico="exp">4+ yrs</li>
-                  <li data-ico="loc">Bahrain</li>
-                  <li data-ico="role">Cloud & AI</li>
-                </ul>
-                <p class="fv1-blurb">Architects web, cloud, and AI hands-on with bots and performance.</p>
-              </div>
+
+
+<section id="founders" class="founders-v1" aria-labelledby="founders-heading">
+  <div class="fv1-container">
+    <header class="fv1-head">
+      <h2 class="fv1-title" id="founders-heading">Founders & Core Team</h2>
+      <p class="fv1-kicker">Meet the passionate team behind our vision and success</p>
+    </header>
+
+    <div class="fv1-mosaic" data-slider="founders">
+      <!-- Ahmad -->
+      <article class="fv1-item">
+        <div class="fv1-card">
+          <div class="fv1-experience">4+ yrs</div>
+          <div class="fv1-body">
+            <div class="fv1-top">
+              <h3 class="fv1-name">
+                Ahmad Raza
+                <span class="fv1-contacts">
+                  <a class="fv1-ico" href="https://bh.linkedin.com/in/ahmadrza10" target="_blank" rel="noopener" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path fill="currentColor" d="M4.98 3.5A2.48 2.48 0 1 1 0 3.5a2.48 2.48 0 0 1 4.98 0zM.5 8.5h4V24h-4V8.5zM8.5 8.5h3.84v2.11h.05c.54-1.02 1.86-2.11 3.84-2.11 4.1 0 4.86 2.7 4.86 6.21V24h-4v-6.88c0-1.64-.03-3.74-2.28-3.74-2.28 0-2.63 1.78-2.63 3.62V24h-4V8.5z" />
+                    </svg>
+                  </a>
+                  <a class="fv1-ico" href="mailto:info@orabyt.com" aria-label="Email">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5v2Z" />
+                    </svg>
+                  </a>
+                </span>
+              </h3>
+              <p class="fv1-role">Co-founder & CTO</p>
+              <p class="fv1-education">M.Sc. Computer Science, REVA University, Bangalore</p>
             </div>
-          </article>
-          <div class="fv1-pillar one" aria-hidden="true"></div>
-          <article class="fv1-item wide">
-            <div class="fv1-card">
-              <div class="fv1-media"><img src="/images/arun ceo.jpeg" alt="Arunbal P" loading="lazy"><span class="fv1-badge">CEO</span></div>
-              <div class="fv1-body">
-                <div class="fv1-top">
-                  <h3 class="fv1-name">Arunbal P <span class="fv1-contacts"><a class="fv1-ico" href="https://in.linkedin.com/in/arunbal-p-366990181" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true">
-                          <path fill="currentColor" d="M4.98 3.5A2.48 2.48 0 1 1 0 3.5a2.48 2.48 0 0 1 4.98 0zM.5 8.5h4V24h-4V8.5zM8.5 8.5h3.84v2.11h.05c.54-1.02 1.86-2.11 3.84-2.11 4.1 0 4.86 2.7 4.86 6.21V24h-4v-6.88c0-1.64-.03-3.74-2.28-3.74-2.28 0-2.63 1.78-2.63 3.62V24h-4V8.5z" />
-                        </svg></a><a class="fv1-ico" href="mailto:info@orabyt.com" aria-label="Email"><svg viewBox="0 0 24 24" aria-hidden="true">
-                          <path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5v2Z" />
-                        </svg></a></span></h3>
-                  <p class="fv1-role">CEO</p>
-                </div>
-                <ul class="fv1-chips">
-                  <li data-ico="exp">9+ yrs</li>
-                  <li data-ico="loc">Bahrain</li>
-                  <li data-ico="role">Delivery & Integrations</li>
-                </ul>
-                <p class="fv1-blurb">Leads product and enterprise integrations across Bahrain & India.</p>
-              </div>
+            <ul class="fv1-chips">
+              <li data-ico="role">Cloud & AI Engineer</li>
+              <li data-ico="exp">4+ yrs experience</li>
+              <li data-ico="loc">Based in Bahrain</li>
+            </ul>
+            <p class="fv1-blurb">
+              Leads web, cloud and AI architecture with a focus on real client delivery.
+            </p>
+            <div class="fv1-location">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/>
+              </svg>
+              Bahrain
             </div>
-          </article>
-          <div class="fv1-pillar two" aria-hidden="true"></div>
+          </div>
         </div>
-        <div class="fv1-dots" aria-hidden="true"></div>
-      </div>
-    </section>
+      </article>
+
+      <!-- Arun -->
+      <article class="fv1-item">
+        <div class="fv1-card">
+          <div class="fv1-experience">9+ yrs</div>
+          <div class="fv1-body">
+            <div class="fv1-top">
+              <h3 class="fv1-name">
+                Arunbal P
+                <span class="fv1-contacts">
+                  <a class="fv1-ico" href="https://in.linkedin.com/in/arunbal-p-366990181" target="_blank" rel="noopener" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path fill="currentColor" d="M4.98 3.5A2.48 2.48 0 1 1 0 3.5a2.48 2.48 0 0 1 4.98 0zM.5 8.5h4V24h-4V8.5zM8.5 8.5h3.84v2.11h.05c.54-1.02 1.86-2.11 3.84-2.11 4.1 0 4.86 2.7 4.86 6.21V24h-4v-6.88c0-1.64-.03-3.74-2.28-3.74-2.28 0-2.63 1.78-2.63 3.62V24h-4V8.5z" />
+                    </svg>
+                  </a>
+                  <a class="fv1-ico" href="mailto:info@orabyt.com" aria-label="Email">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5v2Z" />
+                    </svg>
+                  </a>
+                </span>
+              </h3>
+              <p class="fv1-role">Co-founder & CEO</p>
+              <p class="fv1-education">Sr. Software Developer, University of Calicut</p>
+            </div>
+            <ul class="fv1-chips">
+              <li data-ico="role">Delivery & Integrations</li>
+              <li data-ico="exp">9+ yrs experience</li>
+              <li data-ico="loc">Bahrain & India</li>
+            </ul>
+            <p class="fv1-blurb">
+              Oversees delivery, integrations and client success across Bahrain and India.
+            </p>
+            <div class="fv1-location">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/>
+              </svg>
+              Bahrain & India
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Vinayak -->
+      <article class="fv1-item">
+        <div class="fv1-card">
+          <div class="fv1-experience">2+ yrs</div>
+          <div class="fv1-body">
+            <div class="fv1-top">
+              <h3 class="fv1-name">
+                Vinayak Joshi
+                <span class="fv1-contacts">
+                  <a class="fv1-ico" href="#" target="_blank" rel="noopener" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path fill="currentColor" d="M4.98 3.5A2.48 2.48 0 1 1 0 3.5a2.48 2.48 0 0 1 4.98 0zM.5 8.5h4V24h-4V8.5zM8.5 8.5h3.84v2.11h.05c.54-1.02 1.86-2.11 3.84-2.11 4.1 0 4.86 2.7 4.86 6.21V24h-4v-6.88c0-1.64-.03-3.74-2.28-3.74-2.28 0-2.63 1.78-2.63 3.62V24h-4V8.5z" />
+                    </svg>
+                  </a>
+                  <a class="fv1-ico" href="mailto:info@orabyt.com" aria-label="Email">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5v2Z" />
+                    </svg>
+                  </a>
+                </span>
+              </h3>
+              <p class="fv1-role">Full-stack Developer</p>
+              <p class="fv1-education">MCA, Bangalore University</p>
+            </div>
+            <ul class="fv1-chips">
+              <li data-ico="role">Full-stack Development</li>
+              <li data-ico="exp">2+ yrs experience</li>
+              <li data-ico="loc">Bangalore, India</li>
+            </ul>
+            <p class="fv1-blurb">
+              Builds modern web applications end-to-end across frontend and backend.
+            </p>
+            <div class="fv1-location">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/>
+              </svg>
+              Bangalore, India
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Bhumi -->
+      <article class="fv1-item">
+        <div class="fv1-card">
+          <div class="fv1-body">
+            <div class="fv1-top">
+              <h3 class="fv1-name">
+                Bhumi Panday
+                <span class="fv1-contacts">
+                  <a class="fv1-ico" href="#" target="_blank" rel="noopener" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path fill="currentColor" d="M4.98 3.5A2.48 2.48 0 1 1 0 3.5a2.48 2.48 0 0 1 4.98 0zM.5 8.5h4V24h-4V8.5zM8.5 8.5h3.84v2.11h.05c.54-1.02 1.86-2.11 3.84-2.11 4.1 0 4.86 2.7 4.86 6.21V24h-4v-6.88c0-1.64-.03-3.74-2.28-3.74-2.28 0-2.63 1.78-2.63 3.62V24h-4V8.5z" />
+                    </svg>
+                  </a>
+                  <a class="fv1-ico" href="mailto:info@orabyt.com" aria-label="Email">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5v2Z" />
+                    </svg>
+                  </a>
+                </span>
+              </h3>
+              <p class="fv1-role">Frontend Engineer</p>
+              <p class="fv1-education">BCA, RL Jalappa Institute of Technology, Bangalore</p>
+            </div>
+            <ul class="fv1-chips">
+              <li data-ico="role">Frontend Development</li>
+              <li data-ico="loc">Bangalore, India</li>
+            </ul>
+            <p class="fv1-blurb">
+              Focused on clean, responsive interfaces for web and mobile experiences.
+            </p>
+            <div class="fv1-location">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/>
+              </svg>
+              Bangalore, India
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="fv1-dots" aria-hidden="true">
+      <button class="fv1-dot active" aria-label="Slide 1"></button>
+      <button class="fv1-dot" aria-label="Slide 2"></button>
+      <button class="fv1-dot" aria-label="Slide 3"></button>
+      <button class="fv1-dot" aria-label="Slide 4"></button>
+    </div>
+  </div>
+</section>
+
+    <script>
+       // Mobile slider functionality for founders section
+document.addEventListener('DOMContentLoaded', function() {
+    const foundersSection = document.querySelector('.founders-v1');
+    const mosaic = foundersSection.querySelector('.fv1-mosaic');
+    const dots = foundersSection.querySelectorAll('.fv1-dot');
+    const items = foundersSection.querySelectorAll('.fv1-item');
+    
+    // Only initialize slider on mobile
+    if (window.innerWidth <= 820) {
+        initMobileSlider();
+    }
+    
+    function initMobileSlider() {
+        let currentSlide = 0;
+        const totalSlides = items.length;
+        
+        // Update dots based on current slide
+        function updateDots() {
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+        
+        // Scroll to specific slide
+        function goToSlide(slideIndex) {
+            if (slideIndex < 0 || slideIndex >= totalSlides) return;
+            
+            currentSlide = slideIndex;
+            const item = items[slideIndex];
+            const scrollLeft = item.offsetLeft - mosaic.offsetLeft;
+            
+            mosaic.scrollTo({
+                left: scrollLeft,
+                behavior: 'smooth'
+            });
+            
+            updateDots();
+        }
+        
+        // Handle dot clicks
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => goToSlide(index));
+        });
+        
+        // Handle scroll events to update dots
+        mosaic.addEventListener('scroll', function() {
+            const scrollPosition = mosaic.scrollLeft + mosaic.offsetWidth / 2;
+            
+            for (let i = 0; i < items.length; i++) {
+                const item = items[i];
+                const itemStart = item.offsetLeft - mosaic.offsetLeft;
+                const itemEnd = itemStart + item.offsetWidth;
+                
+                if (scrollPosition >= itemStart && scrollPosition < itemEnd) {
+                    if (currentSlide !== i) {
+                        currentSlide = i;
+                        updateDots();
+                    }
+                    break;
+                }
+            }
+        });
+        
+        // Initialize dots
+        updateDots();
+        
+        // Add keyboard navigation
+        mosaic.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                goToSlide(currentSlide - 1);
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                goToSlide(currentSlide + 1);
+            }
+        });
+    }
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth <= 820 && !mosaic.classList.contains('slider-initialized')) {
+            initMobileSlider();
+            mosaic.classList.add('slider-initialized');
+        }
+    });
+    
+    // Add intersection observer for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && window.innerWidth > 820) {
+                entry.target.style.animationPlayState = 'running';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    // Observe cards for animation
+    if (window.innerWidth > 820) {
+        document.querySelectorAll('.fv1-card').forEach(card => {
+            card.style.animationPlayState = 'paused';
+            observer.observe(card);
+        });
+    }
+});
+    </script>
+
+
+
+
+
+
+
     <section id="faq" class="section-faq-dark" aria-labelledby="faq-heading">
       <div class="faq-container">
         <header class="faq-head">
