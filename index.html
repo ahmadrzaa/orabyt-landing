@@ -1595,6 +1595,42 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 
+
+
+<!-- WhatsApp floating button -->
+<!-- Floating WhatsApp button (uses your PNG icon) -->
+<a
+  id="orby-wa"
+  class="orby-wa"
+  href="#"
+  aria-label="Chat on WhatsApp"
+  target="_blank"
+  rel="noopener"
+>
+  <img
+    src="images/whatsapp.png"
+    alt="Chat on WhatsApp"
+    class="orby-wa__img"
+  >
+</a>
+
+<script>
+  (function () {
+    var btn = document.getElementById("orby-wa");
+    if (!btn) return;
+
+    // your WhatsApp number (no +, no spaces)
+    var phone = "918102326415";
+
+    // default enquiry message
+    var msg = "Hi, I am contacting you from your website about a web / AI project.";
+
+    btn.href = "https://wa.me/" + phone + "?text=" + encodeURIComponent(msg);
+  })();
+</script>
+
+
+
 <script src="script.js" defer="defer"></script>
 
   </body>

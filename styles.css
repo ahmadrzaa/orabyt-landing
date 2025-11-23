@@ -3632,3 +3632,71 @@ body:has(.has-dd.open)::after{
     padding:4.8rem 1.25rem;
   }
 }
+
+
+/* ===========================
+   ORABYT – floating WhatsApp button
+   Only affects .orby-wa and .orby-wa__img
+   =========================== */
+
+.orby-wa {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: transparent; /* your PNG already has the green circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  z-index: 99999;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+  animation: orbyWaFloat 2.4s ease-in-out infinite;
+}
+
+.orby-wa__img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* hover effect */
+.orby-wa:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: 0 22px 56px rgba(0, 0, 0, 0.6);
+}
+
+/* soft float animation */
+@keyframes orbyWaFloat {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* mobile – slightly smaller & closer to corner */
+@media (max-width: 768px) {
+  .orby-wa {
+    right: 14px;
+    bottom: 14px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .orby-wa__img {
+    max-width: 90%;
+    max-height: 90%;
+  }
+}
