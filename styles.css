@@ -1,3 +1,8 @@
+/* smooth scroll everywhere */
+html {
+  scroll-behavior: smooth;
+}
+
 /* FONTS: Orbitron for big hero text, Josefin Sans for hero paragraph */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Josefin+Sans:wght@400;500;600&display=swap');
 
@@ -275,7 +280,7 @@ body:has(.has-dd.open)::after{
   inset:0;
   z-index:10050;
 
-  /* keep hero/video visible, no overlay color */
+  /* hero/video still behind, no dark overlay */
   background:transparent;
   backdrop-filter:none;
 
@@ -289,7 +294,7 @@ body:has(.has-dd.open)::after{
   pointer-events:auto;
 }
 
-/* sliding panel */
+/* sliding panel (white sheet + dark text for contrast) */
 .drawer__panel{
   position:absolute;
   top:0;
@@ -306,7 +311,8 @@ body:has(.has-dd.open)::after{
   display:flex;
   flex-direction:column;
 
-  background:#fff;
+  background:#ffffff;
+  color:#020617;                 /* dark text inside drawer */
   box-shadow:-22px 0 40px rgba(0,0,0,.75);
 }
 
@@ -320,9 +326,9 @@ body:has(.has-dd.open)::after{
   justify-content:space-between;
   height:var(--nav-h);
   padding:0 16px;
-  border-bottom:1px solid rgba(255,255,255,.12);
   padding-left:calc(16px + env(safe-area-inset-left));
   padding-right:calc(16px + env(safe-area-inset-right));
+  border-bottom:1px solid rgba(15,23,42,.06);
 }
 
 .drawer__logo{
@@ -331,9 +337,9 @@ body:has(.has-dd.open)::after{
 }
 
 .drawer__close{
-  background:none;
-  border:1px solid rgba(255,255,255,.25);
-  color:var(--text);
+  background:transparent;
+  border:1px solid rgba(15,23,42,.16);
+  color:#020617;
   border-radius:10px;
   padding:6px 10px;
   cursor:pointer;
@@ -347,22 +353,23 @@ body:has(.has-dd.open)::after{
   overflow:auto;
 }
 
+/* top-level links */
 .drawer__nav > a{
   display:flex;
   align-items:center;
   justify-content:space-between;
   padding:16px 20px;
-  color:var(--text);
+  color:#020617;
   border-radius:0;
   background:transparent;
-  border-bottom:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid rgba(15,23,42,.06);
   text-transform:uppercase;
   letter-spacing:.18em;
   font-size:.8rem;
 }
 
 .drawer__nav > a:hover{
-  background:rgba(46,184,139,.18);
+  background:rgba(15,23,42,.04);
 }
 
 /* ABOUT US dropdown (mobile) */
@@ -372,10 +379,10 @@ body:has(.has-dd.open)::after{
   align-items:center;
   justify-content:space-between;
   padding:16px 20px;
-  color:var(--text);
+  color:#020617;
   border-radius:0;
   background:transparent;
-  border-bottom:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid rgba(15,23,42,.06);
   list-style:none;
   cursor:pointer;
   text-transform:uppercase;
@@ -400,11 +407,16 @@ body:has(.has-dd.open)::after{
 
 .drawer__nav details a{
   padding:14px 28px;
-  border-bottom:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(15,23,42,.04);
   display:block;
   text-transform:none;
   letter-spacing:.07em;
   font-size:.8rem;
+  color:#020617;
+}
+
+.drawer__nav details a:hover{
+  background:rgba(15,23,42,.03);
 }
 
 .drawer__cta{
@@ -415,9 +427,10 @@ body:has(.has-dd.open)::after{
   gap:10px;
 }
 
+/* reuse nav button but on white bg */
 .drawer__cta .btn-outline{
   width:100%;
-  display:inline-flex; /* make sure BOOK A DEMO shows on mobile */
+  display:inline-flex;
 }
 
 /* ---------------- HERO ---------------- */
@@ -446,7 +459,7 @@ body:has(.has-dd.open)::after{
   position:absolute;
   inset:0;
   pointer-events:none;
-  background:none;  /* <— no dark overlay */
+  background:none;  /* no dark overlay */
 }
 
 .hero__inner{
@@ -553,15 +566,18 @@ body:has(.has-dd.open)::after{
   .nav__actions{ margin-left:auto; }
 }
 
+/* MOBILE – fix hero layout + center CTA */
 @media (max-width:768px){
   .hero{
     min-height:72vh;
-    align-items:flex-start;
+    align-items:center;              /* center content vertically */
   }
 
   .hero__inner{
-    padding:82px 16px 40px;
+    padding:86px 18px 40px;
     width:100%;
+    align-items:center;              /* center horizontally */
+    text-align:center;
   }
 
   .heading-xl{
@@ -575,10 +591,9 @@ body:has(.has-dd.open)::after{
   }
 
   .hero__cta{
-    justify-content:flex-start;
+    justify-content:center;          /* button centered under text */
   }
 }
-
 
 
 
@@ -2324,222 +2339,439 @@ body:has(.has-dd.open)::after{
 
 /* BOOKING NEXT SECTION */
 
-.orby-enquiry{
-  --eq-bg:#f7f3ec;        /* page background, light beige to match ref */
-  --eq-ink:#0e2a2a;       /* dark teal text */
-  --eq-muted:#4e605f;
-  --eq-line:#e9dccb;      
-  --eq-line-focus:#0f3a37;
-  --eq-btn:#0f3a37;      
-  --eq-btn-ink:#ffffff;
-  --eq-radius:4px;
+/* ===========================
+   BOOKING / ENQUIRY SECTION
+   =========================== */
 
-  background:var(--eq-bg);
+.orby-enquiry{
+  /* colours matching rest of homepage */
+  --eq-bg:#f7f3ec;
+  --eq-ink:#07141a;
+  --eq-muted:#52616a;
+  --eq-line:#decec0;
+  --eq-line-focus:#021c21;
+  --eq-btn:#021c21;
+  --eq-btn-ink:#f9fafb;
+  --eq-radius:12px;
+
+  background:
+    radial-gradient(900px 520px at 0% 0%, rgba(245,232,214,.9) 0, transparent 60%),
+    linear-gradient(180deg,#f7f3ec 0%, #f6f1ea 45%, #f2ece5 100%);
   color:var(--eq-ink);
-  padding:40px 0 64px;
-  font-family:inherit;
+  padding:52px 0 64px;
+  font-family:var(--font-body, system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif);
 }
-.orby-enquiry .eq-wrap{width:min(1120px,92vw);margin:0 auto}
+
+.orby-enquiry .eq-wrap{
+  width:min(1120px,92vw);
+  margin:0 auto;
+}
+
+/* heading – same style family as SERVICES / TECH / FAQ */
 .orby-enquiry .eq-title{
-  margin:0 0 26px;
+  margin:0 0 24px;
   text-align:center;
   font-weight:900;
-  letter-spacing:.04em;
-  font-size:clamp(28px,6vw,64px);
+  font-family:var(--font-display,var(--font-head),inherit);
+  text-transform:uppercase;
+  letter-spacing:.20em;
+  font-size:clamp(1.7rem,2.6vw,2.2rem);
   color:var(--eq-ink);
 }
 
-/* grid */
+/* grid – NO card box around it, same as your original */
 .orby-enquiry .eq-form{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:18px 22px;
 }
-.orby-enquiry .eq-field{display:flex;flex-direction:column;gap:8px}
+
+.orby-enquiry .eq-field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
 .orby-enquiry .eq-field span{
-  font-size:12px;
-  letter-spacing:.06em;
+  font-size:11px;
+  letter-spacing:.16em;
   text-transform:uppercase;
   color:var(--eq-muted);
   font-weight:700;
+  font-family:var(--font-head,inherit);
 }
-.orby-enquiry .eq-wide{grid-column:1 / -1}
+
+.orby-enquiry .eq-wide{
+  grid-column:1 / -1;
+}
 
 /* inputs */
+
 .orby-enquiry input,
 .orby-enquiry select,
 .orby-enquiry textarea{
-  background:#fff;
+  background:#ffffff;
   border:1px solid var(--eq-line);
   border-radius:var(--eq-radius);
-  padding:14px 12px;
+  padding:12px 12px;
   font-size:15px;
   color:var(--eq-ink);
   outline:0;
-  transition:border-color .15s ease, box-shadow .15s ease;
+  transition:border-color .15s ease,
+            box-shadow .15s ease,
+            background-color .15s ease;
+  font-family:var(--font-body,inherit);
 }
-.orby-enquiry textarea{resize:vertical}
+
+.orby-enquiry textarea{
+  resize:vertical;
+  min-height:96px;
+}
+
+.orby-enquiry input:hover,
+.orby-enquiry select:hover,
+.orby-enquiry textarea:hover{
+  background:#faf7f1;
+}
+
 .orby-enquiry input:focus,
 .orby-enquiry select:focus,
 .orby-enquiry textarea:focus{
   border-color:var(--eq-line-focus);
-  box-shadow:0 0 0 2px rgba(15,58,55,.12);
+  box-shadow:0 0 0 2px rgba(2,28,33,.14);
+  background:#ffffff;
 }
 
 /* phone with small CC select */
-.orby-enquiry .eq-phone-wrap{display:grid;grid-template-columns:auto 1fr;gap:8px}
+
+.orby-enquiry .eq-phone-wrap{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:8px;
+}
+
 .orby-enquiry .eq-cc{
-  min-width:72px;
+  min-width:84px;
   padding-right:8px;
 }
 
 /* consent */
+
 .orby-enquiry .eq-consent{
-  display:flex;align-items:center;gap:10px;
-  font-size:14px;color:var(--eq-muted);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:14px;
+  color:var(--eq-muted);
 }
-.orby-enquiry .eq-consent input{width:18px;height:18px}
 
-/* submit */
-.orby-enquiry .eq-actions{display:grid;gap:10px;align-items:center}
-.orby-enquiry .eq-small{margin:0;font-size:12px;color:var(--eq-muted)}
+.orby-enquiry .eq-consent input{
+  width:18px;
+  height:18px;
+}
+
+/* submit row */
+
+.orby-enquiry .eq-actions{
+  display:grid;
+  gap:8px;
+  align-items:center;
+}
+
+.orby-enquiry .eq-small{
+  margin:0;
+  font-size:12px;
+  color:var(--eq-muted);
+}
+
+/* button – premium pill, same vibe as BOOK A DEMO */
+
 .orby-enquiry .eq-btn{
-  appearance:none;border:0;cursor:pointer;
-  background:var(--eq-btn);color:var(--eq-btn-ink);
-  padding:14px 18px;border-radius:2px;font-weight:900;letter-spacing:.04em;
-  width:max(220px,40%);text-align:center;
+  appearance:none;
+  border:0;
+  cursor:pointer;
+  background:linear-gradient(135deg,var(--eq-btn) 0%, #064955 100%);
+  color:var(--eq-btn-ink);
+  padding:14px 20px;
+  border-radius:999px;
+  font-weight:900;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  width:max(220px,40%);
+  text-align:center;
+  font-size:.78rem;
+  font-family:var(--font-head,inherit);
+  box-shadow:0 18px 42px rgba(2,28,33,.45);
+  transition:transform .14s ease,
+             box-shadow .14s ease,
+             filter .14s ease;
 }
-.orby-enquiry .eq-btn:hover{filter:brightness(1.05)}
 
-/* toast */
-.orby-enquiry .eq-toast{
-  position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(16px);
-  background:#0f3a37;color:#fff;border-radius:999px;padding:10px 16px;
-  box-shadow:0 10px 24px rgba(0,0,0,.25);opacity:0;pointer-events:none;
-  transition:opacity .2s,transform .2s;z-index:60
+.orby-enquiry .eq-btn:hover{
+  filter:brightness(1.06);
+  transform:translateY(-1px);
+  box-shadow:0 22px 52px rgba(2,28,33,.55);
 }
-.orby-enquiry .eq-toast[data-show="true"]{opacity:1;transform:translateX(-50%)}
+
+.orby-enquiry .eq-btn:active{
+  transform:translateY(0);
+  box-shadow:0 14px 32px rgba(2,28,33,.40);
+}
+
+/* toast stays same, just font + colour tied in */
+
+.orby-enquiry .eq-toast{
+  position:fixed;
+  left:50%;
+  bottom:24px;
+  transform:translateX(-50%) translateY(16px);
+  background:#021c21;
+  color:#fff;
+  border-radius:999px;
+  padding:10px 16px;
+  box-shadow:0 10px 24px rgba(0,0,0,.25);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s,transform .2s;
+  z-index:60;
+  font-family:var(--font-body,inherit);
+  font-size:.85rem;
+}
+
+.orby-enquiry .eq-toast[data-show="true"]{
+  opacity:1;
+  transform:translateX(-50%);
+}
 
 /* responsive */
+
 @media (max-width:880px){
-  .orby-enquiry .eq-form{grid-template-columns:1fr}
-  .orby-enquiry .eq-btn{width:100%}
+  .orby-enquiry .eq-form{
+    grid-template-columns:1fr;
+  }
+
+  .orby-enquiry .eq-btn{
+    width:100%;
+  }
 }
 
 
 
-/* footer */
-/* ===== MINIMAL FOOTER ======================================= */
+
+/* ===========================
+   ORABYT FOOTER (ONLY FOOTER)
+   =========================== */
 
 .ora-footer {
-  background:#021c21;                   /* dark teal, not bright green */
-  color:#e5f4f2;
-  padding:18px 20px;                    /* SLIM height */
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
-  box-sizing:border-box;
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(900px 520px at 0% 0%, rgba(15,46,54,.95) 0, transparent 60%),
+    radial-gradient(780px 520px at 100% 100%, rgba(9,25,32,.95) 0, transparent 60%),
+    linear-gradient(180deg,#020910 0%, #02161b 45%, #010b10 100%);
+  color: #e5f4f2;
+
+  padding: 18px 22px;
+  border-top: 1px solid rgba(148, 187, 191, 0.35);
+
+  font-family: var(--font-body, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif);
+  overflow: hidden;
 }
+
+/* soft diagonal glow behind */
+.ora-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  opacity: 0.55;
+  background:
+    linear-gradient(120deg,
+      transparent 0%,
+      rgba(148, 236, 212, .35) 35%,
+      rgba(255, 255, 255, .22) 52%,
+      transparent 70%);
+  transform: translate3d(-16%,0,0);
+  animation: oraFootSweep 26s linear infinite;
+}
+
+@keyframes oraFootSweep {
+  0%   { transform: translate3d(-16%,0,0); }
+  50%  { transform: translate3d(6%,0,0); }
+  100% { transform: translate3d(16%,0,0); }
+}
+
+/* inner layout */
 
 .ora-foot-inner {
-  max-width:1240px;
-  margin:0 auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:24px;
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  position: relative;
+  z-index: 1;
 }
 
-/* left block */
+/* LEFT: logo + tag line */
 
 .ora-foot-left {
-  display:flex;
-  align-items:center;
-  gap:12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .ora-mark {
-  display:block;
-  height:30px;                          /* small logo */
-  width:auto;
+  display: block;
+  height: 30px;
+  width: auto;
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,.65));
+  transition: transform .16s ease, filter .16s ease;
+}
+
+.ora-foot-left:hover .ora-mark {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 10px 26px rgba(0,0,0,.85));
 }
 
 .ora-foot-tag {
-  margin:0;
-  font-size:0.78rem;
-  text-transform:uppercase;
-  letter-spacing:.12em;
-  color:#9ed9d4;
+  margin: 0;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: .22em;
+  color: rgba(196, 238, 232, 0.83);
+  font-weight: 700;
+  white-space: nowrap;
 }
 
-/* middle links */
+/* MIDDLE: links */
 
 .ora-foot-nav {
-  display:flex;
-  gap:18px;
-  font-size:0.85rem;
+  display: flex;
+  gap: 18px;
+  font-size: 0.85rem;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .ora-foot-nav a {
-  color:#e5f4f2;
-  text-decoration:none;
-  opacity:.85;
-  transition:opacity .15s ease, transform .15s ease;
+  position: relative;
+  color: #e5f4f2;
+  text-decoration: none;
+  opacity: 0.86;
+  padding-bottom: 2px;
+  font-weight: 500;
+  transition:
+    opacity .14s ease,
+    transform .14s ease,
+    color .14s ease;
+}
+
+/* underline from center on hover */
+.ora-foot-nav a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #5eead4 0%, #f9fafb 100%);
+  transform: translateX(-50%);
+  transition: width .18s ease;
 }
 
 .ora-foot-nav a:hover {
-  opacity:1;
-  transform:translateY(-1px);
+  opacity: 1;
+  transform: translateY(-1px);
+  color: #ffffff;
 }
 
-/* right side */
+.ora-foot-nav a:hover::after {
+  width: 100%;
+}
+
+/* RIGHT: copyright */
 
 .ora-foot-right {
-  font-size:0.8rem;
-  color:#b0ced0;
-  white-space:nowrap;
+  font-size: 0.8rem;
+  color: rgba(193, 224, 222, 0.88);
+  white-space: nowrap;
 }
 
-/* responsive: stack on mobile */
+/* small highlight on year span */
+.ora-foot-right #year {
+  font-variant-numeric: tabular-nums;
+  padding: 0 2px;
+}
 
-@media (max-width: 768px) {
+/* ===========================
+   RESPONSIVE
+   =========================== */
+
+@media (max-width: 880px) {
   .ora-foot-inner {
-    flex-direction:column;
-    align-items:flex-start;
-    gap:10px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .ora-foot-left {
+    order: 1;
   }
 
   .ora-foot-nav {
-    flex-wrap:wrap;
-    row-gap:6px;
+    order: 2;
+    gap: 12px;
   }
 
   .ora-foot-right {
-    white-space:normal;
+    order: 3;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 520px) {
+  .ora-footer {
+    padding: 16px 16px 20px;
+  }
+
+  .ora-foot-nav {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
 
 
 /*  CASE STUDY PAGE  */
-/*  CASE STUDY PAGE  */
-/* ============== ORABYT CASE PAGE – GRID + SWIPE ANIMATION ============== */
+/* ===========================================
+   ORABYT – CASE STUDY PAGE
+   Matching homepage font system (only vars)
+   =========================================== */
 
-/* main page wrapper (body stays white) */
+/* MAIN LAYOUT WRAPPER (page background) */
 .ora-case-layout {
-  background-color: #ffffff;
+  background:
+    radial-gradient(900px 520px at 0% 0%, rgba(245, 232, 214, 0.9) 0, transparent 60%),
+    linear-gradient(180deg, #f7f3ec 0%, #f6f1ea 45%, #f2ece5 100%);
   padding: 4.5rem 1.5rem 5rem;
-}
-
-/* center article like a grid column */
-.ora-case-article {
-  max-width: 780px;
-  margin: 0 auto;
+  font-family: var(--font-body);
   color: var(--ink, #072429);
-  font-family: var(--font-body, 'Inter','Helvetica Neue','Neue Helvetica Pro',Helvetica,Arial,sans-serif);
-  font-size: 1rem;
-  line-height: 1.4;
 }
 
-/* ---- animations ---- */
+/* center article content */
+.ora-case-article {
+  max-width: 880px;
+  margin: 0 auto;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ====== ANIMATIONS ====== */
 
 @keyframes ora-swipe-right {
   from {
@@ -2563,7 +2795,20 @@ body:has(.has-dd.open)::after{
   }
 }
 
-/* ========= HERO TITLE AREA ========= */
+@keyframes ora-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===========================================
+   HERO TITLE AREA
+   =========================================== */
 
 .ora-case-header-inner {
   display: flex;
@@ -2579,46 +2824,61 @@ body:has(.has-dd.open)::after{
 /* small label above title */
 .ora-case-eyebrow {
   font-size: 0.78rem;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--accent, #b08556);
   margin: 0 0 0.25rem;
-  font-family: var(--font-head, 'Neue Helvetica Pro','Inter','Helvetica Neue',Helvetica,Arial,sans-serif);
+  font-family: var(--font-display, var(--font-head));
 }
 
-/* main title – follow homepage style (feature2__title) */
+/* main title – uses homepage heading font */
 .ora-case-heading {
   margin-top: 0;
-  margin-bottom: 0;
-  font-family: var(--font-head, 'Neue Helvetica Pro','Inter','Helvetica Neue',Helvetica,Arial,sans-serif);
+  margin-bottom: 0.2rem;
+  font-family: var(--font-display, var(--font-head));
   font-size: clamp(2.4rem, 6vw, 3.6rem);
-  line-height: 1.06;
-  letter-spacing: -0.015em;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
   font-weight: 900;
   color: var(--ink, #072429);
-  text-shadow: 0 1px 0 rgba(255,255,255,.45);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
 }
 
-/* author line */
+/* optional subtitle under title */
+.ora-case-subtitle {
+  margin: 0;
+  max-width: 640px;
+  font-size: 0.98rem;
+  color: var(--muted, #4e6166);
+  font-family: var(--font-body);
+}
+
+/* author / meta line */
 .ora-case-meta {
   display: inline-flex;
   align-items: center;
   column-gap: 0.75rem;
   font-size: 0.9rem;
   color: var(--muted, #4e6166);
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+  font-family: var(--font-body);
 }
 
 .ora-case-avatar {
   width: 32px;
   height: 32px;
   border-radius: 999px;
-  background-color: var(--ink, #072429);
+  background: linear-gradient(135deg, #021c21 0%, #094755 100%);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.75rem;
   font-weight: 600;
+  font-family: var(--font-display, var(--font-head));
 }
 
 .ora-case-meta-text {
@@ -2627,48 +2887,51 @@ body:has(.has-dd.open)::after{
   column-gap: 0.4rem;
 }
 
+/* just the middle dot */
 .ora-case-meta-dot {
   font-size: 1.1rem;
   line-height: 1;
 }
 
-/* ========= BLACK BAND + WHITE LOGO CARD ========= */
+/* ===========================================
+   BLACK STRIP + WHITE LOGO CARD
+   =========================================== */
 
 .ora-case-hero-strip {
   margin-top: 2.5rem;
-  background-color: #111111;
+  background: radial-gradient(120% 220% at 10% 0%, #111827 0, #020617 40%, #020617 100%);
   border-radius: 24px;
   padding: 40px 24px;
-  animation: ora-swipe-right 0.6s ease-out 0.05s both;
+  animation: ora-swipe-right 0.6s ease-out 0.1s both;
 }
 
 .ora-case-hero-card {
-  max-width: 600px;
+  max-width: 640px;
   margin: 0 auto;
   background-color: #ffffff;
-  border-radius: 16px;
+  border-radius: 18px;
   padding: 40px 48px;
   display: flex;
   align-items: center;
   justify-content: center;
   column-gap: 32px;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 20px 54px rgba(0, 0, 0, 0.28);
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
-/* subtle hover lift */
+/* hover lift */
 .ora-case-hero-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 26px 72px rgba(0, 0, 0, 0.35);
 }
 
 .ora-case-hero-logo-left,
 .ora-case-hero-logo-right {
-  font-size: 1.2rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  font-family: var(--font-head, 'Neue Helvetica Pro','Inter','Helvetica Neue',Helvetica,Arial,sans-serif);
+  font-family: var(--font-display, var(--font-head));
   color: var(--ink, #072429);
 }
 
@@ -2682,66 +2945,71 @@ body:has(.has-dd.open)::after{
   background-color: #111111;
 }
 
-/* ========= MAIN ARTICLE BODY (GRID) ========= */
+/* ===========================================
+   MAIN ARTICLE BODY (GRID SECTIONS)
+   =========================================== */
 
 .ora-case-body {
   margin-top: 3.5rem;
   background-color: #ffffff;
   border-radius: 24px 24px 0 0;
   padding: 48px 48px 60px;
-  display: grid;            /* grid model */
+  display: grid;
   grid-auto-rows: auto;
   row-gap: 40px;
-  animation: ora-swipe-left 0.6s ease-out 0.1s both;
+  animation: ora-fade-up 0.6s ease-out 0.18s both;
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.18);
 }
 
-/* each section is one row in the grid */
+/* each section block */
 .ora-case-section {
   width: 100%;
+  position: relative;
+  padding-top: 2px;
 }
 
-/* headings inside article */
+/* section headings */
 .ora-case-section-title {
   margin-top: 0;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   font-size: 1.4rem;
   font-weight: 700;
   position: relative;
-  font-family: var(--font-head, 'Neue Helvetica Pro','Inter','Helvetica Neue',Helvetica,Arial,sans-serif);
+  font-family: var(--font-display, var(--font-head));
   color: var(--ink, #072429);
 }
 
-/* small underline accent */
+/* small gold underline accent */
 .ora-case-section-title::after {
   content: "";
   position: absolute;
   left: 0;
   bottom: -6px;
-  width: 40px;
+  width: 44px;
   height: 2px;
   background-color: var(--accent, #b08556);
 }
 
-/* text */
+/* text / lists */
 .ora-case-section p,
 .ora-case-section ul,
 .ora-case-section ol {
   margin-top: 0;
   margin-bottom: 12px;
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: 1.7;
   color: var(--muted, #4e6166);
-  font-family: var(--font-body, 'Inter','Helvetica Neue','Neue Helvetica Pro',Helvetica,Arial,sans-serif);
+  font-family: var(--font-body);
 }
 
-/* highlight important words (strong) */
+/* highlight important words */
 .ora-case-body strong {
   color: var(--accent, #b08556);
   background-color: #fff6ea;
   padding: 0 2px;
 }
 
-/* list styling */
+/* list spacing */
 .ora-case-section ul,
 .ora-case-section ol {
   padding-left: 1.4rem;
@@ -2751,13 +3019,13 @@ body:has(.has-dd.open)::after{
   margin-top: 4px;
 }
 
-/* list markers in darker color */
+/* list markers */
 .ora-case-section ul li::marker,
 .ora-case-section ol li::marker {
   color: var(--ink, #072429);
 }
 
-/* numbered list */
+/* numbered list convenience class */
 .ora-case-numbered {
   list-style: decimal;
 }
@@ -2769,17 +3037,26 @@ body:has(.has-dd.open)::after{
   border-left: 2px solid var(--ink, #072429);
   font-style: italic;
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: 1.7;
   color: var(--ink, #072429);
+  font-family: var(--font-body);
 }
 
-/* ========= CTA BLOCK ========= */
+/* subtle divider between sections (optional) */
+.ora-case-section + .ora-case-section {
+  border-top: 1px solid rgba(219, 227, 229, 0.8);
+  padding-top: 26px;
+}
+
+/* ===========================================
+   CTA BLOCK (BOTTOM)
+   =========================================== */
 
 .ora-case-cta {
   margin-top: 40px;
   padding: 24px 20px;
-  border-radius: 14px;
-  background-color: #f4f3f7;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #f4f3f7 0%, #edf3f6 100%);
   border: 1px solid var(--line, #dbe3e5);
 }
 
@@ -2787,7 +3064,7 @@ body:has(.has-dd.open)::after{
   margin: 0 0 8px;
   font-size: 1.25rem;
   font-weight: 700;
-  font-family: var(--font-head, 'Neue Helvetica Pro','Inter','Helvetica Neue',Helvetica,Arial,sans-serif);
+  font-family: var(--font-display, var(--font-head));
   color: var(--ink, #072429);
 }
 
@@ -2795,26 +3072,30 @@ body:has(.has-dd.open)::after{
   margin: 0 0 16px;
   font-size: 0.96rem;
   color: var(--muted, #4e6166);
-  font-family: var(--font-body, 'Inter','Helvetica Neue','Neue Helvetica Pro',Helvetica,Arial,sans-serif);
+  font-family: var(--font-body);
 }
 
-/* RECTANGLE button with border color */
+/* rectangle CTA button with border + hover */
 .ora-case-cta-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 10px 22px;
-  border-radius: 6px;              /* rectangle, not pill */
-  border: 1px solid var(--ink, #072429);  /* border = ink */
+  border-radius: 6px;
+  border: 1px solid var(--ink, #072429);
   background-color: var(--ink, #072429);
   color: #ffffff;
   font-size: 0.95rem;
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
-  font-family: var(--font-head, 'Neue Helvetica Pro','Inter','Helvetica Neue',Helvetica,Arial,sans-serif);
-  transition: background-color 0.18s ease, color 0.18s ease,
-    transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  font-family: var(--font-display, var(--font-head));
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
 }
 
 .ora-case-cta-button:hover {
@@ -2825,9 +3106,10 @@ body:has(.has-dd.open)::after{
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* ========= RESPONSIVE (TABLET + MOBILE) ========= */
+/* ===========================================
+   RESPONSIVE – TABLET
+   =========================================== */
 
-/* tablet */
 @media screen and (max-width: 991px) {
   .ora-case-layout {
     padding: 3.5rem 1.25rem 4.5rem;
@@ -2842,7 +3124,10 @@ body:has(.has-dd.open)::after{
   }
 }
 
-/* mobile */
+/* ===========================================
+   RESPONSIVE – MOBILE
+   =========================================== */
+
 @media screen and (max-width: 767px) {
   .ora-case-layout {
     padding: 3rem 1rem 4rem;
@@ -2852,15 +3137,19 @@ body:has(.has-dd.open)::after{
     margin-bottom: 2.2rem;
   }
 
+  .ora-case-heading {
+    font-size: clamp(2rem, 7vw, 2.6rem);
+  }
+
   .ora-case-hero-strip {
-    padding: 28px 16px;
+    padding: 26px 16px;
     border-radius: 20px;
   }
 
   .ora-case-hero-card {
-    padding: 28px 20px;
+    padding: 24px 18px;
     flex-direction: column;
-    row-gap: 12px;
+    row-gap: 10px;
   }
 
   .ora-case-hero-logo-divider {
@@ -2870,8 +3159,13 @@ body:has(.has-dd.open)::after{
 
   .ora-case-body {
     margin-top: 32px;
-    padding: 32px 20px 40px;
+    padding: 28px 18px 36px;
     border-radius: 20px 20px 0 0;
+    box-shadow: 0 14px 36px rgba(15, 23, 42, 0.16);
+  }
+
+  .ora-case-section-title {
+    font-size: 1.25rem;
   }
 
   .ora-case-section-title::after {
@@ -2886,6 +3180,10 @@ body:has(.has-dd.open)::after{
     width: 100%;
     justify-content: center;
   }
+
+  .ora-case-meta {
+    font-size: 0.85rem;
+  }
 }
 
 
@@ -2893,31 +3191,44 @@ body:has(.has-dd.open)::after{
 
 
 
+/* ============================================
+   ORABYT – COMPANY PAGE
+   Uses homepage fonts + btn-solid style
+   ============================================ */
 
-
-/* COMPANY PAGE */
-/* ===== COMPANY PAGE – APPLE / ATLA STYLE ================= */
-
-/* whole company page sections = same soft grey bg like Atla */
+/* All company sections share the same soft bg */
 .ora-company-hero-block,
 .ora-company-team-block,
 .ora-company-values-block,
 .ora-company-founders {
-  background: var(--light-hero-bg, #f4f3f7);   /* from Atla tokens, fallback */
-  color: var(--ink, #171717);
+  background: var(--light-hero-bg, #f4f3f7);
+  color: var(--ink, #07141a);
 }
 
+/* generic inner shell */
 .ora-company-shell {
   width: min(1120px, 92vw);
   margin: 0 auto;
   padding: 72px 0 64px;
 }
 
-/* --- HERO: heading + globe image ------------------------- */
+/* ---------------- ANIMATIONS ---------------- */
+
+@keyframes oraCompanyFadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes oraCompanyFadeRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ========== HERO: text + globe image ========== */
 
 .ora-company-hero-block .ora-company-shell {
   display: grid;
-  grid-template-columns: minmax(0, 0.6fr) minmax(0, 0.4fr);
+  grid-template-columns: minmax(0, 0.58fr) minmax(0, 0.42fr);
   gap: 72px;
   align-items: center;
 }
@@ -2930,49 +3241,62 @@ body:has(.has-dd.open)::after{
 }
 
 .ora-company-hero-text {
-  max-width: 34rem;
+  max-width: 36rem;
+  animation: oraCompanyFadeUp 0.6s ease-out both;
 }
 
-/* keep your exact text:
-   <h1 class="ora-company-hero-heading">
-     Enabling simple<br>web &amp; AI for small teams
-   </h1>
-*/
+/* HEADING – same family as homepage hero, smaller */
 .ora-company-hero-heading {
-  margin: 0 0 16px;
-  font-family: var(--font-head, 'Neue Helvetica Pro','Inter','Helvetica Neue',Helvetica,Arial,sans-serif);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.08;
-  font-size: clamp(2.4rem, 4.5vw, 3.5rem);
+  margin: 0 0 18px;
+  font-family: var(--font-display, var(--font-head, 'Neue Helvetica Pro','Inter','Helvetica Neue',Helvetica,Arial,sans-serif));
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  line-height: 1.1;
+  font-size: clamp(1.4rem, 2.6vw, 2.0rem);
 }
 
+/* PARAGRAPH – same family as homepage body/lead */
 .ora-company-hero-body {
   margin: 0 0 10px;
   font-family: var(--font-body, 'Inter','Helvetica Neue','Neue Helvetica Pro',Helvetica,Arial,sans-serif);
-  font-size: 0.98rem;
-  line-height: 1.6;
-  color: var(--muted, #4e6166);
+  font-size: .98rem;
+  line-height: 1.7;
+  color: #09161e;                     /* darker, crisp text */
 }
 
+/* the extra lines below hero text */
+.ora-company-hero-body + p {
+  margin-top: 8px;
+}
+
+/* right globe – IMAGE ONLY, no box, no circle */
 .ora-company-hero-visual {
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: oraCompanyFadeRight 0.65s ease-out 0.05s both;
 }
 
-/* ONLY your globe PNG – no pill, no box */
 .ora-company-orb-img {
   display: block;
   max-width: 420px;
   width: 100%;
   height: auto;
-  border-radius: 50%;       /* image stays round */
-  box-shadow: none;
-  background: transparent;
+  border-radius: 0;        /* no circle crop */
+  box-shadow: none;        /* no white box / glow */
+  background: transparent; /* pure PNG */
 }
 
-/* ===== TEAM BLOCK ======================================== */
+/* If you have CTA in hero, reuse .btn-solid from homepage */
+.ora-company-hero-cta {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ================= TEAM BLOCK ================= */
 
 .ora-company-team-block .ora-company-shell {
   padding-top: 40px;
@@ -2990,40 +3314,45 @@ body:has(.has-dd.open)::after{
 @media (max-width: 900px) {
   .ora-company-team-top {
     grid-template-columns: minmax(0, 1fr);
-    row-gap: 8px;
+    row-gap: 10px;
   }
 }
 
 .ora-company-team-label {
   margin: 0;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--base-color-brand--green1, #00bd83);
-  font-family: var(--font-head, 'Neue Helvetica Pro','Inter','Helvetica Neue',Helvetica,Arial,sans-serif);
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--brand-green, #00bd83);
+  font-family: var(--font-display, var(--font-head));
 }
 
 .ora-company-team-copy {
   margin: 0;
-  font-family: var(--font-body, 'Inter','Helvetica Neue','Neue Helvetica Pro',Helvetica,Arial,sans-serif);
-  font-size: 0.98rem;
-  line-height: 1.6;
-  color: var(--muted, #4e6166);
+  font-family: var(--font-body);
+  font-size: .98rem;
+  line-height: 1.7;
+  color: #1a2a32;
 }
 
+/* big team image */
 .ora-company-team-image-wrap {
   display: flex;
   justify-content: center;
+  margin-top: 24px;
 }
 
 .ora-company-team-image {
   display: block;
   width: 100%;
   max-width: 100%;
-  border-radius: 12px;
+  border-radius: 18px;
   object-fit: cover;
+  box-shadow: 0 18px 42px rgba(15, 23, 42, .25);
 }
 
-/* ===== WHAT DRIVES US ==================================== */
+/* ============ VALUES / WHAT DRIVES US ============ */
 
 .ora-company-values-block .ora-company-shell {
   padding-top: 64px;
@@ -3037,21 +3366,22 @@ body:has(.has-dd.open)::after{
 
 .ora-company-values-title {
   margin: 0;
-  font-family: var(--font-head, 'Neue Helvetica Pro','Inter','Helvetica Neue',Helvetica,Arial,sans-serif);
-  font-size: clamp(2rem, 4vw, 2.6rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-family: var(--font-display, var(--font-head));
+  font-size: clamp(1.5rem, 3vw, 2.0rem);
+  font-weight: 900;
+  letter-spacing: .18em;
+  text-transform: uppercase;
 }
 
 .ora-company-values-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0,1fr));
   gap: 40px 80px;
 }
 
 @media (max-width: 900px) {
   .ora-company-values-grid {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: minmax(0,1fr);
     gap: 28px;
   }
 }
@@ -3063,27 +3393,29 @@ body:has(.has-dd.open)::after{
 .ora-values-index {
   display: block;
   margin-bottom: 4px;
-  font-family: var(--font-head, 'Neue Helvetica Pro','Inter','Helvetica Neue',Helvetica,Arial,sans-serif);
-  font-size: 0.8rem;
-  color: var(--base-color-brand--green1, #00bd83);
+  font-family: var(--font-display, var(--font-head));
+  font-size: .8rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--brand-green, #00bd83);
 }
 
 .ora-values-heading {
   margin: 0 0 6px;
-  font-family: var(--font-head, 'Neue Helvetica Pro','Inter','Helvetica Neue',Helvetica,Arial,sans-serif);
-  font-size: 1.05rem;
+  font-family: var(--font-head);
+  font-size: 1.02rem;
   font-weight: 600;
 }
 
 .ora-values-body {
   margin: 0;
-  font-family: var(--font-body, 'Inter','Helvetica Neue','Neue Helvetica Pro',Helvetica,Arial,sans-serif);
-  font-size: 0.96rem;
-  line-height: 1.6;
-  color: var(--muted, #4e6166);
+  font-family: var(--font-body);
+  font-size: .95rem;
+  line-height: 1.7;
+  color: #1b2830;
 }
 
-/* ===== FOUNDERS CARDS ==================================== */
+/* ================= FOUNDERS CARDS ================= */
 
 .ora-company-founders .ora-company-shell {
   padding-top: 48px;
@@ -3098,205 +3430,208 @@ body:has(.has-dd.open)::after{
 
 .ora-founders-title {
   margin: 0 0 8px;
-  font-family: var(--font-head, 'Neue Helvetica Pro','Inter','Helvetica Neue',Helvetica,Arial,sans-serif);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  font-size: 1.8rem;
+  font-family: var(--font-display, var(--font-head));
+  font-weight: 900;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-size: 1.4rem;
 }
 
 .ora-founders-lead {
   margin: 0;
-  font-family: var(--font-body, 'Inter','Helvetica Neue','Neue Helvetica Pro',Helvetica,Arial,sans-serif);
-  font-size: 0.96rem;
-  line-height: 1.6;
-  color: var(--muted, #4e6166);
+  font-family: var(--font-body);
+  font-size: .96rem;
+  line-height: 1.7;
+  color: #1a2a32;
 }
 
 .ora-founders-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 22px;
 }
 
 @media (max-width: 960px) {
-  .ora-founders-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  .ora-founders-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
 }
 @media (max-width: 640px) {
-  .ora-founders-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  .ora-founders-grid { grid-template-columns: minmax(0,1fr); }
 }
 
 .ora-founder-card {
-  background: #ffffff;
-  border-radius: 14px;
-  border: 1px solid var(--base-color-neutral--neutral-light, #ccc);
-  padding: 16px 16px 14px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.06);
+  background:#ffffff;
+  border-radius:16px;
+  border:1px solid rgba(148,163,184,.45);
+  padding:16px 16px 14px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  box-shadow:0 18px 40px rgba(15,23,42,.10);
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+
+.ora-founder-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 24px 60px rgba(15,23,42,.22);
 }
 
 .ora-founder-name {
-  margin: 0 0 4px;
-  font-family: var(--font-head, 'Neue Helvetica Pro','Inter','Helvetica Neue',Helvetica,Arial,sans-serif);
-  font-size: 1rem;
-  font-weight: 600;
+  margin:0 0 4px;
+  font-family:var(--font-head);
+  font-size:.95rem;
+  font-weight:600;
 }
 
 .ora-founder-role {
-  margin: 0 0 8px;
-  font-family: var(--font-body, 'Inter','Helvetica Neue','Neue Helvetica Pro',Helvetica,Arial,sans-serif);
-  font-size: 0.85rem;
-  color: var(--dark-grey-1, #a2a2a2);
+  margin:0 0 8px;
+  font-family:var(--font-body);
+  font-size:.82rem;
+  color:#9ca3af;
 }
 
 .ora-founder-note {
-  margin: 0;
-  font-family: var(--font-body, 'Inter','Helvetica Neue','Neue Helvetica Pro',Helvetica,Arial,sans-serif);
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: var(--muted, #4e6166);
+  margin:0;
+  font-family:var(--font-body);
+  font-size:.9rem;
+  line-height:1.6;
+  color:#1f2933;
 }
 
-/* ICONS: ONLY LINE ICONS, NO CIRCLE BG  */
+/* icons – line only, hover green */
 .ora-founder-links {
-  margin-top: 12px;
-  display: flex;
-  gap: 12px;
+  margin-top:12px;
+  display:flex;
+  gap:12px;
 }
 
 .ora-founder-icon {
-  display: inline-flex;
-  width: 22px;
-  height: 22px;
-  padding: 0;
-  border: none;                 /* no circle, no border */
-  background: transparent;
-  color: var(--base-color-neutral--neutral-darkest, #111);
-  text-decoration: none;
-  transition: color 0.16s ease, transform 0.16s ease;
+  display:inline-flex;
+  width:22px;
+  height:22px;
+  border:none;
+  background:transparent;
+  color:#111827;
+  text-decoration:none;
+  transition:color .16s ease, transform .16s ease;
 }
 
 .ora-founder-icon-svg {
-  width: 22px;
-  height: 22px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.7;
+  width:22px;
+  height:22px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.7;
 }
 
 .ora-founder-icon:hover {
-  color: var(--base-color-brand--green1, #00bd83);   /* email + LinkedIn turn green */
-  transform: translateY(-1px);
+  color:var(--brand-green,#00bd83);
+  transform:translateY(-1px);
 }
 
-/* ===== FLOATING WHATSAPP BUTTON =========================== */
-
-.ora-whatsapp-float {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  z-index: 9999;
-  display: inline-flex;
-  width: 54px;
-  height: 54px;
-  border-radius: 999px;
-  background: #22c55e;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
-  align-items: center;
-  justify-content: center;
-}
-
-.ora-whatsapp-float img {
-  width: 30px;
-  height: 30px;
-  display: block;
-}
-
-.ora-whatsapp-float:hover {
-  transform: translateY(-2px);
-}
-
-/* ===== CTA INNER LAYOUT ===== */
-/* ===== DARK CTA STRIP (Join our mission) ======================= */
+/* =========== DARK CTA STRIP (JOIN OUR MISSION) =========== */
 
 .ora-cta-dark {
-  background-color: #050505;               /* solid near-black */
-  color: #f9fafb;                          /* light text */
-  padding: 7.5rem 1.5rem;
+  background-color:#050505;
+  color:#f9fafb;
+  padding:7.5rem 1.5rem;
 }
 
 .ora-cta-shell {
-  max-width: 680px;
-  margin: 0 auto;
-  text-align: center;
+  max-width:680px;
+  margin:0 auto;
+  text-align:center;
 }
-
-/* Heading */
 
 .ora-cta-title {
-  margin: 0 0 1rem;
-  font-family: var(--font-head, 'Neue Helvetica Pro','Inter','Helvetica Neue',Helvetica,Arial,sans-serif);
-  font-size: clamp(2.4rem, 4vw, 3.2rem);
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  color: #ffffff;
+  margin:0 0 1rem;
+  font-family:var(--font-display,var(--font-head));
+  font-size:clamp(1.6rem, 3.2vw, 2.3rem);
+  font-weight:900;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  line-height:1.1;
 }
-
-/* Body text */
 
 .ora-cta-body {
-  margin: 0 0 2.5rem;
-  font-family: var(--font-body, 'Inter','Helvetica Neue','Neue Helvetica Pro',Helvetica,Arial,sans-serif);
-  font-size: 1rem;
-  line-height: 1.6;
-  color: rgba(249, 250, 251, 0.78);
+  margin:0 0 2.5rem;
+  font-family:var(--font-body);
+  font-size:1rem;
+  line-height:1.7;
+  color:rgba(249,250,251,.8);
 }
 
-/* ===== BUTTON: rectangle + border, like “Book a demo” ========= */
-
+/* CTA button: same feeling as .btn-solid (black + green) */
 .ora-cta-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-
-  padding: 0.7rem 2.4rem;
-  border-radius: 10px;                           /* rectangle with soft corners */
-  border: 1px solid rgba(148, 163, 184, 0.9);    /* grey/green-ish border */
-  background-color: #ffffff;                     /* << only change: white bg */
-  color: #064e3b;                                /* dark green text for contrast */
-
-  font-family: var(--font-head, 'Neue Helvetica Pro','Inter','Helvetica Neue',Helvetica,Arial,sans-serif);
-  font-size: 0.95rem;
-  font-weight: 500;
-  text-decoration: none;
-
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.5rem;
+  padding:10px 34px;
+  border-radius:5px;
+  border:2px solid var(--brand-green,#00bd83);
+  background-color:#000;
+  color:var(--brand-green,#00bd83);
+  font-family:var(--font-ui,var(--font-head));
+  font-size:.85rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.22em;
+  text-decoration:none;
+  box-shadow:0 16px 34px rgba(0,0,0,.7);
   transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    background-color 0.18s ease,
-    border-color 0.18s ease,
-    color 0.18s ease;
+    transform .2s ease,
+    box-shadow .2s ease,
+    filter .2s ease,
+    background .2s ease,
+    color .2s ease,
+    border-color .2s ease;
 }
 
 .ora-cta-button:hover {
-  transform: translateY(-2px);
-  background-color: #f9fafb;                    /* light fill on hover */
-  color: #064e3b;                               /* deep green text */
-  border-color: #064e3b;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+  background:var(--brand-green,#00bd83);
+  color:#000;
+  border-color:var(--brand-green,#00bd83);
+  transform:translateY(-1px);
+  filter:brightness(1.06);
+  box-shadow:0 20px 42px rgba(0,0,0,.85);
 }
 
-/* no dot for this style – hide it */
-.ora-cta-dot {
-  display: none;
+/* =========== FLOATING WHATSAPP BUTTON =========== */
+
+.ora-whatsapp-float {
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:9999;
+  display:inline-flex;
+  width:54px;
+  height:54px;
+  border-radius:999px;
+  background:#22c55e;
+  box-shadow:0 16px 40px rgba(0,0,0,.3);
+  align-items:center;
+  justify-content:center;
+  transition:transform .18s ease, box-shadow .18s ease;
 }
 
+.ora-whatsapp-float img {
+  width:30px;
+  height:30px;
+  display:block;
+}
 
+.ora-whatsapp-float:hover {
+  transform:translateY(-2px);
+  box-shadow:0 22px 52px rgba(0,0,0,.4);
+}
+
+/* =========== RESPONSIVE TWEAKS =========== */
+
+@media (max-width:768px){
+  .ora-company-shell{
+    padding:56px 0 52px;
+  }
+  .ora-cta-dark{
+    padding:4.8rem 1.25rem;
+  }
+}
